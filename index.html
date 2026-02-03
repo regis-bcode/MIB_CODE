@@ -36,6 +36,9 @@
       --shadow2:0 10px 26px rgba(0,0,0,.28);
 
       --max:1200px;
+
+      /* gate sticky */
+      --gatebar-h: 64px;
     }
 
     *{box-sizing:border-box}
@@ -54,7 +57,6 @@
     /* =========================
        ASSETS (em /assets/)
        - assets/baumgratz_logo_selo.png
-       - assets/bcode_icone_3d.png
        - assets/bcode_gradiente.png
        - assets/bcode_pattern_gradiente.png
        ========================= */
@@ -71,103 +73,130 @@
       mix-blend-mode: screen;
     }
 
-    .wrap{max-width:var(--max); margin:0 auto; padding:26px 18px 80px;}
+    .wrap{max-width:var(--max); margin:0 auto; padding:18px 18px 80px;}
 
-    /* Header */
-    header{
-      position:sticky; top:12px; z-index:20;
-      border:1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(13,37,63,.70), rgba(13,37,63,.35));
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow2);
+    /* =========================================================
+       GATE BAR (RESPONSIVO) — fica sempre visível
+       ========================================================= */
+    .gatebar{
+      position: sticky;
+      top: 10px;
+      z-index: 50;
+      margin: 10px auto 14px;
+      border:1px solid rgba(248,247,255,.14);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(13,37,63,.74), rgba(13,37,63,.40));
+      box-shadow: 0 10px 26px rgba(0,0,0,.28);
       backdrop-filter: blur(10px);
       overflow:hidden;
+      height: var(--gatebar-h);
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 10px;
     }
-    .head-inner{
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
-      padding:16px 18px;
+
+    .gatebar-left{
+      display:flex; align-items:center; gap:12px;
+      min-width: 260px;
+      padding-left: 6px;
     }
 
     .brand{
-      display:flex; align-items:center; gap:12px; min-width: 320px;
+      display:flex; align-items:center; gap:12px;
+      min-width: 220px;
     }
 
-    /* LOGO (corrigido: proporção e sem “BC” fallback visual intrusivo) */
+    /* Logo com proporção */
     .logo-wrap{
-      width:54px; height:54px;
+      width:44px; height:44px;
       border-radius: 14px;
       background: rgba(248,247,255,.06);
-      border:1px solid var(--stroke);
+      border:1px solid rgba(248,247,255,.14);
       display:flex; align-items:center; justify-content:center;
       overflow:hidden;
       flex:0 0 auto;
     }
     .logo-wrap img{
       width:100%; height:100%;
-      object-fit:contain;            /* mantém proporção */
+      object-fit:contain;
       object-position:center;
       display:block;
-      padding:8px;                  /* respiro institucional, sem “cortar” */
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.25));
+      padding:7px;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,.22));
     }
 
-    .brand .t1{
-      font-weight:900; font-size:18px; letter-spacing:.2px; line-height:1.1;
+    .brand-txt .t1{
+      font-weight:900; font-size:14px; letter-spacing:.2px; line-height:1.1;
+      margin:0;
     }
-    .brand .t2{
-      font-weight:500; font-size:12px; color:var(--muted); margin-top:3px; line-height:1.3;
+    .brand-txt .t2{
+      font-weight:500; font-size:11px; color:var(--muted);
+      margin-top:3px; line-height:1.2;
     }
 
-    nav{
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    /* Gate pills (sempre visíveis, com scroll horizontal no mobile) */
+    .gatebar-gates{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex: 1 1 auto;
+      overflow-x:auto;
+      padding-right:6px;
+      scrollbar-width: thin;
     }
-    nav a{
-      text-decoration:none; color:var(--text);
-      font-weight:800; font-size:12px;
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(13,37,63,.28);
-      transition:.18s ease;
+    .gatebar-gates::-webkit-scrollbar{ height:8px; }
+    .gatebar-gates::-webkit-scrollbar-thumb{
+      background: rgba(248,247,255,.12);
+      border-radius: 999px;
     }
-    nav a:hover{ transform: translateY(-1px); border-color: var(--stroke2); }
-    nav a.active{
-      border-color: rgba(79,148,255,.55);
-      background: rgba(79,148,255,.12);
-      box-shadow: 0 0 0 3px rgba(79,148,255,.12);
+
+    .gbtn{
+      text-decoration:none;
+      color: rgba(248,247,255,.95);
+      font-weight:900;
+      font-size:12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(248,247,255,.14);
+      background: rgba(13,37,63,.24);
+      white-space: nowrap;
+      transition: .18s ease;
+    }
+    .gbtn:hover{ transform: translateY(-1px); border-color: rgba(248,247,255,.22); }
+    .gbtn.active{
+      border-color: rgba(79,148,255,.60);
+      background: rgba(79,148,255,.14);
+      box-shadow: 0 0 0 4px rgba(79,148,255,.10);
     }
 
     /* Hero */
     .hero{
-      margin-top:18px;
-      border-radius: var(--radius-xl);
-      border:1px solid var(--stroke);
+      border-radius: 22px;
+      border:1px solid rgba(248,247,255,.12);
       background:
         radial-gradient(800px 380px at 20% 30%, rgba(79,148,255,.20), transparent 60%),
         radial-gradient(700px 360px at 80% 60%, rgba(50,208,194,.16), transparent 60%),
         linear-gradient(180deg, rgba(13,37,63,.62), rgba(13,37,63,.30));
-      box-shadow: var(--shadow);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
       overflow:hidden;
-      position:relative;
     }
     .hero-inner{
-      padding: 18px 20px 14px;
+      padding: 22px 22px 14px;
       display:grid;
       grid-template-columns: 1.35fr .65fr;
       gap:18px;
       align-items:center;
     }
-    .hero h1{ margin:0 0 8px; font-size:28px; font-weight:900; line-height:1.12; }
-    .hero p{ margin:0; color:var(--muted); font-size:14px; line-height:1.6; max-width:78ch; }
+    .hero h1{ margin:0 0 10px; font-size:30px; font-weight:900; line-height:1.12; }
+    .hero p{ margin:0; color:rgba(248,247,255,.78); font-size:14px; line-height:1.65; max-width:82ch; }
 
-    /* HERO LOGO CARD (substitui o bloco BAUMGRATZ CODE e mantém proporção) */
-    .hero-aside{
-      display:flex; align-items:center; justify-content:center;
-    }
+    /* Card com LOGO (direita do hero) */
+    .hero-aside{ display:flex; align-items:center; justify-content:center; }
     .hero-logo-card{
       width:100%;
       max-width: 380px;
-      aspect-ratio: 1 / 1;                 /* quadrado institucional */
+      aspect-ratio: 1 / 1;
       border-radius: 26px;
       border:1px solid rgba(248,247,255,.14);
       background: rgba(13,37,63,.24);
@@ -182,8 +211,9 @@
     .hero-logo-card::before{
       content:"";
       position:absolute; inset:-40px;
-      background: radial-gradient(600px 320px at 40% 35%, rgba(79,148,255,.16), transparent 60%),
-                  radial-gradient(520px 280px at 70% 70%, rgba(50,208,194,.12), transparent 62%);
+      background:
+        radial-gradient(600px 320px at 40% 35%, rgba(79,148,255,.16), transparent 60%),
+        radial-gradient(520px 280px at 70% 70%, rgba(50,208,194,.12), transparent 62%);
       opacity:.9;
       pointer-events:none;
     }
@@ -191,38 +221,38 @@
       position:relative;
       width: 84%;
       height: 84%;
-      object-fit: contain;                 /* mantém proporção do selo */
+      object-fit: contain;
       object-position: center;
       filter: drop-shadow(0 18px 22px rgba(0,0,0,.35));
     }
 
-    /* Ribbon */
+    /* Ribbon timeline */
     .ribbon-area{
-      padding: 14px 20px 20px;
+      padding: 14px 22px 22px;
       border-top:1px solid rgba(248,247,255,.08);
     }
     .ribbon-title{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin-bottom:10px;
+      margin-bottom:12px;
     }
     .ribbon-title .l{
       font-weight:900; font-size:12px; letter-spacing:.2px;
       color: rgba(248,247,255,.90);
     }
     .ribbon-title .r{
-      font-size:11px; color:var(--muted);
+      font-size:11px; color:rgba(248,247,255,.70);
     }
 
     .ribbon-track{
       position:relative;
-      margin-top:10px;
-      padding: 18px 0 4px;
+      margin-top:6px;
+      padding: 16px 0 4px;
     }
     .ribbon-track::before{
       content:"";
       position:absolute;
       left:12px; right:12px;
-      top:54px;
+      top:52px;
       height:2px;
       border-radius:999px;
       background: rgba(248,247,255,.22);
@@ -244,10 +274,9 @@
 
     .rb{
       text-decoration:none;
-      color:var(--text);
+      color:rgba(248,247,255,.95);
       min-width:170px;
     }
-
     .rb-top{
       display:flex; align-items:center; justify-content:center;
       position:relative;
@@ -263,7 +292,6 @@
       box-shadow: 0 10px 18px rgba(0,0,0,.25);
       font-weight:900;
       font-size:12px;
-      color: rgba(248,247,255,.92);
     }
     .rb-dot{
       position:absolute;
@@ -281,7 +309,6 @@
       box-shadow: 0 16px 40px rgba(0,0,0,.32);
       overflow:hidden;
       min-height:128px;
-      transform: translateY(0);
       transition:.18s ease;
     }
     .rb-flag::after{
@@ -295,20 +322,16 @@
       border-top:12px solid rgba(255,255,255,.20);
       opacity:.65;
     }
-
     .rb-num{
       font-weight:900;
       font-size:18px;
       letter-spacing:.2px;
       margin:0 0 6px;
-      opacity:.98;
-      color: rgba(248,247,255,.95);
     }
     .rb-name{
       margin:0 0 8px;
       font-size:13px;
       font-weight:900;
-      color: rgba(248,247,255,.95);
     }
     .rb-desc{
       margin:0;
@@ -337,20 +360,12 @@
     .c5{ background: linear-gradient(180deg, rgba(79,148,255,.55), rgba(50,208,194,.35)); }
     .c6{ background: linear-gradient(180deg, rgba(248,247,255,.25), rgba(13,37,63,.40)); }
 
-    /* Contraste — Fase 03 (verde) */
-    .c3,
-    .c3 .rb-num,
-    .c3 .rb-name,
-    .c3 .rb-desc,
+    /* Contraste — fase verde */
+    .c3, .c3 *{ color: rgba(8,20,34,.92) !important; }
+    .c3 .rb-desc{ color: rgba(8,20,34,.85) !important; }
     .c3 .rb-gate{
-      color: rgba(8,20,34,.92);
-    }
-    .c3 .rb-num{ color: rgba(8,20,34,.95); }
-    .c3 .rb-desc{ color: rgba(8,20,34,.85); }
-    .c3 .rb-gate{
-      border-color: rgba(8,20,34,.25);
-      background: rgba(248,247,255,.35);
-      color: rgba(8,20,34,.92);
+      border-color: rgba(8,20,34,.25) !important;
+      background: rgba(248,247,255,.35) !important;
     }
 
     .rb:hover .rb-flag{ border-color: rgba(248,247,255,.22); transform: translateY(-1px); }
@@ -362,11 +377,11 @@
 
     /* Seções */
     .section{
-      margin-top: 22px;
-      border-radius: var(--radius-xl);
-      border:1px solid var(--stroke);
+      margin-top: 18px;
+      border-radius: 22px;
+      border:1px solid rgba(248,247,255,.12);
       background: linear-gradient(180deg, rgba(13,37,63,.55), rgba(13,37,63,.25));
-      box-shadow: var(--shadow2);
+      box-shadow: 0 10px 26px rgba(0,0,0,.28);
       overflow:hidden;
     }
     .section-hd{
@@ -376,13 +391,13 @@
     }
     .section-hd h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
     .section-hd .meta{
-      margin-top:6px; font-size:12px; color:var(--muted); line-height:1.5; max-width: 92ch;
+      margin-top:6px; font-size:12px; color:rgba(248,247,255,.72); line-height:1.5; max-width: 92ch;
     }
     .pill{
       font-size:11px; font-weight:900;
       padding:10px 12px;
       border-radius:999px;
-      border:1px solid var(--stroke);
+      border:1px solid rgba(248,247,255,.12);
       background: rgba(248,247,255,.06);
       white-space:nowrap;
     }
@@ -392,8 +407,8 @@
     .pill.lime{ border-color: rgba(194,249,112,.45); background: rgba(194,249,112,.10); }
 
     details.step{
-      border:1px solid var(--stroke);
-      border-radius: var(--radius-lg);
+      border:1px solid rgba(248,247,255,.12);
+      border-radius: 18px;
       background: rgba(13,37,63,.34);
       margin: 14px 20px 18px;
       overflow:hidden;
@@ -409,7 +424,7 @@
     .sum-left{ min-width: 0; }
     .sum-title{ font-weight:900; font-size:14px; }
     .sum-desc{
-      margin-top:4px; color: var(--muted); font-size:12px;
+      margin-top:4px; color: rgba(248,247,255,.72); font-size:12px;
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
     .sum-right{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
@@ -417,7 +432,7 @@
       font-size:11px; font-weight:900;
       padding:8px 10px;
       border-radius:999px;
-      border:1px solid var(--stroke);
+      border:1px solid rgba(248,247,255,.12);
       background: rgba(248,247,255,.06);
     }
     .chip.owner{ border-color: rgba(50,208,194,.45); background: rgba(50,208,194,.10); }
@@ -432,26 +447,44 @@
     .box{
       border:1px solid rgba(248,247,255,.10);
       background: rgba(13,37,63,.28);
-      border-radius: var(--radius-md);
+      border-radius: 14px;
       padding: 12px 12px 10px;
     }
     .box h4{ margin:0 0 8px; font-size:12px; font-weight:900; letter-spacing:.2px; }
-    .box ul{ margin:0; padding-left:18px; color:var(--muted); font-size:12px; line-height:1.55; }
+    .box p, .box ul{
+      margin:0;
+      color: rgba(248,247,255,.74);
+      font-size:12px;
+      line-height:1.6;
+    }
+    .box ul{ padding-left:18px; }
+
     .gate-box{
       grid-column: 1 / -1;
       border-color: rgba(255,122,89,.28);
       background: linear-gradient(90deg, rgba(255,122,89,.12), rgba(79,148,255,.08));
     }
-    .gate-box p{ margin:0; color: var(--text); font-size:12px; line-height:1.55; }
-    .gate-q{ margin-top:6px; color: var(--muted); }
+    .gate-box p{ color: rgba(248,247,255,.92); }
+    .gate-q{ margin-top:6px; color: rgba(248,247,255,.74); }
 
+    /* =========================================================
+       Responsividade: manter GATES sempre acessíveis
+       - gatebar fixa e com scroll horizontal
+       - colunas do hero empilham
+       ========================================================= */
     @media (max-width:980px){
       .hero-inner{ grid-template-columns:1fr; }
-      .hero-aside{ justify-content:flex-start; padding-top:6px; }
-      .head-inner{ flex-direction:column; align-items:flex-start; }
-      nav{ justify-content:flex-start; }
-      .brand{ min-width: 0; }
+      .hero-aside{ justify-content:flex-start; }
       .hero-logo-card{ max-width: 320px; }
+      .step-content{ grid-template-columns:1fr; }
+      .gatebar-left{ min-width: 220px; }
+    }
+    @media (max-width:640px){
+      :root{ --gatebar-h: 62px; }
+      .wrap{ padding: 12px 12px 70px; }
+      .brand-txt .t2{ display:none; } /* limpa poluição no mobile */
+      .gatebar-left{ min-width: 170px; }
+      .gbtn{ font-size:12px; padding: 10px 12px; }
     }
   </style>
 </head>
@@ -462,29 +495,29 @@
 
   <div class="wrap">
 
-    <header>
-      <div class="head-inner">
+    <!-- GATE BAR (sempre visível) -->
+    <div class="gatebar" id="gatebar">
+      <div class="gatebar-left">
         <div class="brand">
           <div class="logo-wrap">
-            <!-- LOGO (arquivo confirmado por você): -->
             <img src="assets/baumgratz_logo_selo.png" alt="Baumgratz Code" />
           </div>
-          <div>
-            <div class="t1">MIB — Workflow End-to-End</div>
-            <div class="t2">Metodologia de Implantação Baumgratz Code • Visão institucional completa</div>
+          <div class="brand-txt">
+            <div class="t1">MIB — Workflow</div>
+            <div class="t2">End-to-End • governança por gates</div>
           </div>
         </div>
-
-        <nav id="topnav">
-          <a href="#vendas">Vendas</a>
-          <a href="#arquitetura">Arquitetura</a>
-          <a href="#transicao">Transição Interna</a>
-          <a href="#onboarding">Onboarding</a>
-          <a href="#implantacao">Implantação</a>
-          <a href="#suporte">Suporte</a>
-        </nav>
       </div>
-    </header>
+
+      <div class="gatebar-gates" id="gatebarGates" aria-label="Gates">
+        <a class="gbtn" href="#vendas" data-target="vendas">G1 • Vendas</a>
+        <a class="gbtn" href="#arquitetura" data-target="arquitetura">G2 • Arquitetura</a>
+        <a class="gbtn" href="#transicao" data-target="transicao">G3 • Transição</a>
+        <a class="gbtn" href="#onboarding" data-target="onboarding">G4 • Onboarding</a>
+        <a class="gbtn" href="#implantacao" data-target="implantacao">G5 • Implantação</a>
+        <a class="gbtn" href="#suporte" data-target="suporte">G6 • Suporte</a>
+      </div>
+    </div>
 
     <section class="hero" id="inicio">
       <div class="hero-inner">
@@ -498,14 +531,12 @@
         </div>
 
         <div class="hero-aside">
-          <!-- TROCA: aqui agora entra o LOGO BAUMGRATZ com proporção correta -->
           <div class="hero-logo-card" aria-label="Baumgratz Code">
             <img class="hero-logo" src="assets/baumgratz_logo_selo.png" alt="Baumgratz Code" />
           </div>
         </div>
       </div>
 
-      <!-- DESENHO DO FLUXO (GATES) -->
       <div class="ribbon-area">
         <div class="ribbon-title">
           <div class="l">Gates do Workflow End-to-End</div>
@@ -575,8 +606,8 @@
               <div class="rb-flag c5">
                 <div class="rb-num">05</div>
                 <div class="rb-name">Implantação (MIB)</div>
-                <div class="rb-desc">Direcionar → Planejar → Executar → Validar → Encerrar, com decisão contínua.</div>
-                <div class="rb-gate">Gates 5–8 • Execução</div>
+                <div class="rb-desc">Gates internos por fases (Iniciação → Planejamento → Execução → Monitoramento e Controle → Encerramento).</div>
+                <div class="rb-gate">Gate 5 • Execução</div>
               </div>
             </a>
 
@@ -598,11 +629,11 @@
       </div>
     </section>
 
-    <!-- 1 VENDAS -->
+    <!-- G1 -->
     <section class="section" id="vendas">
       <div class="section-hd">
         <div>
-          <h2>1) Ciclo de Vendas</h2>
+          <h2>G1) Vendas</h2>
           <div class="meta">Proposta → Ciclo de Arquitetura → Validação PMO</div>
         </div>
         <span class="pill orange">Gate 1</span>
@@ -647,11 +678,11 @@
       </details>
     </section>
 
-    <!-- 2 ARQUITETURA -->
+    <!-- G2 -->
     <section class="section" id="arquitetura">
       <div class="section-hd">
         <div>
-          <h2>2) Ciclo de Arquitetura</h2>
+          <h2>G2) Arquitetura</h2>
           <div class="meta">Validação técnica e operacional do que foi vendido. Integrações, dependências e riscos críticos evidenciados.</div>
         </div>
         <span class="pill teal">Gate 2</span>
@@ -695,11 +726,11 @@
       </details>
     </section>
 
-    <!-- 3 TRANSIÇÃO -->
+    <!-- G3 -->
     <section class="section" id="transicao">
       <div class="section-hd">
         <div>
-          <h2>3) Transição Interna</h2>
+          <h2>G3) Transição Interna</h2>
           <div class="meta">Ciclo obrigatório: projeto internalizado por PMO/GPs antes do onboarding com o cliente.</div>
         </div>
         <span class="pill blue">Gate 3</span>
@@ -744,11 +775,11 @@
       </details>
     </section>
 
-    <!-- 4 ONBOARDING -->
+    <!-- G4 -->
     <section class="section" id="onboarding">
       <div class="section-hd">
         <div>
-          <h2>4) Onboarding</h2>
+          <h2>G4) Onboarding</h2>
           <div class="meta">Kickoff e alinhamento com o cliente: governança, papéis, cadência e plano inicial em ondas.</div>
         </div>
         <span class="pill lime">Gate 4</span>
@@ -794,63 +825,85 @@
       </details>
     </section>
 
-    <!-- 5 IMPLANTAÇÃO -->
+    <!-- G5 -->
     <section class="section" id="implantacao">
       <div class="section-hd">
         <div>
-          <h2>5) Implantação (MIB)</h2>
-          <div class="meta">Execução por fases com governança orientada a decisão: direcionar, planejar, executar, validar e encerrar.</div>
+          <h2>G5) Implantação (MIB)</h2>
+          <div class="meta">Execução com gates internos por fases (Iniciação → Planejamento → Execução → Monitoramento e Controle → Encerramento).</div>
         </div>
-        <span class="pill blue">Gates 5–8</span>
+        <span class="pill blue">Gate 5</span>
       </div>
 
       <details class="step" open>
         <summary>
           <div class="sum-left">
-            <div class="sum-title">Fases da Implantação (MIB)</div>
-            <div class="sum-desc">Direcionamento → Planejamento → Execução → Validação → Encerramento</div>
+            <div class="sum-title">Gates internos da Implantação</div>
+            <div class="sum-desc">Iniciação → Planejamento → Execução → Monitoramento e Controle → Encerramento</div>
           </div>
           <div class="sum-right">
             <span class="chip owner">Owner: GP</span>
-            <span class="chip gate">Gates 5–8</span>
+            <span class="chip gate">Gate 5</span>
           </div>
         </summary>
 
         <div class="step-content">
           <div class="box">
-            <h4>Fases</h4>
-            <ul>
-              <li>Fase 1: Direcionamento Estratégico (Gate 5)</li>
-              <li>Fase 2: Planejamento Adaptativo (Gate 6)</li>
-              <li>Fase 3: Execução Incremental (Gate contínuo)</li>
-              <li>Fase 4: Validação e Estabilização (Gate 7)</li>
-              <li>Fase 5: Encerramento (Gate 8)</li>
-            </ul>
+            <h4>1. Iniciação (Initiating)</h4>
+            <p>
+              Fase de autorização formal do projeto. Alinhamento estratégico, definição do problema/oportunidade,
+              identificação dos principais stakeholders e avaliação preliminar de viabilidade.
+            </p>
+            <p style="margin-top:8px;color:rgba(248,247,255,.88);font-weight:900;">Output típico: Project Charter.</p>
           </div>
+
           <div class="box">
-            <h4>Entregáveis mínimos</h4>
-            <ul>
-              <li>Backlog por valor/risco e roadmap em ondas</li>
-              <li>Indicadores de valor, risco, fluxo e adoção</li>
-              <li>Registro de decisões rastreável</li>
-              <li>Plano de transição para suporte</li>
-            </ul>
+            <h4>2. Planejamento (Planning)</h4>
+            <p>
+              Desenho da solução e estratégia de execução. Definição de escopo, cronograma, custos, riscos, recursos,
+              comunicações e critérios de sucesso. Reduz incerteza antes de escalar esforço e custo.
+            </p>
+            <p style="margin-top:8px;color:rgba(248,247,255,.88);font-weight:900;">Deliverable: Plano de Gerenciamento do Projeto (integrado).</p>
+          </div>
+
+          <div class="box">
+            <h4>3. Execução (Executing)</h4>
+            <p>
+              Realização do trabalho planejado. Mobilização do time, produção de entregas e engajamento de stakeholders.
+              Gestão intensiva em coordenação, liderança e integração entre áreas.
+            </p>
+          </div>
+
+          <div class="box">
+            <h4>4. Monitoramento e Controle (Monitoring &amp; Controlling)</h4>
+            <p>
+              Fase transversal que ocorre em paralelo. Mede performance, controla desvios, gerencia riscos e suporta
+              decisões de correção de rota. Objetivo: proteger o valor do projeto.
+            </p>
+          </div>
+
+          <div class="box">
+            <h4>5. Encerramento (Closing)</h4>
+            <p>
+              Formalização da conclusão do projeto ou fase. Aceite das entregas, lições aprendidas, liberação de recursos
+              e fechamento administrativo/financeiro. Essencial para maturidade e reaproveitamento de conhecimento.
+            </p>
           </div>
 
           <div class="box gate-box">
-            <p><strong>Governança da Implantação</strong></p>
-            <p class="gate-q">Regra: Foi tudo Implantado conforme plano do projeto?</p>
+            <p><strong>Gate de Encerramento da Implantação</strong></p>
+            <p class="gate-q">Regra: Foi tudo implantado conforme plano do projeto?</p>
           </div>
         </div>
       </details>
     </section>
 
-    <!-- 6 SUPORTE -->
+    <!-- G6 -->
     <section class="section" id="suporte">
       <div class="section-hd">
         <div>
-          <h2>6) Transição para Suporte</h2>
-          <div class="meta">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite para sustentação sem dependência do projeto.</div>
+          <h2>G6) Suporte</h2>
+          <div class="meta">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite do suporte.</div>
         </div>
         <span class="pill orange">Gate 6</span>
       </div>
@@ -879,7 +932,7 @@
           <div class="box">
             <h4>Critérios de prontidão</h4>
             <ul>
-              <li>Suporte apto a sustentar sem “colar no GP”.</li>
+              <li>Suporte apto a sustentar sem dependência do time de projeto.</li>
               <li>Cliente sabe acionar e expectativas calibradas.</li>
               <li>Riscos residuais conhecidos e aceitos.</li>
             </ul>
@@ -896,9 +949,9 @@
   </div>
 
   <script>
-    // Ativar link do menu e destacar o gate no ribbon conforme scroll
+    // Destaque ativo (gatebar + ribbon) conforme scroll
     (function(){
-      const navLinks = Array.from(document.querySelectorAll("#topnav a"));
+      const gateBtns = Array.from(document.querySelectorAll(".gbtn"));
       const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
 
       const sections = [
@@ -911,20 +964,18 @@
       ].filter(Boolean);
 
       function setActive(){
-        const y = window.scrollY + 170;
+        const y = window.scrollY + 190; // compensa header/gatebar
         let current = sections[0]?.id || "";
         for (const s of sections) {
           if (s.offsetTop <= y) current = s.id;
         }
 
-        navLinks.forEach(a => {
-          const id = a.getAttribute("href").slice(1);
-          a.classList.toggle("active", id === current);
-        });
+        gateBtns.forEach(a => a.classList.toggle("active", a.dataset.target === current));
+        ribbons.forEach(r => r.classList.toggle("active", r.dataset.target === current));
 
-        ribbons.forEach(r => {
-          r.classList.toggle("active", r.dataset.target === current);
-        });
+        // garante que no mobile o botão ativo fique visível (sem pular layout)
+        const activeBtn = gateBtns.find(b => b.classList.contains("active"));
+        if (activeBtn) activeBtn.scrollIntoView({behavior:"smooth", block:"nearest", inline:"center"});
       }
 
       window.addEventListener("scroll", setActive, {passive:true});
