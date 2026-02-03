@@ -51,23 +51,26 @@
       overflow-x:hidden;
     }
 
-    /* Fundo com assets */
+    /* =========================================================
+       ASSETS (ARQUIVOS EM /assets/)
+       Ajuste os nomes aqui se necessário
+       ========================================================= */
     .bg-gradient{
       position:fixed; inset:0; z-index:-2;
-      background: url("assets/bcode_gradiente.png") center/cover no-repeat;
+      background: url("assets/bcode_gradiente.png") center/cover no-repeat; /* <-- ASSET 1 */
       opacity:.22; pointer-events:none;
       filter:saturate(1.05) contrast(1.05);
     }
     .bg-pattern{
       position:fixed; inset:-40px; z-index:-1;
-      background: url("assets/bcode_pattern_gradiente.png") center/cover no-repeat;
+      background: url("assets/bcode_pattern_gradiente.png") center/cover no-repeat; /* <-- ASSET 2 */
       opacity:.10; pointer-events:none;
       mix-blend-mode: screen;
     }
 
     .wrap{max-width:var(--max); margin:0 auto; padding:26px 18px 80px;}
 
-    /* Header institucional */
+    /* Header */
     header{
       position:sticky; top:12px; z-index:20;
       border:1px solid var(--stroke);
@@ -81,9 +84,7 @@
       display:flex; align-items:center; justify-content:space-between; gap:16px;
       padding:16px 18px;
     }
-    .brand{
-      display:flex; align-items:center; gap:12px; min-width: 280px;
-    }
+    .brand{ display:flex; align-items:center; gap:12px; min-width:280px; }
     .brand img{
       width:44px; height:44px; object-fit:contain;
       border-radius: 12px;
@@ -91,18 +92,10 @@
       border:1px solid var(--stroke);
       padding:6px;
     }
-    .brand .t1{
-      font-weight:900; font-size:18px; letter-spacing:.2px; line-height:1.1;
-    }
-    .brand .t2{
-      font-weight:500; font-size:12px; color:var(--muted); margin-top:3px;
-      line-height:1.3;
-    }
+    .brand .t1{ font-weight:900; font-size:18px; letter-spacing:.2px; line-height:1.1; }
+    .brand .t2{ font-weight:500; font-size:12px; color:var(--muted); margin-top:3px; line-height:1.3; }
 
-    /* Menu pills */
-    nav{
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
-    }
+    nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
     nav a{
       text-decoration:none; color:var(--text);
       font-weight:800; font-size:12px;
@@ -133,7 +126,7 @@
       position:relative;
     }
     .hero-inner{
-      padding: 18px 20px 18px;
+      padding: 18px 20px 14px;
       display:grid;
       grid-template-columns: 1.35fr .65fr;
       gap:18px;
@@ -141,113 +134,161 @@
     }
     .hero h1{ margin:0 0 8px; font-size:28px; font-weight:900; line-height:1.12; }
     .hero p{ margin:0; color:var(--muted); font-size:14px; line-height:1.6; max-width:78ch; }
-
-    .hero-aside{
-      display:flex; align-items:center; justify-content:center;
-    }
+    .hero-aside{ display:flex; align-items:center; justify-content:center; }
     .hero-aside img{
       width:min(240px, 100%); height:auto;
       filter: drop-shadow(0 18px 26px rgba(0,0,0,.35));
       opacity:.95;
     }
 
-    /* Timeline (fases visuais) */
-    .timeline-wrap{
-      padding: 0 20px 18px;
+    /* =========================================================
+       RIBBON TIMELINE (DESENHO DO FLUXO COMO VOCÊ PEDIU)
+       ========================================================= */
+    .ribbon-area{
+      padding: 14px 20px 20px;
       border-top:1px solid rgba(248,247,255,.08);
     }
-    .timeline-title{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px;
-      padding: 14px 0 10px;
+    .ribbon-title{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:10px;
     }
-    .timeline-title .left{
+    .ribbon-title .l{
       font-weight:900; font-size:12px; letter-spacing:.2px;
       color: rgba(248,247,255,.90);
     }
-    .timeline-title .right{
+    .ribbon-title .r{
       font-size:11px; color:var(--muted);
     }
 
-    .timeline{
-      display:flex;
-      align-items:stretch;
-      gap:10px;
-      overflow-x:auto;
-      padding:10px 2px 6px;
-      scrollbar-width: thin;
-    }
-    .timeline::-webkit-scrollbar{ height:8px; }
-    .timeline::-webkit-scrollbar-thumb{
-      background: rgba(248,247,255,.12);
-      border-radius: 999px;
-    }
-
-    .node{
-      min-width: 190px;
-      border:1px solid var(--stroke);
-      border-radius: 18px;
-      background: rgba(13,37,63,.34);
-      padding: 12px 12px 12px;
-      text-decoration:none;
-      color: var(--text);
-      transition:.18s ease;
+    .ribbon-track{
       position:relative;
+      margin-top:10px;
+      padding: 18px 0 4px;
     }
-    .node:hover{ transform: translateY(-1px); border-color: var(--stroke2); }
-    .node.active{
-      border-color: rgba(79,148,255,.55);
-      background: linear-gradient(90deg, rgba(79,148,255,.14), rgba(50,208,194,.10));
-      box-shadow: 0 0 0 3px rgba(79,148,255,.12);
-    }
-
-    .node-top{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom:10px;
-    }
-    .dot{
-      width:14px; height:14px; border-radius:999px;
-      border:2px solid rgba(248,247,255,.22);
-      background: rgba(79,148,255,.35);
-      box-shadow: 0 0 0 5px rgba(79,148,255,.10);
-      flex:0 0 auto;
-    }
-    .node.active .dot{
-      border-color: rgba(79,148,255,.70);
-      background: rgba(79,148,255,.90);
-      box-shadow: 0 0 0 6px rgba(79,148,255,.12);
-    }
-
-    .badge{
-      font-size:10px; font-weight:900;
-      padding:6px 8px;
+    .ribbon-track::before{
+      content:"";
+      position:absolute;
+      left:12px; right:12px;
+      top:54px;
+      height:2px;
       border-radius:999px;
-      border:1px solid rgba(255,122,89,.40);
-      background: rgba(255,122,89,.10);
-      color: rgba(248,247,255,.92);
-      white-space:nowrap;
+      background: rgba(248,247,255,.22);
     }
-    .node h3{
+
+    .ribbons{
+      display:grid;
+      grid-template-columns: repeat(6, minmax(170px, 1fr));
+      gap:14px;
+      align-items:start;
+      overflow-x:auto;
+      padding-bottom:10px;
+    }
+    .ribbons::-webkit-scrollbar{ height:8px; }
+    .ribbons::-webkit-scrollbar-thumb{
+      background: rgba(248,247,255,.12);
+      border-radius:999px;
+    }
+
+    .rb{
+      text-decoration:none;
+      color:var(--text);
+      min-width:170px;
+    }
+
+    .rb-top{
+      display:flex; align-items:center; justify-content:center;
+      position:relative;
+      margin-bottom:12px;
+      height:48px;
+    }
+    .rb-icon{
+      width:42px; height:42px;
+      border-radius:999px;
+      display:grid; place-items:center;
+      background: rgba(248,247,255,.10);
+      border:1px solid rgba(248,247,255,.18);
+      box-shadow: 0 10px 18px rgba(0,0,0,.25);
+      font-weight:900;
+      font-size:12px;
+    }
+    .rb-dot{
+      position:absolute;
+      bottom:-14px;
+      width:12px; height:12px; border-radius:999px;
+      border:2px solid rgba(248,247,255,.30);
+      background: rgba(248,247,255,.85);
+    }
+
+    /* Fita (bandeirinha) */
+    .rb-flag{
+      position:relative;
+      border-radius: 16px;
+      padding: 14px 14px 14px;
+      border:1px solid rgba(248,247,255,.12);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      min-height:120px;
+    }
+    .rb-flag::after{
+      /* pontinha da fita */
+      content:"";
+      position:absolute;
+      left:18px;
+      bottom:-12px;
+      width:0; height:0;
+      border-left:12px solid transparent;
+      border-right:12px solid transparent;
+      border-top:12px solid rgba(255,255,255,.20);
+      filter: blur(.0px);
+      opacity:.85;
+    }
+
+    .rb-num{
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:.2px;
       margin:0 0 6px;
-      font-size:13px; font-weight:900; letter-spacing:.2px;
+      opacity:.95;
     }
-    .node p{
+    .rb-name{
+      margin:0 0 8px;
+      font-size:13px;
+      font-weight:900;
+    }
+    .rb-desc{
       margin:0;
       font-size:11px;
-      color: var(--muted);
       line-height:1.55;
+      color: rgba(255,255,255,.88);
+      opacity:.9;
+    }
+    .rb-gate{
+      display:inline-block;
+      margin-top:10px;
+      font-size:10px;
+      font-weight:900;
+      padding:7px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.20);
+      background: rgba(13,37,63,.22);
+      color: rgba(255,255,255,.92);
+      white-space:nowrap;
     }
 
-    .connector{
-      width:70px; flex: 0 0 70px;
-      align-self:center;
-      height:2px;
-      background: linear-gradient(90deg, rgba(79,148,255,.55), rgba(50,208,194,.45), rgba(194,249,112,.35));
-      border-radius: 999px;
-      opacity:.75;
-    }
+    /* Cores por fase (institucional, mas com leitura clara) */
+    .c1{ background: linear-gradient(180deg, rgba(79,148,255,.78), rgba(13,37,63,.40)); }
+    .c2{ background: linear-gradient(180deg, rgba(50,208,194,.78), rgba(13,37,63,.40)); }
+    .c3{ background: linear-gradient(180deg, rgba(194,249,112,.65), rgba(13,37,63,.40)); color:rgba(13,37,63,.92); }
+    .c3 .rb-desc, .c3 .rb-gate{ color: rgba(13,37,63,.90); }
+    .c4{ background: linear-gradient(180deg, rgba(255,122,89,.70), rgba(13,37,63,.40)); }
+    .c5{ background: linear-gradient(180deg, rgba(79,148,255,.55), rgba(50,208,194,.35)); }
+    .c6{ background: linear-gradient(180deg, rgba(248,247,255,.25), rgba(13,37,63,.40)); }
 
-    /* Seções do conteúdo */
+    .rb:hover .rb-flag{ border-color: rgba(248,247,255,.22); transform: translateY(-1px); transition:.18s ease; }
+    .rb.active .rb-icon{ border-color: rgba(79,148,255,.65); box-shadow: 0 0 0 4px rgba(79,148,255,.12), 0 10px 18px rgba(0,0,0,.25); }
+    .rb.active .rb-dot{ background: rgba(79,148,255,.95); border-color: rgba(79,148,255,.65); }
+
+    /* Seções */
     .section{
       margin-top: 22px;
       border-radius: var(--radius-xl);
@@ -261,18 +302,9 @@
       display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
       border-bottom:1px solid rgba(248,247,255,.08);
     }
-    .section-hd h2{
-      margin:0;
-      font-size:16px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
+    .section-hd h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
     .section-hd .meta{
-      margin-top:6px;
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.5;
-      max-width: 90ch;
+      margin-top:6px; font-size:12px; color:var(--muted); line-height:1.5; max-width: 92ch;
     }
     .pill{
       font-size:11px; font-weight:900;
@@ -305,15 +337,10 @@
     .sum-left{ min-width: 0; }
     .sum-title{ font-weight:900; font-size:14px; }
     .sum-desc{
-      margin-top:4px;
-      color: var(--muted);
-      font-size:12px;
+      margin-top:4px; color: var(--muted); font-size:12px;
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
-    .sum-right{
-      display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end;
-      flex:0 0 auto;
-    }
+    .sum-right{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
     .chip{
       font-size:11px; font-weight:900;
       padding:8px 10px;
@@ -336,34 +363,17 @@
       border-radius: var(--radius-md);
       padding: 12px 12px 10px;
     }
-    .box h4{
-      margin:0 0 8px;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-    .box ul{
-      margin:0;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size:12px;
-      line-height:1.55;
-    }
+    .box h4{ margin:0 0 8px; font-size:12px; font-weight:900; letter-spacing:.2px; }
+    .box ul{ margin:0; padding-left:18px; color:var(--muted); font-size:12px; line-height:1.55; }
     .gate-box{
       grid-column: 1 / -1;
       border-color: rgba(255,122,89,.28);
       background: linear-gradient(90deg, rgba(255,122,89,.12), rgba(79,148,255,.08));
     }
-    .gate-box p{
-      margin:0;
-      color: var(--text);
-      font-size:12px;
-      line-height:1.55;
-    }
+    .gate-box p{ margin:0; color: var(--text); font-size:12px; line-height:1.55; }
     .gate-q{ margin-top:6px; color: var(--muted); }
 
-    /* Responsivo */
-    @media (max-width: 980px){
+    @media (max-width:980px){
       .hero-inner{ grid-template-columns:1fr; }
       .hero-aside{ justify-content:flex-start; padding-top:6px; }
       .step-content{ grid-template-columns:1fr; }
@@ -378,9 +388,13 @@
   <div class="bg-pattern" aria-hidden="true"></div>
 
   <div class="wrap">
+
     <header>
       <div class="head-inner">
         <div class="brand">
+          <!-- =========================
+               ASSET 3 (LOGO)
+               ========================= -->
           <img src="assets/baumgratz_logo_selo.png" alt="Baumgratz Code" />
           <div>
             <div class="t1">MIB — Workflow End-to-End</div>
@@ -402,89 +416,112 @@
     <section class="hero" id="inicio">
       <div class="hero-inner">
         <div>
-          <h1>Fases do processo — visão de Workflow</h1>
+          <h1>Workflow End-to-End em fases</h1>
           <p>
-            Esta página consolida a cadeia de valor do projeto, do Comercial ao Suporte, com gates claros,
-            papéis explícitos e passagem de bastão controlada. O objetivo é alinhar entendimento, reduzir ruído
-            e elevar previsibilidade operacional na execução da MIB.
+            Representação institucional do fluxo completo (do Comercial ao Suporte), com gates, responsabilidades
+            e passagem de bastão controlada. O foco é reduzir ruído, aumentar previsibilidade e padronizar entendimento.
           </p>
         </div>
 
         <div class="hero-aside">
+          <!-- =========================
+               ASSET 4 (ÍCONE 3D)
+               ========================= -->
           <img src="assets/bcode_icone_3d.png" alt="Ícone Baumgratz Code" />
         </div>
       </div>
 
-      <div class="timeline-wrap">
-        <div class="timeline-title">
-          <div class="left">TIMELINE • WORKFLOW END-TO-END</div>
-          <div class="right">Clique nas etapas para navegar</div>
+      <!-- =========================================================
+           AQUI ESTÁ O DESENHO DO FLUXO (RIBBON TIMELINE)
+           ========================================================= -->
+      <div class="ribbon-area">
+        <div class="ribbon-title">
+          <div class="l">Fases do Workflow End-to-End</div>
+          <div class="r">Clique na fase para navegar (com governança por Gate)</div>
         </div>
 
-        <div class="timeline" id="timeline">
-          <a class="node" href="#vendas" data-target="vendas">
-            <div class="node-top">
-              <span class="dot"></span>
-              <span class="badge">Gate 1</span>
-            </div>
-            <h3>Vendas</h3>
-            <p>Decisão de investimento e venda responsável (macroescopo + premissas).</p>
-          </a>
+        <div class="ribbon-track">
+          <div class="ribbons" id="ribbons">
 
-          <span class="connector" aria-hidden="true"></span>
+            <a class="rb" href="#vendas" data-target="vendas">
+              <div class="rb-top">
+                <div class="rb-icon">G1</div>
+                <div class="rb-dot"></div>
+              </div>
+              <div class="rb-flag c1">
+                <div class="rb-num">01</div>
+                <div class="rb-name">Vendas</div>
+                <div class="rb-desc">Decisão de investimento e venda responsável (macroescopo, premissas e exclusões).</div>
+                <div class="rb-gate">Gate 1 • Investimento</div>
+              </div>
+            </a>
 
-          <a class="node" href="#arquitetura" data-target="arquitetura">
-            <div class="node-top">
-              <span class="dot"></span>
-              <span class="badge">Gate 2</span>
-            </div>
-            <h3>Arquitetura</h3>
-            <p>Validação técnica e operacional. Ajuste formal de escopo quando necessário.</p>
-          </a>
+            <a class="rb" href="#arquitetura" data-target="arquitetura">
+              <div class="rb-top">
+                <div class="rb-icon">G2</div>
+                <div class="rb-dot"></div>
+              </div>
+              <div class="rb-flag c2">
+                <div class="rb-num">02</div>
+                <div class="rb-name">Arquitetura</div>
+                <div class="rb-desc">Validação técnica e operacional. Dependências, integrações e riscos críticos explícitos.</div>
+                <div class="rb-gate">Gate 2 • Viabilidade</div>
+              </div>
+            </a>
 
-          <span class="connector" aria-hidden="true"></span>
+            <a class="rb" href="#transicao" data-target="transicao">
+              <div class="rb-top">
+                <div class="rb-icon">G3</div>
+                <div class="rb-dot"></div>
+              </div>
+              <div class="rb-flag c3">
+                <div class="rb-num">03</div>
+                <div class="rb-name">Transição Interna</div>
+                <div class="rb-desc">Comercial + Arquitetura apresentam para PMO/GPs. Internalização antes do cliente.</div>
+                <div class="rb-gate">Gate 3 • Internalizado</div>
+              </div>
+            </a>
 
-          <a class="node" href="#transicao" data-target="transicao">
-            <div class="node-top">
-              <span class="dot"></span>
-              <span class="badge">Gate 3</span>
-            </div>
-            <h3>Transição Interna</h3>
-            <p>Projeto internalizado: Comercial + Arquitetura apresentam ao PMO e GPs.</p>
-          </a>
+            <a class="rb" href="#onboarding" data-target="onboarding">
+              <div class="rb-top">
+                <div class="rb-icon">G4</div>
+                <div class="rb-dot"></div>
+              </div>
+              <div class="rb-flag c4">
+                <div class="rb-num">04</div>
+                <div class="rb-name">Onboarding</div>
+                <div class="rb-desc">Kickoff, governança, papéis, cadência e plano inicial em ondas com o cliente.</div>
+                <div class="rb-gate">Gate 4 • Pronto</div>
+              </div>
+            </a>
 
-          <span class="connector" aria-hidden="true"></span>
+            <a class="rb" href="#implantacao" data-target="implantacao">
+              <div class="rb-top">
+                <div class="rb-icon">G5-8</div>
+                <div class="rb-dot"></div>
+              </div>
+              <div class="rb-flag c5">
+                <div class="rb-num">05</div>
+                <div class="rb-name">Implantação (MIB)</div>
+                <div class="rb-desc">Direcionar → Planejar → Executar → Validar → Encerrar, com decisão contínua.</div>
+                <div class="rb-gate">Gates 5–8 • Execução</div>
+              </div>
+            </a>
 
-          <a class="node" href="#onboarding" data-target="onboarding">
-            <div class="node-top">
-              <span class="dot"></span>
-              <span class="badge">Gate 4</span>
-            </div>
-            <h3>Onboarding</h3>
-            <p>Alinhamento com cliente: governança, papéis, cadência e plano inicial.</p>
-          </a>
+            <a class="rb" href="#suporte" data-target="suporte">
+              <div class="rb-top">
+                <div class="rb-icon">GF</div>
+                <div class="rb-dot"></div>
+              </div>
+              <div class="rb-flag c6">
+                <div class="rb-num">06</div>
+                <div class="rb-name">Suporte</div>
+                <div class="rb-desc">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite do suporte.</div>
+                <div class="rb-gate">Gate Final • Encerrado</div>
+              </div>
+            </a>
 
-          <span class="connector" aria-hidden="true"></span>
-
-          <a class="node" href="#implantacao" data-target="implantacao">
-            <div class="node-top">
-              <span class="dot"></span>
-              <span class="badge">Gates 5–8</span>
-            </div>
-            <h3>Implantação (MIB)</h3>
-            <p>Execução controlada por fases: direcionar, planejar, executar, validar e encerrar.</p>
-          </a>
-
-          <span class="connector" aria-hidden="true"></span>
-
-          <a class="node" href="#suporte" data-target="suporte">
-            <div class="node-top">
-              <span class="dot"></span>
-              <span class="badge">Gate Final</span>
-            </div>
-            <h3>Suporte</h3>
-            <p>Passagem de bastão formal com base de conhecimento, SLA e aceite.</p>
-          </a>
+          </div>
         </div>
       </div>
     </section>
@@ -494,9 +531,9 @@
       <div class="section-hd">
         <div>
           <h2>1) Ciclo de Vendas</h2>
-          <div class="meta">Decisão de investimento e venda responsável. O objetivo é entrar no funil com o mínimo de risco oculto e máxima clareza de escopo.</div>
+          <div class="meta">Decisão de investimento e venda responsável. Clareza de macroescopo, premissas, exclusões e riscos.</div>
         </div>
-        <span class="pill orange">Gate 1 • Decisão de Investimento</span>
+        <span class="pill orange">Gate 1</span>
       </div>
 
       <details class="step" open>
@@ -515,16 +552,16 @@
           <div class="box">
             <h4>Atividades-chave</h4>
             <ul>
-              <li>Qualificação da oportunidade e entendimento do problema.</li>
-              <li>Definição de macroescopo, premissas, exclusões e dependências.</li>
-              <li>Validação de capacidade de entrega (antes do fechamento).</li>
+              <li>Qualificação e entendimento do problema do cliente.</li>
+              <li>Macroescopo, premissas, exclusões e dependências explícitas.</li>
+              <li>Validação prévia com PMO (capacidade e risco).</li>
             </ul>
           </div>
           <div class="box">
             <h4>Entregáveis mínimos</h4>
             <ul>
-              <li>Proposta/Contrato com macroescopo explícito.</li>
-              <li>Premissas, restrições e exclusões formalizadas.</li>
+              <li>Proposta/Contrato com escopo macro claro.</li>
+              <li>Premissas/Exclusões formalizadas.</li>
               <li>Riscos comerciais visíveis e aceitos.</li>
             </ul>
           </div>
@@ -542,9 +579,9 @@
       <div class="section-hd">
         <div>
           <h2>2) Ciclo de Arquitetura</h2>
-          <div class="meta">Validação técnica e operacional: transforma o “vendido” em solução viável, com riscos e dependências explícitos.</div>
+          <div class="meta">Validação técnica e operacional do que foi vendido. Integrações, dependências e riscos críticos evidenciados.</div>
         </div>
-        <span class="pill teal">Gate 2 • Viabilidade da Solução</span>
+        <span class="pill teal">Gate 2</span>
       </div>
 
       <details class="step">
@@ -564,15 +601,14 @@
             <h4>Atividades-chave</h4>
             <ul>
               <li>Desenho da solução e visão de implementação.</li>
-              <li>Mapeamento de integrações e dependências críticas.</li>
-              <li>Levantamento de restrições e pontos não negociáveis.</li>
+              <li>Mapa de integrações/dependências críticas.</li>
+              <li>Identificação de restrições e pontos não negociáveis.</li>
             </ul>
           </div>
           <div class="box">
             <h4>Entregáveis obrigatórios</h4>
             <ul>
               <li>Documento de arquitetura (visão executável).</li>
-              <li>Mapa de integrações/dependências.</li>
               <li>Riscos técnicos/operacionais + mitigação inicial.</li>
               <li>Ajustes formais de escopo quando aplicável.</li>
             </ul>
@@ -591,9 +627,9 @@
       <div class="section-hd">
         <div>
           <h2>3) Transição Interna</h2>
-          <div class="meta">Ciclo obrigatório: Comercial e Arquitetura apresentam o projeto ao PMO e GPs para internalização antes do cliente.</div>
+          <div class="meta">Ciclo obrigatório: projeto internalizado por PMO/GPs antes do onboarding com o cliente.</div>
         </div>
-        <span class="pill blue">Gate 3 • Projeto Internalizado</span>
+        <span class="pill blue">Gate 3</span>
       </div>
 
       <details class="step" open>
@@ -614,7 +650,7 @@
             <ul>
               <li>Racional da venda + expectativas do cliente.</li>
               <li>Arquitetura proposta e implicações.</li>
-              <li>Riscos, dependências, restrições e premissas contratuais.</li>
+              <li>Riscos, restrições e premissas contratuais.</li>
               <li>Indicação de GP e estratégia de condução.</li>
             </ul>
           </div>
@@ -640,16 +676,16 @@
       <div class="section-hd">
         <div>
           <h2>4) Onboarding</h2>
-          <div class="meta">Preparação estruturada para execução: alinhamento de governança, papéis, cadência e plano inicial (ondas).</div>
+          <div class="meta">Kickoff e alinhamento com o cliente: governança, papéis, cadência e plano inicial em ondas.</div>
         </div>
-        <span class="pill lime">Gate 4 • Pronto para Implantar</span>
+        <span class="pill lime">Gate 4</span>
       </div>
 
       <details class="step" open>
         <summary>
           <div class="sum-left">
             <div class="sum-title">Onboarding com o Cliente (MIB)</div>
-            <div class="sum-desc">Kickoff, governança, responsabilidades, plano inicial em ondas e calendário macro</div>
+            <div class="sum-desc">Governança, responsabilidades, cadência e plano inicial em ondas</div>
           </div>
           <div class="sum-right">
             <span class="chip owner">Owner: PMO</span>
@@ -664,7 +700,7 @@
               <li>Apresentação da MIB e do fluxo de gates.</li>
               <li>Papéis e responsabilidades (cliente × Baumgratz Code).</li>
               <li>Modelo de governança e tomada de decisão.</li>
-              <li>Planejamento inicial em ondas + calendário macro.</li>
+              <li>Plano inicial em ondas + calendário macro.</li>
             </ul>
           </div>
           <div class="box">
@@ -690,9 +726,9 @@
       <div class="section-hd">
         <div>
           <h2>5) Implantação (MIB)</h2>
-          <div class="meta">Execução controlada por fases, com governança orientada a decisão: direcionar, planejar, executar, validar e encerrar.</div>
+          <div class="meta">Execução por fases com governança orientada a decisão: direcionar, planejar, executar, validar e encerrar.</div>
         </div>
-        <span class="pill blue">Gates 5–8 • Execução controlada</span>
+        <span class="pill blue">Gates 5–8</span>
       </div>
 
       <details class="step" open>
@@ -719,18 +755,18 @@
             </ul>
           </div>
           <div class="box">
-            <h4>Entregáveis mínimos por controle</h4>
+            <h4>Entregáveis mínimos</h4>
             <ul>
               <li>Backlog por valor/risco e roadmap em ondas</li>
               <li>Indicadores de valor, risco, fluxo e adoção</li>
-              <li>Registro de decisões (rastreável)</li>
+              <li>Registro de decisões rastreável</li>
               <li>Plano de transição para suporte</li>
             </ul>
           </div>
 
           <div class="box gate-box">
             <p><strong>Governança da Implantação</strong></p>
-            <p class="gate-q">Regra: gate existe para decisão e proteção de valor (não para burocracia).</p>
+            <p class="gate-q">Regra: gate existe para decisão e proteção do valor (sem burocracia).</p>
           </div>
         </div>
       </details>
@@ -741,16 +777,16 @@
       <div class="section-hd">
         <div>
           <h2>6) Transição para Suporte</h2>
-          <div class="meta">Passagem de bastão formal: suporte recebe base de conhecimento, SLA/canais e aceite para sustentação sem dependência do projeto.</div>
+          <div class="meta">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite para sustentação sem dependência do projeto.</div>
         </div>
-        <span class="pill orange">Gate Final • Projeto Encerrado</span>
+        <span class="pill orange">Gate Final</span>
       </div>
 
       <details class="step">
         <summary>
           <div class="sum-left">
             <div class="sum-title">Passagem de bastão formal</div>
-            <div class="sum-desc">Transferência de conhecimento, SLA, canais e aceite do suporte</div>
+            <div class="sum-desc">Transferência de conhecimento, SLA/canais e aceite do suporte</div>
           </div>
           <div class="sum-right">
             <span class="chip owner">Owner: Suporte</span>
@@ -771,7 +807,7 @@
             <h4>Critérios de prontidão</h4>
             <ul>
               <li>Suporte apto a sustentar sem “colar no GP”.</li>
-              <li>Cliente sabe acionar e tem expectativas calibradas.</li>
+              <li>Cliente sabe acionar e expectativas calibradas.</li>
               <li>Riscos residuais conhecidos e aceitos.</li>
             </ul>
           </div>
@@ -783,13 +819,14 @@
         </div>
       </details>
     </section>
+
   </div>
 
   <script>
-    // Ativar link do menu e da timeline conforme scroll
+    // Ativar link do menu e destacar a fase no ribbon conforme scroll
     (function(){
       const navLinks = Array.from(document.querySelectorAll("#topnav a"));
-      const nodes = Array.from(document.querySelectorAll("#timeline .node"));
+      const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
 
       const sections = [
         document.getElementById("vendas"),
@@ -801,7 +838,7 @@
       ].filter(Boolean);
 
       function setActive(){
-        const y = window.scrollY + 160;
+        const y = window.scrollY + 170;
         let current = sections[0]?.id || "";
         for (const s of sections) {
           if (s.offsetTop <= y) current = s.id;
@@ -812,8 +849,8 @@
           a.classList.toggle("active", id === current);
         });
 
-        nodes.forEach(n => {
-          n.classList.toggle("active", n.dataset.target === current);
+        ribbons.forEach(r => {
+          r.classList.toggle("active", r.dataset.target === current);
         });
       }
 
