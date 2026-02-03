@@ -1,0 +1,987 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MIB | Workflow End-to-End — Baumgratz Code</title>
+
+  <!-- Fonte institucional (Brandbook: Zalando Sans Expanded) -->
+  <!-- Se não carregar via Google Fonts, mantém fallback. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Paleta (Brandbook) */
+      --bcode-blue: #4F94FF;
+      --bcode-ice:  #F8F7FF;
+      --bcode-lime: #C2F970;
+      --bcode-teal: #32D0C2;
+      --bcode-navy: #0D253F;
+      --bcode-orange:#FF7A59;
+
+      --bg: #071623;
+      --card: rgba(13,37,63,.72);
+      --card2: rgba(13,37,63,.45);
+      --stroke: rgba(248,247,255,.10);
+      --stroke2: rgba(248,247,255,.18);
+      --text: rgba(248,247,255,.92);
+      --muted: rgba(248,247,255,.70);
+
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --shadow2: 0 10px 26px rgba(0,0,0,.28);
+
+      --max: 1120px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: "Zalando Sans Expanded", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 70% 15%, rgba(79,148,255,.18), transparent 60%),
+                  radial-gradient(900px 600px at 30% 90%, rgba(50,208,194,.15), transparent 55%),
+                  linear-gradient(180deg, #06121d 0%, #050f18 100%);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    /* Background assets */
+    .bg-gradient{
+      position:fixed; inset:0;
+      background: url("assets/BCODE_gradiente.png") center/cover no-repeat;
+      opacity:.22;
+      pointer-events:none;
+      filter:saturate(1.05) contrast(1.05);
+      z-index:-2;
+    }
+    .bg-pattern{
+      position:fixed; inset:-40px;
+      background: url("assets/BCODE_pattern_gradiente.png") center/cover no-repeat;
+      opacity:.10;
+      pointer-events:none;
+      z-index:-1;
+      mix-blend-mode: screen;
+      filter: blur(.2px);
+    }
+
+    /* Layout */
+    .wrap{ max-width:var(--max); margin:0 auto; padding: 26px 20px 80px; }
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
+      padding: 16px 18px;
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(13,37,63,.65), rgba(13,37,63,.35));
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow2);
+      position:sticky; top:12px; z-index:30;
+      backdrop-filter: blur(10px);
+    }
+    .brand{
+      display:flex; align-items:center; gap:14px; min-width: 240px;
+    }
+    .brand img{
+      width:44px; height:44px; object-fit:contain;
+      border-radius: 12px;
+      background: rgba(248,247,255,.06);
+      border:1px solid var(--stroke);
+      padding:6px;
+    }
+    .brand .t1{
+      font-weight:800;
+      letter-spacing:.4px;
+      font-size:14px;
+      line-height:1.1;
+    }
+    .brand .t2{
+      font-weight:500;
+      font-size:12px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+
+    nav{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    nav a{
+      text-decoration:none;
+      color:var(--text);
+      font-weight:600;
+      font-size:12px;
+      padding:10px 12px;
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      background: rgba(13,37,63,.28);
+      transition:.18s ease;
+    }
+    nav a:hover{ border-color: var(--stroke2); transform: translateY(-1px); }
+    nav a.active{
+      border-color: rgba(79,148,255,.55);
+      background: rgba(79,148,255,.12);
+      box-shadow: 0 0 0 3px rgba(79,148,255,.12);
+    }
+
+    .hero{
+      margin-top:18px;
+      border-radius: var(--radius-xl);
+      border:1px solid var(--stroke);
+      background:
+        radial-gradient(800px 400px at 20% 30%, rgba(79,148,255,.22), transparent 60%),
+        radial-gradient(700px 380px at 80% 65%, rgba(50,208,194,.18), transparent 60%),
+        linear-gradient(180deg, rgba(13,37,63,.62), rgba(13,37,63,.30));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-inner{
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap:18px;
+      padding: 22px 22px 18px;
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-weight:900;
+      letter-spacing:.2px;
+      font-size:28px;
+      line-height:1.12;
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+      max-width: 72ch;
+    }
+    .badges{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:14px;
+    }
+    .badge{
+      font-size:12px;
+      font-weight:700;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(248,247,255,.06);
+    }
+    .badge.ok{ border-color: rgba(50,208,194,.38); background: rgba(50,208,194,.10); }
+    .badge.gate{ border-color: rgba(255,122,89,.40); background: rgba(255,122,89,.10); }
+    .badge.mib{ border-color: rgba(194,249,112,.40); background: rgba(194,249,112,.10); color: rgba(248,247,255,.95); }
+
+    .hero-aside{
+      display:flex; align-items:center; justify-content:center;
+      padding: 8px 0 0;
+    }
+    .hero-aside img{
+      width:min(240px, 100%);
+      height:auto;
+      filter: drop-shadow(0 18px 28px rgba(0,0,0,.35));
+      opacity:.95;
+    }
+
+    .controls{
+      display:flex; gap:10px; flex-wrap:wrap;
+      padding: 0 22px 20px;
+      border-top:1px solid rgba(248,247,255,.08);
+    }
+    .btn{
+      appearance:none; border:none; cursor:pointer;
+      padding:10px 12px;
+      border-radius: 12px;
+      font-weight:800;
+      font-size:12px;
+      letter-spacing:.2px;
+      color:var(--text);
+      background: rgba(248,247,255,.08);
+      border:1px solid var(--stroke);
+      transition:.18s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: var(--stroke2); }
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(79,148,255,.20), rgba(50,208,194,.18));
+      border-color: rgba(79,148,255,.45);
+    }
+    .btn.warn{
+      background: rgba(255,122,89,.12);
+      border-color: rgba(255,122,89,.45);
+    }
+
+    /* Workflow */
+    .section{
+      margin-top: 22px;
+      border-radius: var(--radius-xl);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(13,37,63,.55), rgba(13,37,63,.25));
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .section-hd{
+      padding:18px 20px;
+      display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
+      border-bottom:1px solid rgba(248,247,255,.08);
+    }
+    .section-hd h2{
+      margin:0;
+      font-size:16px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .section-hd .meta{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.5;
+      max-width: 90ch;
+    }
+    .pill{
+      font-size:11px; font-weight:900;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(248,247,255,.06);
+      white-space:nowrap;
+    }
+    .pill.blue{ border-color: rgba(79,148,255,.45); background: rgba(79,148,255,.10); }
+    .pill.teal{ border-color: rgba(50,208,194,.45); background: rgba(50,208,194,.10); }
+    .pill.orange{ border-color: rgba(255,122,89,.45); background: rgba(255,122,89,.10); }
+    .pill.lime{ border-color: rgba(194,249,112,.45); background: rgba(194,249,112,.10); }
+
+    .wf{
+      padding: 18px 20px 20px;
+    }
+    .wf-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+
+    .step{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-lg);
+      background: rgba(13,37,63,.34);
+      overflow:hidden;
+    }
+    .step summary{
+      list-style:none;
+      cursor:pointer;
+      padding: 16px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .step summary::-webkit-details-marker{ display:none; }
+
+    .step-title{
+      display:flex; align-items:center; gap:12px; min-width: 0;
+    }
+    .num{
+      width:34px; height:34px;
+      border-radius: 12px;
+      display:grid; place-items:center;
+      font-weight:900;
+      border:1px solid var(--stroke);
+      background: rgba(248,247,255,.06);
+      flex:0 0 auto;
+    }
+    .name{
+      font-weight:900;
+      font-size:14px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .desc{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:3px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .right{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+      flex:0 0 auto;
+    }
+    .chip{
+      font-size:11px;
+      font-weight:900;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(248,247,255,.06);
+    }
+    .chip.gate{ border-color: rgba(255,122,89,.55); background: rgba(255,122,89,.12); }
+    .chip.owner{ border-color: rgba(50,208,194,.45); background: rgba(50,208,194,.10); }
+    .chip.co{ border-color: rgba(79,148,255,.45); background: rgba(79,148,255,.10); }
+    .caret{
+      width:26px; height:26px;
+      border-radius: 10px;
+      border:1px solid var(--stroke);
+      background: rgba(248,247,255,.05);
+      display:grid; place-items:center;
+      transition: .18s ease;
+    }
+    details[open] .caret{ transform: rotate(180deg); }
+
+    .content{
+      padding: 0 16px 16px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .box{
+      border:1px solid rgba(248,247,255,.10);
+      background: rgba(13,37,63,.28);
+      border-radius: var(--radius-md);
+      padding: 12px 12px 10px;
+    }
+    .box h4{
+      margin:0 0 8px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.2px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .k{
+      display:inline-block;
+      width:10px; height:10px;
+      border-radius: 3px;
+      background: var(--bcode-blue);
+      box-shadow: 0 0 0 3px rgba(79,148,255,.12);
+    }
+    .k.teal{ background: var(--bcode-teal); box-shadow: 0 0 0 3px rgba(50,208,194,.12); }
+    .k.orange{ background: var(--bcode-orange); box-shadow: 0 0 0 3px rgba(255,122,89,.12); }
+    .k.lime{ background: var(--bcode-lime); box-shadow: 0 0 0 3px rgba(194,249,112,.10); }
+    .box ul{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.55;
+    }
+    .gate-box{
+      grid-column: 1 / -1;
+      border-color: rgba(255,122,89,.28);
+      background: linear-gradient(90deg, rgba(255,122,89,.12), rgba(79,148,255,.08));
+    }
+    .gate-box p{
+      margin:0;
+      color: var(--text);
+      font-size:12px;
+      line-height:1.55;
+    }
+    .gate-q{
+      margin-top:6px;
+      color: var(--muted);
+    }
+
+    /* MIB phases inside Implantação */
+    .phases{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: repeat(5, minmax(180px, 1fr));
+      gap:10px;
+      overflow-x:auto;
+      padding-bottom:6px;
+    }
+    .phase{
+      min-width: 180px;
+      border:1px solid rgba(248,247,255,.10);
+      background: rgba(13,37,63,.26);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .phase .pt{
+      font-weight:900;
+      font-size:12px;
+      margin:0 0 8px;
+    }
+    .phase .pg{
+      display:inline-block;
+      font-size:10px;
+      font-weight:900;
+      padding:6px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,122,89,.40);
+      background: rgba(255,122,89,.10);
+      margin-bottom:10px;
+    }
+    .phase ul{
+      margin:0;
+      padding-left: 16px;
+      color: var(--muted);
+      font-size:11px;
+      line-height:1.55;
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 22px;
+      border-radius: var(--radius-xl);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(13,37,63,.55), rgba(13,37,63,.25));
+      box-shadow: var(--shadow2);
+      padding: 18px 20px;
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.6;
+    }
+    .foot-strong{ color: var(--text); font-weight:800; }
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero-inner{ grid-template-columns: 1fr; }
+      .hero-aside{ justify-content:flex-start; }
+      .content{ grid-template-columns: 1fr; }
+      header{ align-items:flex-start; flex-direction:column; }
+      nav{ justify-content:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-gradient" aria-hidden="true"></div>
+  <div class="bg-pattern" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <img src="assets/Baumgratz Code_logo__POSITIVA_SELO.png" alt="Baumgratz Code" />
+        <div>
+          <div class="t1">MIB | Workflow End-to-End</div>
+          <div class="t2">Metodologia de Implantação Baumgratz Code — visão institucional</div>
+        </div>
+      </div>
+
+      <nav id="topnav">
+        <a href="#vendas">Vendas</a>
+        <a href="#arquitetura">Arquitetura</a>
+        <a href="#transicao-interna">Transição Interna</a>
+        <a href="#onboarding">Onboarding</a>
+        <a href="#implantacao">Implantação (MIB)</a>
+        <a href="#suporte">Suporte</a>
+      </nav>
+    </header>
+
+    <section class="hero" id="inicio">
+      <div class="hero-inner">
+        <div>
+          <h1>Workflow End-to-End (MIB)</h1>
+          <p>
+            Este material consolida a cadeia de valor completa — do Comercial ao Suporte — com
+            gates claros, responsabilidades explícitas e passagens de bastão controladas.
+            O objetivo é padronizar entendimento, reduzir ruído e elevar previsibilidade operacional.
+          </p>
+
+          <div class="badges">
+            <span class="badge mib">MIB • Baumgratz Code</span>
+            <span class="badge ok">Governança • Rastreabilidade</span>
+            <span class="badge gate">Gates • Go / Ajustar / Retornar</span>
+          </div>
+        </div>
+
+        <div class="hero-aside">
+          <img src="assets/BCODE_ícone 3D.png" alt="Ícone Baumgratz Code" />
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn primary" id="expandAll">Expandir tudo</button>
+        <button class="btn" id="collapseAll">Recolher tudo</button>
+        <button class="btn warn" id="scrollTop">Voltar ao topo</button>
+      </div>
+    </section>
+
+    <!-- SEÇÃO: VENDAS -->
+    <section class="section" id="vendas">
+      <div class="section-hd">
+        <div>
+          <h2>1) Ciclo de Vendas</h2>
+          <div class="meta">
+            Finalidade: decidir <strong>investimento e venda responsável</strong>, com macroescopo, premissas e riscos explicitados.
+          </div>
+        </div>
+        <span class="pill orange">Gate 1 • Decisão de Investimento</span>
+      </div>
+
+      <div class="wf">
+        <div class="wf-grid">
+          <details class="step" open>
+            <summary>
+              <div class="step-title">
+                <div class="num">1</div>
+                <div>
+                  <div class="name">Playbook + Pipeline Comercial</div>
+                  <div class="desc">Prospecção → Qualificação → Diagnóstico → Proposta → Validação PMO → Fechamento</div>
+                </div>
+              </div>
+              <div class="right">
+                <span class="chip owner">Owner: Comercial</span>
+                <span class="chip co">Co: PMO</span>
+                <span class="chip gate">Gate 1</span>
+                <div class="caret">▾</div>
+              </div>
+            </summary>
+
+            <div class="content">
+              <div class="box">
+                <h4><span class="k teal"></span>Objetivo</h4>
+                <ul>
+                  <li>Qualificar oportunidade e assegurar viabilidade comercial.</li>
+                  <li>Formalizar macroescopo, premissas, exclusões e dependências.</li>
+                  <li>Evitar “venda de expectativa” e preservar margem operacional.</li>
+                </ul>
+              </div>
+              <div class="box">
+                <h4><span class="k"></span>Entregáveis mínimos</h4>
+                <ul>
+                  <li>Proposta/Contrato + macroescopo.</li>
+                  <li>Premissas, restrições e exclusões explícitas.</li>
+                  <li>Riscos comerciais visíveis e aceitos.</li>
+                </ul>
+              </div>
+
+              <div class="box gate-box">
+                <h4><span class="k orange"></span>Gate 1 — Decisão de Investimento</h4>
+                <p class="gate-q"><strong>Pergunta:</strong> Vale a pena investir e vender esta solução?</p>
+                <p>Decisão: <strong>Go</strong> para Arquitetura | <strong>Ajustar</strong> (proposta/escopo) | <strong>Encerrar</strong> oportunidade.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO: ARQUITETURA -->
+    <section class="section" id="arquitetura">
+      <div class="section-hd">
+        <div>
+          <h2>2) Ciclo de Arquitetura</h2>
+          <div class="meta">
+            Finalidade: validar viabilidade <strong>técnica e operacional</strong>, reduzir risco e, se necessário, corrigir venda via ajuste formal.
+          </div>
+        </div>
+        <span class="pill teal">Gate 2 • Viabilidade da Solução</span>
+      </div>
+
+      <div class="wf">
+        <div class="wf-grid">
+          <details class="step">
+            <summary>
+              <div class="step-title">
+                <div class="num">2</div>
+                <div>
+                  <div class="name">Validação técnica e operacional</div>
+                  <div class="desc">Arquitetura, integrações, dependências e riscos críticos</div>
+                </div>
+              </div>
+              <div class="right">
+                <span class="chip owner">Owner: Arquitetura</span>
+                <span class="chip co">Co: PMO</span>
+                <span class="chip gate">Gate 2</span>
+                <div class="caret">▾</div>
+              </div>
+            </summary>
+
+            <div class="content">
+              <div class="box">
+                <h4><span class="k teal"></span>Atividades-chave</h4>
+                <ul>
+                  <li>Desenho de solução e visão de implementação.</li>
+                  <li>Mapeamento de integrações e dependências críticas.</li>
+                  <li>Levantamento de restrições e pontos não negociáveis.</li>
+                </ul>
+              </div>
+              <div class="box">
+                <h4><span class="k"></span>Entregáveis obrigatórios</h4>
+                <ul>
+                  <li>Documento de arquitetura da solução.</li>
+                  <li>Mapa de integrações/dependências.</li>
+                  <li>Riscos técnicos/operacionais + mitigação inicial.</li>
+                  <li>Ajustes formais de escopo (quando aplicável).</li>
+                </ul>
+              </div>
+
+              <div class="box gate-box">
+                <h4><span class="k orange"></span>Gate 2 — Viabilidade da Solução</h4>
+                <p class="gate-q"><strong>Pergunta:</strong> A solução vendida é tecnicamente e operacionalmente viável?</p>
+                <p>Decisão: <strong>Go</strong> para Transição Interna | <strong>Retornar</strong> p/ Comercial (ajuste) | <strong>Replanejar</strong> abordagem.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO: TRANSIÇÃO INTERNA -->
+    <section class="section" id="transicao-interna">
+      <div class="section-hd">
+        <div>
+          <h2>3) Transição Interna</h2>
+          <div class="meta">
+            Finalidade: garantir que <strong>PMO e GPs internalizem</strong> o projeto antes de qualquer compromisso com o cliente.
+          </div>
+        </div>
+        <span class="pill blue">Gate 3 • Projeto Internalizado</span>
+      </div>
+
+      <div class="wf">
+        <div class="wf-grid">
+          <details class="step">
+            <summary>
+              <div class="step-title">
+                <div class="num">3</div>
+                <div>
+                  <div class="name">Apresentação interna (Comercial + Arquitetura → PMO + GPs)</div>
+                  <div class="desc">Tradução completa do projeto, riscos, expectativas e restrições</div>
+                </div>
+              </div>
+              <div class="right">
+                <span class="chip owner">Owner: PMO</span>
+                <span class="chip co">Apresenta: Comercial/Arquitetura</span>
+                <span class="chip gate">Gate 3</span>
+                <div class="caret">▾</div>
+              </div>
+            </summary>
+
+            <div class="content">
+              <div class="box">
+                <h4><span class="k teal"></span>Atividades-chave</h4>
+                <ul>
+                  <li>Racional da venda + expectativas do cliente.</li>
+                  <li>Arquitetura proposta e implicações.</li>
+                  <li>Riscos, dependências, premissas e restrições contratuais.</li>
+                  <li>Indicação preliminar de GP + forma de condução.</li>
+                </ul>
+              </div>
+              <div class="box">
+                <h4><span class="k"></span>Entregáveis obrigatórios</h4>
+                <ul>
+                  <li>Visão consolidada do projeto (1-pager interno).</li>
+                  <li>Escopo macro internalizado.</li>
+                  <li>Mapa de riscos compreendido pelo PMO.</li>
+                  <li>Parecer do PMO: apto / apto com ajustes / retornar.</li>
+                </ul>
+              </div>
+
+              <div class="box gate-box">
+                <h4><span class="k orange"></span>Gate 3 — Projeto Internalizado</h4>
+                <p class="gate-q"><strong>Pergunta:</strong> PMO e GPs entendem o projeto o suficiente para assumir a execução?</p>
+                <p>Decisão: <strong>Go</strong> para Onboarding | <strong>Ajustar</strong> (antes do cliente) | <strong>Retornar</strong> p/ Arquitetura/Comercial.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO: ONBOARDING -->
+    <section class="section" id="onboarding">
+      <div class="section-hd">
+        <div>
+          <h2>4) Onboarding</h2>
+          <div class="meta">
+            Finalidade: preparar a execução com governança, expectativas alinhadas e plano inicial em ondas.
+          </div>
+        </div>
+        <span class="pill lime">Gate 4 • Pronto para Implantar</span>
+      </div>
+
+      <div class="wf">
+        <div class="wf-grid">
+          <details class="step">
+            <summary>
+              <div class="step-title">
+                <div class="num">4</div>
+                <div>
+                  <div class="name">4.1 Onboarding Interno (PMO / GP / Time)</div>
+                  <div class="desc">Alocação, leitura estruturada, estratégia e preparação do Kickoff</div>
+                </div>
+              </div>
+              <div class="right">
+                <span class="chip owner">Owner: PMO</span>
+                <span class="chip co">Co: GPs/Time</span>
+                <div class="caret">▾</div>
+              </div>
+            </summary>
+
+            <div class="content">
+              <div class="box">
+                <h4><span class="k teal"></span>Atividades-chave</h4>
+                <ul>
+                  <li>Nomeação formal do GP e estrutura de time.</li>
+                  <li>Revisão do escopo macro e riscos.</li>
+                  <li>Estratégia de condução e cadência inicial.</li>
+                </ul>
+              </div>
+              <div class="box">
+                <h4><span class="k"></span>Entregáveis</h4>
+                <ul>
+                  <li>Plano de Kickoff.</li>
+                  <li>Mapa preliminar de stakeholders.</li>
+                  <li>Plano inicial em ondas (rascunho).</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <details class="step" open>
+            <summary>
+              <div class="step-title">
+                <div class="num">4</div>
+                <div>
+                  <div class="name">4.2 Onboarding com o Cliente (Metodologia MIB)</div>
+                  <div class="desc">Kickoff, governança, responsabilidades e planejamento inicial</div>
+                </div>
+              </div>
+              <div class="right">
+                <span class="chip owner">Owner: PMO</span>
+                <span class="chip co">Co: Cliente/GP</span>
+                <span class="chip gate">Gate 4</span>
+                <div class="caret">▾</div>
+              </div>
+            </summary>
+
+            <div class="content">
+              <div class="box">
+                <h4><span class="k lime"></span>Conteúdos obrigatórios</h4>
+                <ul>
+                  <li>Apresentação da <strong>MIB</strong> e do fluxo de gates.</li>
+                  <li>RACI de alto nível (cliente × Baumgratz Code).</li>
+                  <li>Modelo de governança e tomada de decisão.</li>
+                  <li>Planejamento inicial em ondas + calendário macro.</li>
+                </ul>
+              </div>
+              <div class="box">
+                <h4><span class="k"></span>Entregáveis</h4>
+                <ul>
+                  <li>Ata de Kickoff + decisões.</li>
+                  <li>Mapa de stakeholders validado.</li>
+                  <li>Governança aprovada.</li>
+                  <li>Plano inicial do projeto + calendário macro.</li>
+                </ul>
+              </div>
+
+              <div class="box gate-box">
+                <h4><span class="k orange"></span>Gate 4 — Pronto para Implantar</h4>
+                <p class="gate-q"><strong>Pergunta:</strong> Cliente, PMO e time estão alinhados e preparados para iniciar a execução?</p>
+                <p>Decisão: <strong>Go</strong> para Implantação | <strong>Ajustar</strong> alinhamentos | <strong>Replanejar</strong> pré-requisitos.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO: IMPLANTAÇÃO -->
+    <section class="section" id="implantacao">
+      <div class="section-hd">
+        <div>
+          <h2>5) Implantação (MIB — Baumgratz Code)</h2>
+          <div class="meta">
+            Finalidade: executar com controle, adaptação e decisão contínua. Aqui <strong>não se revalida venda</strong> — aqui se entrega valor com governança.
+          </div>
+        </div>
+        <span class="pill blue">Gates 5–8 • Execução controlada</span>
+      </div>
+
+      <div class="wf">
+        <div class="wf-grid">
+          <details class="step" open>
+            <summary>
+              <div class="step-title">
+                <div class="num">5</div>
+                <div>
+                  <div class="name">Fases MIB (visão integrada)</div>
+                  <div class="desc">Direcionamento → Planejamento → Execução → Validação → Encerramento</div>
+                </div>
+              </div>
+              <div class="right">
+                <span class="chip owner">Owner: GP</span>
+                <span class="chip co">Co: PMO/Time</span>
+                <span class="chip gate">Gates 5–8</span>
+                <div class="caret">▾</div>
+              </div>
+            </summary>
+
+            <div class="content">
+              <div class="box" style="grid-column: 1 / -1;">
+                <h4><span class="k teal"></span>Mapa das fases (rolável)</h4>
+                <div class="phases">
+                  <div class="phase">
+                    <p class="pt">Fase 1 — Direcionamento Estratégico</p>
+                    <span class="pg">Gate 5 • Alinhamento Estratégico</span>
+                    <ul>
+                      <li>Valor para execução</li>
+                      <li>Objetivos mensuráveis</li>
+                      <li>Critérios de sucesso</li>
+                      <li>Stakeholders & responsabilidades</li>
+                    </ul>
+                  </div>
+                  <div class="phase">
+                    <p class="pt">Fase 2 — Planejamento Adaptativo</p>
+                    <span class="pg">Gate 6 • Pronto para Executar</span>
+                    <ul>
+                      <li>Backlog por valor/risco</li>
+                      <li>Roadmap em ondas</li>
+                      <li>Riscos & dependências</li>
+                      <li>Cadência e rituais</li>
+                    </ul>
+                  </div>
+                  <div class="phase">
+                    <p class="pt">Fase 3 — Execução Incremental</p>
+                    <span class="pg">Gate contínuo • Ajustar/Parar</span>
+                    <ul>
+                      <li>Incrementos aceitos</li>
+                      <li>Indicadores (valor/risco/fluxo)</li>
+                      <li>Registro de decisões</li>
+                      <li>Repriorização contínua</li>
+                    </ul>
+                  </div>
+                  <div class="phase">
+                    <p class="pt">Fase 4 — Validação e Estabilização</p>
+                    <span class="pg">Gate 7 • Pronto para Operar</span>
+                    <ul>
+                      <li>Validação prática</li>
+                      <li>Adoção / uso real</li>
+                      <li>Ajustes finais</li>
+                      <li>Plano de transição</li>
+                    </ul>
+                  </div>
+                  <div class="phase">
+                    <p class="pt">Fase 5 — Encerramento</p>
+                    <span class="pg">Gate 8 • Encerramento Aprovado</span>
+                    <ul>
+                      <li>Benefícios realizados</li>
+                      <li>Lições aprendidas</li>
+                      <li>Aceite formal</li>
+                      <li>Transição concluída</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="box gate-box">
+                <h4><span class="k orange"></span>Governança da Implantação (MIB)</h4>
+                <p><strong>Regra operacional:</strong> gate existe para decisão, não para burocracia. Se não há decisão, o fórum não deve existir.</p>
+                <p class="gate-q">Diretriz: indicadores de <strong>valor, risco, fluxo, qualidade e adoção</strong> sustentam as deliberações.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO: SUPORTE -->
+    <section class="section" id="suporte">
+      <div class="section-hd">
+        <div>
+          <h2>6) Transição para Suporte</h2>
+          <div class="meta">
+            Finalidade: garantir continuidade sem dependência do time de projeto, com base de conhecimento mínima e aceite formal.
+          </div>
+        </div>
+        <span class="pill orange">Gate Final • Projeto Encerrado</span>
+      </div>
+
+      <div class="wf">
+        <div class="wf-grid">
+          <details class="step">
+            <summary>
+              <div class="step-title">
+                <div class="num">6</div>
+                <div>
+                  <div class="name">Passagem de bastão formal</div>
+                  <div class="desc">Transferência de conhecimento, SLAs, canais e aceite de suporte</div>
+                </div>
+              </div>
+              <div class="right">
+                <span class="chip owner">Owner: Suporte</span>
+                <span class="chip co">Co: PMO/GP</span>
+                <span class="chip gate">Gate final</span>
+                <div class="caret">▾</div>
+              </div>
+            </summary>
+
+            <div class="content">
+              <div class="box">
+                <h4><span class="k teal"></span>Entregáveis</h4>
+                <ul>
+                  <li>Documento de transição e operação assistida (se aplicável).</li>
+                  <li>Base de conhecimento mínima e rastreável.</li>
+                  <li>SLA/canais e critérios de acionamento.</li>
+                </ul>
+              </div>
+              <div class="box">
+                <h4><span class="k"></span>Critérios de prontidão</h4>
+                <ul>
+                  <li>Suporte apto a sustentar sem “colar no GP”.</li>
+                  <li>Cliente sabe acionar e tem expectativas calibradas.</li>
+                  <li>Riscos residuais conhecidos e aceitos.</li>
+                </ul>
+              </div>
+
+              <div class="box gate-box">
+                <h4><span class="k orange"></span>Gate Final — Projeto Encerrado</h4>
+                <p class="gate-q"><strong>Pergunta:</strong> O suporte consegue sustentar sem o time de projeto?</p>
+                <p>Decisão: <strong>Encerrar</strong> oficialmente | <strong>Estender</strong> estabilização | <strong>Ajustar</strong> base de conhecimento.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="foot-strong">Nota de governança (MIB):</div>
+      <div>
+        Este workflow foi desenhado para reduzir ruído entre áreas, institucionalizar gates e consolidar a
+        passagem de bastão com responsabilidade explícita. O objetivo é elevar previsibilidade e proteger valor contratado.
+        <br><br>
+        <span class="foot-strong">Identidade visual aplicada</span> conforme brandbook (paleta e tipografia). :contentReference[oaicite:1]{index=1}
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Utilities
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    // Expand/Collapse
+    const details = () => $$("details.step");
+    document.getElementById("expandAll").addEventListener("click", () => {
+      details().forEach(d => d.open = true);
+    });
+    document.getElementById("collapseAll").addEventListener("click", () => {
+      details().forEach(d => d.open = false);
+    });
+    document.getElementById("scrollTop").addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Active nav on scroll
+    const navLinks = $$("#topnav a");
+    const sections = navLinks.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+
+    const setActive = () => {
+      const y = window.scrollY + 140;
+      let current = sections[0]?.id || "";
+      for (const s of sections) {
+        if (s.offsetTop <= y) current = s.id;
+      }
+      navLinks.forEach(a => {
+        const id = a.getAttribute("href").slice(1);
+        a.classList.toggle("active", id === current);
+      });
+    };
+
+    window.addEventListener("scroll", setActive, { passive: true });
+    setActive();
+  </script>
+</body>
+</html>
