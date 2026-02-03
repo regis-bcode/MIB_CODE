@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MIB | Workflow End-to-End — Baumgratz Code</title>
+
+  <!-- Tipografia institucional -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --blue:#4F94FF;
+      --teal:#32D0C2;
+      --lime:#C2F970;
+      --orange:#FF7A59;
+      --navy:#0D253F;
+      --ice:#F8F7FF;
+
+      --bg:#071623;
+      --card:rgba(13,37,63,.65);
+      --stroke:rgba(248,247,255,.12);
+      --text:rgba(248,247,255,.95);
+      --muted:rgba(248,247,255,.70);
+
+      --radius:18px;
+      --shadow:0 18px 40px rgba(0,0,0,.35);
+      --max:1200px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Zalando Sans Expanded",system-ui,Arial,sans-serif;
+      background:linear-gradient(180deg,#06121d,#050f18);
+      color:var(--text);
+    }
+
+    header{
+      position:sticky;top:0;z-index:10;
+      background:rgba(7,22,35,.85);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--stroke);
+    }
+
+    .wrap{max-width:var(--max);margin:auto;padding:24px}
+
+    h1{
+      font-size:32px;
+      font-weight:800;
+      margin:0 0 8px;
+    }
+
+    h2{
+      font-size:20px;
+      margin:0;
+      font-weight:800;
+    }
+
+    p{color:var(--muted);line-height:1.6}
+
+    nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    nav a{
+      color:var(--text);
+      text-decoration:none;
+      font-size:12px;
+      font-weight:700;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+    }
+
+    section{
+      margin-top:28px;
+      background:var(--card);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .section-head{
+      padding:18px 22px;
+      border-bottom:1px solid var(--stroke);
+    }
+
+    .section-body{
+      padding:20px 22px;
+    }
+
+    details{
+      background:rgba(13,37,63,.45);
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      margin-bottom:12px;
+      overflow:hidden;
+    }
+
+    summary{
+      cursor:pointer;
+      padding:16px;
+      font-weight:800;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    summary::-webkit-details-marker{display:none}
+
+    .tags span{
+      font-size:11px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      margin-left:6px;
+    }
+
+    .gate{border-color:var(--orange);color:var(--orange)}
+    .owner{border-color:var(--teal);color:var(--teal)}
+
+    .content{
+      padding:16px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px}
+
+    .gatebox{
+      grid-column:1/-1;
+      background:rgba(255,122,89,.12);
+      border:1px solid rgba(255,122,89,.35);
+      border-radius:12px;
+      padding:14px;
+      font-size:13px;
+    }
+
+    footer{
+      margin:40px 0 20px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    @media(max-width:900px){
+      .content{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>MIB — Workflow End-to-End</h1>
+    <p>Metodologia de Implantação Baumgratz Code • Visão institucional completa</p>
+
+    <nav>
+      <a href="#vendas">Vendas</a>
+      <a href="#arquitetura">Arquitetura</a>
+      <a href="#transicao">Transição Interna</a>
+      <a href="#onboarding">Onboarding</a>
+      <a href="#implantacao">Implantação</a>
+      <a href="#suporte">Suporte</a>
+    </nav>
+  </div>
+</header>
+
+<!-- VENDAS -->
+<section id="vendas" class="wrap">
+  <div class="section-head">
+    <h2>1️⃣ Ciclo de Vendas</h2>
+    <p>Decidir investimento e vender com responsabilidade.</p>
+  </div>
+  <div class="section-body">
+    <details open>
+      <summary>
+        Playbook + Pipeline Comercial
+        <div class="tags">
+          <span class="owner">Comercial</span>
+          <span class="gate">Gate 1</span>
+        </div>
+      </summary>
+      <div class="content">
+        <ul>
+          <li>Prospecção e qualificação</li>
+          <li>Diagnóstico e macroescopo</li>
+          <li>Proposta validada pelo PMO</li>
+        </ul>
+        <ul>
+          <li>Premissas e exclusões explícitas</li>
+          <li>Riscos comerciais visíveis</li>
+        </ul>
+        <div class="gatebox">
+          <strong>Gate 1 — Decisão de Investimento</strong><br>
+          Vale a pena investir e vender esta solução?
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ARQUITETURA -->
+<section id="arquitetura" class="wrap">
+  <div class="section-head">
+    <h2>2️⃣ Ciclo de Arquitetura</h2>
+    <p>Validar viabilidade técnica e operacional.</p>
+  </div>
+  <div class="section-body">
+    <details>
+      <summary>
+        Validação da Solução
+        <div class="tags">
+          <span class="owner">Arquitetura</span>
+          <span class="gate">Gate 2</span>
+        </div>
+      </summary>
+      <div class="content">
+        <ul>
+          <li>Desenho da solução</li>
+          <li>Mapeamento de integrações</li>
+        </ul>
+        <ul>
+          <li>Riscos técnicos e operacionais</li>
+          <li>Ajustes formais de escopo</li>
+        </ul>
+        <div class="gatebox">
+          <strong>Gate 2 — Viabilidade da Solução</strong><br>
+          A solução vendida é executável?
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- TRANSIÇÃO INTERNA -->
+<section id="transicao" class="wrap">
+  <div class="section-head">
+    <h2>3️⃣ Transição Interna</h2>
+    <p>Projeto internalizado antes do cliente.</p>
+  </div>
+  <div class="section-body">
+    <details>
+      <summary>
+        Apresentação Interna ao PMO
+        <div class="tags">
+          <span class="owner">PMO</span>
+          <span class="gate">Gate 3</span>
+        </div>
+      </summary>
+      <div class="content">
+        <ul>
+          <li>Racional da venda</li>
+          <li>Arquitetura explicada</li>
+        </ul>
+        <ul>
+          <li>Riscos e restrições</li>
+          <li>Indicação de GP</li>
+        </ul>
+        <div class="gatebox">
+          <strong>Gate 3 — Projeto Internalizado</strong><br>
+          PMO entende e assume o projeto?
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ONBOARDING -->
+<section id="onboarding" class="wrap">
+  <div class="section-head">
+    <h2>4️⃣ Onboarding</h2>
+    <p>Alinhamento interno e com o cliente.</p>
+  </div>
+  <div class="section-body">
+    <details open>
+      <summary>
+        Onboarding com Cliente — MIB
+        <div class="tags">
+          <span class="owner">PMO</span>
+          <span class="gate">Gate 4</span>
+        </div>
+      </summary>
+      <div class="content">
+        <ul>
+          <li>Apresentação da MIB</li>
+          <li>Governança e papéis</li>
+        </ul>
+        <ul>
+          <li>Planejamento inicial em ondas</li>
+          <li>Calendário macro</li>
+        </ul>
+        <div class="gatebox">
+          <strong>Gate 4 — Pronto para Implantar</strong><br>
+          Todos alinhados para executar?
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- IMPLANTAÇÃO -->
+<section id="implantacao" class="wrap">
+  <div class="section-head">
+    <h2>5️⃣ Implantação (MIB)</h2>
+    <p>Execução com controle, adaptação e decisão contínua.</p>
+  </div>
+  <div class="section-body">
+    <details open>
+      <summary>
+        Fases da MIB
+        <div class="tags">
+          <span class="owner">GP / PMO</span>
+          <span class="gate">Gates 5–8</span>
+        </div>
+      </summary>
+      <div class="content">
+        <ul>
+          <li>Direcionamento Estratégico</li>
+          <li>Planejamento Adaptativo</li>
+          <li>Execução Incremental</li>
+        </ul>
+        <ul>
+          <li>Validação e Estabilização</li>
+          <li>Encerramento</li>
+        </ul>
+        <div class="gatebox">
+          Decisões contínuas baseadas em valor, risco e adoção.
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- SUPORTE -->
+<section id="suporte" class="wrap">
+  <div class="section-head">
+    <h2>6️⃣ Transição para Suporte</h2>
+    <p>Encerramento formal e continuidade operacional.</p>
+  </div>
+  <div class="section-body">
+    <details>
+      <summary>
+        Passagem de Bastão
+        <div class="tags">
+          <span class="owner">Suporte</span>
+          <span class="gate">Gate Final</span>
+        </div>
+      </summary>
+      <div class="content">
+        <ul>
+          <li>Base de conhecimento</li>
+          <li>SLA e canais</li>
+        </ul>
+        <ul>
+          <li>Aceite do suporte</li>
+          <li>Encerramento oficial</li>
+        </ul>
+        <div class="gatebox">
+          <strong>Gate Final — Projeto Encerrado</strong><br>
+          Suporte sustenta sem o projeto?
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer>
+  © Baumgratz Code — Metodologia MIB • Governança, clareza e previsibilidade
+</footer>
+
+</body>
+</html>
