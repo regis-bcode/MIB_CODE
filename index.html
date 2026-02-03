@@ -20,7 +20,7 @@
       --ice:#F8F7FF;
 
       --bg:#071623;
-      --card:rgba(13,37,63,.70);
+      --card:rgba(13,37,63,.72);
       --card2:rgba(13,37,63,.42);
       --stroke:rgba(248,247,255,.12);
       --stroke2:rgba(248,247,255,.20);
@@ -53,24 +53,28 @@
 
     /* =========================================================
        ASSETS (ARQUIVOS EM /assets/)
-       Ajuste os nomes aqui se necessário
+       IMPORTANTE: estes nomes devem ser exatamente iguais no GitHub:
+         assets/baumgratz_logo_selo.png
+         assets/bcode_icone_3d.png
+         assets/bcode_gradiente.png
+         assets/bcode_pattern_gradiente.png
        ========================================================= */
     .bg-gradient{
       position:fixed; inset:0; z-index:-2;
-      background: url("assets/bcode_gradiente.png") center/cover no-repeat; /* <-- ASSET 1 */
+      background: url("assets/bcode_gradiente.png") center/cover no-repeat;
       opacity:.22; pointer-events:none;
       filter:saturate(1.05) contrast(1.05);
     }
     .bg-pattern{
       position:fixed; inset:-40px; z-index:-1;
-      background: url("assets/bcode_pattern_gradiente.png") center/cover no-repeat; /* <-- ASSET 2 */
+      background: url("assets/bcode_pattern_gradiente.png") center/cover no-repeat;
       opacity:.10; pointer-events:none;
       mix-blend-mode: screen;
     }
 
     .wrap{max-width:var(--max); margin:0 auto; padding:26px 18px 80px;}
 
-    /* Header */
+    /* Header institucional */
     header{
       position:sticky; top:12px; z-index:20;
       border:1px solid var(--stroke);
@@ -84,18 +88,47 @@
       display:flex; align-items:center; justify-content:space-between; gap:16px;
       padding:16px 18px;
     }
-    .brand{ display:flex; align-items:center; gap:12px; min-width:280px; }
-    .brand img{
-      width:44px; height:44px; object-fit:contain;
+
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width: 320px;
+    }
+
+    /* Logo + fallback caso o asset não carregue */
+    .logo-wrap{
+      width:44px; height:44px;
       border-radius: 12px;
       background: rgba(248,247,255,.06);
       border:1px solid var(--stroke);
+      display:grid; place-items:center;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .logo-wrap img{
+      width:44px; height:44px;
+      object-fit:contain;
+      display:block;
       padding:6px;
     }
-    .brand .t1{ font-weight:900; font-size:18px; letter-spacing:.2px; line-height:1.1; }
-    .brand .t2{ font-weight:500; font-size:12px; color:var(--muted); margin-top:3px; line-height:1.3; }
+    .logo-fallback{
+      display:none;
+      width:100%; height:100%;
+      place-items:center;
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.4px;
+      color: rgba(248,247,255,.92);
+    }
 
-    nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .brand .t1{
+      font-weight:900; font-size:18px; letter-spacing:.2px; line-height:1.1;
+    }
+    .brand .t2{
+      font-weight:500; font-size:12px; color:var(--muted); margin-top:3px; line-height:1.3;
+    }
+
+    nav{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    }
     nav a{
       text-decoration:none; color:var(--text);
       font-weight:800; font-size:12px;
@@ -134,15 +167,27 @@
     }
     .hero h1{ margin:0 0 8px; font-size:28px; font-weight:900; line-height:1.12; }
     .hero p{ margin:0; color:var(--muted); font-size:14px; line-height:1.6; max-width:78ch; }
+
     .hero-aside{ display:flex; align-items:center; justify-content:center; }
     .hero-aside img{
       width:min(240px, 100%); height:auto;
       filter: drop-shadow(0 18px 26px rgba(0,0,0,.35));
       opacity:.95;
     }
+    .icon-fallback{
+      display:none;
+      width:240px; height:180px;
+      border-radius: 20px;
+      border:1px solid rgba(248,247,255,.14);
+      background: rgba(13,37,63,.30);
+      align-items:center; justify-content:center;
+      color: rgba(248,247,255,.80);
+      font-weight:900;
+      letter-spacing:.3px;
+    }
 
     /* =========================================================
-       RIBBON TIMELINE (DESENHO DO FLUXO COMO VOCÊ PEDIU)
+       RIBBON TIMELINE (DESENHO DO FLUXO)
        ========================================================= */
     .ribbon-area{
       padding: 14px 20px 20px;
@@ -210,6 +255,7 @@
       box-shadow: 0 10px 18px rgba(0,0,0,.25);
       font-weight:900;
       font-size:12px;
+      color: rgba(248,247,255,.92);
     }
     .rb-dot{
       position:absolute;
@@ -219,18 +265,19 @@
       background: rgba(248,247,255,.85);
     }
 
-    /* Fita (bandeirinha) */
+    /* Bandeira */
     .rb-flag{
       position:relative;
       border-radius: 16px;
       padding: 14px 14px 14px;
-      border:1px solid rgba(248,247,255,.12);
-      box-shadow: var(--shadow2);
+      border:1px solid rgba(248,247,255,.14);
+      box-shadow: 0 16px 40px rgba(0,0,0,.32);
       overflow:hidden;
-      min-height:120px;
+      min-height:128px;
+      transform: translateY(0);
+      transition:.18s ease;
     }
     .rb-flag::after{
-      /* pontinha da fita */
       content:"";
       position:absolute;
       left:18px;
@@ -239,8 +286,7 @@
       border-left:12px solid transparent;
       border-right:12px solid transparent;
       border-top:12px solid rgba(255,255,255,.20);
-      filter: blur(.0px);
-      opacity:.85;
+      opacity:.65;
     }
 
     .rb-num{
@@ -248,19 +294,21 @@
       font-size:18px;
       letter-spacing:.2px;
       margin:0 0 6px;
-      opacity:.95;
+      opacity:.98;
+      color: rgba(248,247,255,.95);
     }
     .rb-name{
       margin:0 0 8px;
       font-size:13px;
       font-weight:900;
+      color: rgba(248,247,255,.95);
     }
     .rb-desc{
       margin:0;
       font-size:11px;
       line-height:1.55;
-      color: rgba(255,255,255,.88);
-      opacity:.9;
+      color: rgba(255,255,255,.92);
+      opacity:.95;
     }
     .rb-gate{
       display:inline-block;
@@ -275,20 +323,38 @@
       white-space:nowrap;
     }
 
-    /* Cores por fase (institucional, mas com leitura clara) */
+    /* Cores por fase */
     .c1{ background: linear-gradient(180deg, rgba(79,148,255,.78), rgba(13,37,63,.40)); }
     .c2{ background: linear-gradient(180deg, rgba(50,208,194,.78), rgba(13,37,63,.40)); }
-    .c3{ background: linear-gradient(180deg, rgba(194,249,112,.65), rgba(13,37,63,.40)); color:rgba(13,37,63,.92); }
-    .c3 .rb-desc, .c3 .rb-gate{ color: rgba(13,37,63,.90); }
+    .c3{ background: linear-gradient(180deg, rgba(194,249,112,.70), rgba(13,37,63,.40)); }
     .c4{ background: linear-gradient(180deg, rgba(255,122,89,.70), rgba(13,37,63,.40)); }
     .c5{ background: linear-gradient(180deg, rgba(79,148,255,.55), rgba(50,208,194,.35)); }
     .c6{ background: linear-gradient(180deg, rgba(248,247,255,.25), rgba(13,37,63,.40)); }
 
-    .rb:hover .rb-flag{ border-color: rgba(248,247,255,.22); transform: translateY(-1px); transition:.18s ease; }
-    .rb.active .rb-icon{ border-color: rgba(79,148,255,.65); box-shadow: 0 0 0 4px rgba(79,148,255,.12), 0 10px 18px rgba(0,0,0,.25); }
+    /* Correção de contraste — Fase 03 (verde) */
+    .c3,
+    .c3 .rb-num,
+    .c3 .rb-name,
+    .c3 .rb-desc,
+    .c3 .rb-gate{
+      color: rgba(8,20,34,.92);
+    }
+    .c3 .rb-num{ color: rgba(8,20,34,.95); }
+    .c3 .rb-desc{ color: rgba(8,20,34,.85); }
+    .c3 .rb-gate{
+      border-color: rgba(8,20,34,.25);
+      background: rgba(248,247,255,.35);
+      color: rgba(8,20,34,.92);
+    }
+
+    .rb:hover .rb-flag{ border-color: rgba(248,247,255,.22); transform: translateY(-1px); }
+    .rb.active .rb-icon{
+      border-color: rgba(79,148,255,.65);
+      box-shadow: 0 0 0 4px rgba(79,148,255,.12), 0 10px 18px rgba(0,0,0,.25);
+    }
     .rb.active .rb-dot{ background: rgba(79,148,255,.95); border-color: rgba(79,148,255,.65); }
 
-    /* Seções */
+    /* Seções do conteúdo */
     .section{
       margin-top: 22px;
       border-radius: var(--radius-xl);
@@ -379,6 +445,7 @@
       .step-content{ grid-template-columns:1fr; }
       .head-inner{ flex-direction:column; align-items:flex-start; }
       nav{ justify-content:flex-start; }
+      .brand{ min-width: 0; }
     }
   </style>
 </head>
@@ -392,10 +459,10 @@
     <header>
       <div class="head-inner">
         <div class="brand">
-          <!-- =========================
-               ASSET 3 (LOGO)
-               ========================= -->
-          <img src="assets/baumgratz_logo_selo.png" alt="Baumgratz Code" />
+          <div class="logo-wrap">
+            <img id="logoImg" src="assets/baumgratz_logo_selo.png" alt="Baumgratz Code" loading="eager" />
+            <div class="logo-fallback" id="logoFallback">BC</div>
+          </div>
           <div>
             <div class="t1">MIB — Workflow End-to-End</div>
             <div class="t2">Metodologia de Implantação Baumgratz Code • Visão institucional completa</div>
@@ -419,25 +486,22 @@
           <h1>Workflow End-to-End em fases</h1>
           <p>
             Representação institucional do fluxo completo (do Comercial ao Suporte), com gates, responsabilidades
-            e passagem de bastão controlada. O foco é reduzir ruído, aumentar previsibilidade e padronizar entendimento.
+            e passagem de bastão controlada. Direcionamento claro para alinhamento de stakeholders e previsibilidade
+            operacional na execução da MIB.
           </p>
         </div>
 
         <div class="hero-aside">
-          <!-- =========================
-               ASSET 4 (ÍCONE 3D)
-               ========================= -->
-          <img src="assets/bcode_icone_3d.png" alt="Ícone Baumgratz Code" />
+          <img id="iconImg" src="assets/bcode_icone_3d.png" alt="Ícone Baumgratz Code" />
+          <div class="icon-fallback" id="iconFallback">BAUMGRATZ<br/>CODE</div>
         </div>
       </div>
 
-      <!-- =========================================================
-           AQUI ESTÁ O DESENHO DO FLUXO (RIBBON TIMELINE)
-           ========================================================= -->
+      <!-- DESENHO DO FLUXO (RIBBON / TIMELINE) -->
       <div class="ribbon-area">
         <div class="ribbon-title">
           <div class="l">Fases do Workflow End-to-End</div>
-          <div class="r">Clique na fase para navegar (com governança por Gate)</div>
+          <div class="r">Clique na fase para navegar (governança por Gate)</div>
         </div>
 
         <div class="ribbon-track">
@@ -497,7 +561,7 @@
 
             <a class="rb" href="#implantacao" data-target="implantacao">
               <div class="rb-top">
-                <div class="rb-icon">G5-8</div>
+                <div class="rb-icon">G5</div>
                 <div class="rb-dot"></div>
               </div>
               <div class="rb-flag c5">
@@ -510,14 +574,14 @@
 
             <a class="rb" href="#suporte" data-target="suporte">
               <div class="rb-top">
-                <div class="rb-icon">GF</div>
+                <div class="rb-icon">G6</div>
                 <div class="rb-dot"></div>
               </div>
               <div class="rb-flag c6">
                 <div class="rb-num">06</div>
                 <div class="rb-name">Suporte</div>
                 <div class="rb-desc">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite do suporte.</div>
-                <div class="rb-gate">Gate Final • Encerrado</div>
+                <div class="rb-gate">Gate 6 • Encerramento</div>
               </div>
             </a>
 
@@ -629,7 +693,7 @@
           <h2>3) Transição Interna</h2>
           <div class="meta">Ciclo obrigatório: projeto internalizado por PMO/GPs antes do onboarding com o cliente.</div>
         </div>
-        <span class="pill blue">Gate 3</span>
+        <span class="pill.blue pill">Gate 3</span>
       </div>
 
       <details class="step" open>
@@ -779,7 +843,7 @@
           <h2>6) Transição para Suporte</h2>
           <div class="meta">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite para sustentação sem dependência do projeto.</div>
         </div>
-        <span class="pill orange">Gate Final</span>
+        <span class="pill orange">Gate 6</span>
       </div>
 
       <details class="step">
@@ -790,7 +854,7 @@
           </div>
           <div class="sum-right">
             <span class="chip owner">Owner: Suporte</span>
-            <span class="chip gate">Gate Final</span>
+            <span class="chip gate">Gate 6</span>
           </div>
         </summary>
 
@@ -813,7 +877,7 @@
           </div>
 
           <div class="box gate-box">
-            <p><strong>Gate Final — Projeto Encerrado</strong></p>
+            <p><strong>Gate 6 — Encerramento</strong></p>
             <p class="gate-q">Pergunta: o suporte consegue sustentar sem o time de projeto?</p>
           </div>
         </div>
@@ -823,6 +887,25 @@
   </div>
 
   <script>
+    // Fallback de imagens (evita ícone quebrado no header)
+    (function(){
+      const logoImg = document.getElementById("logoImg");
+      const logoFallback = document.getElementById("logoFallback");
+
+      const iconImg = document.getElementById("iconImg");
+      const iconFallback = document.getElementById("iconFallback");
+
+      logoImg.addEventListener("error", () => {
+        logoImg.style.display = "none";
+        logoFallback.style.display = "grid";
+      });
+
+      iconImg.addEventListener("error", () => {
+        iconImg.style.display = "none";
+        iconFallback.style.display = "flex";
+      });
+    })();
+
     // Ativar link do menu e destacar a fase no ribbon conforme scroll
     (function(){
       const navLinks = Array.from(document.querySelectorAll("#topnav a"));
