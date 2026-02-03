@@ -184,10 +184,11 @@
       color: rgba(248,247,255,.80);
       font-weight:900;
       letter-spacing:.3px;
+      text-align:center;
     }
 
     /* =========================================================
-       RIBBON TIMELINE (DESENHO DO FLUXO)
+       RIBBON TIMELINE (GATES)
        ========================================================= */
     .ribbon-area{
       padding: 14px 20px 20px;
@@ -265,7 +266,6 @@
       background: rgba(248,247,255,.85);
     }
 
-    /* Bandeira */
     .rb-flag{
       position:relative;
       border-radius: 16px;
@@ -323,7 +323,6 @@
       white-space:nowrap;
     }
 
-    /* Cores por fase */
     .c1{ background: linear-gradient(180deg, rgba(79,148,255,.78), rgba(13,37,63,.40)); }
     .c2{ background: linear-gradient(180deg, rgba(50,208,194,.78), rgba(13,37,63,.40)); }
     .c3{ background: linear-gradient(180deg, rgba(194,249,112,.70), rgba(13,37,63,.40)); }
@@ -331,7 +330,7 @@
     .c5{ background: linear-gradient(180deg, rgba(79,148,255,.55), rgba(50,208,194,.35)); }
     .c6{ background: linear-gradient(180deg, rgba(248,247,255,.25), rgba(13,37,63,.40)); }
 
-    /* Correção de contraste — Fase 03 (verde) */
+    /* Contraste — Fase 03 (verde) */
     .c3,
     .c3 .rb-num,
     .c3 .rb-name,
@@ -483,7 +482,7 @@
     <section class="hero" id="inicio">
       <div class="hero-inner">
         <div>
-          <h1>Workflow End-to-End em fases</h1>
+          <h1>Workflow End-to-End em gates</h1>
           <p>
             Representação institucional do fluxo completo (do Comercial ao Suporte), com gates, responsabilidades
             e passagem de bastão controlada. Direcionamento claro para alinhamento de stakeholders e previsibilidade
@@ -497,11 +496,11 @@
         </div>
       </div>
 
-      <!-- DESENHO DO FLUXO (RIBBON / TIMELINE) -->
+      <!-- DESENHO DO FLUXO (GATES) -->
       <div class="ribbon-area">
         <div class="ribbon-title">
-          <div class="l">Fases do Workflow End-to-End</div>
-          <div class="r">Clique na fase para navegar (governança por Gate)</div>
+          <div class="l">Gates do Workflow End-to-End</div>
+          <div class="r">Clique no gate para navegar (governança por Gate)</div>
         </div>
 
         <div class="ribbon-track">
@@ -693,7 +692,7 @@
           <h2>3) Transição Interna</h2>
           <div class="meta">Ciclo obrigatório: projeto internalizado por PMO/GPs antes do onboarding com o cliente.</div>
         </div>
-        <span class="pill.blue pill">Gate 3</span>
+        <span class="pill blue">Gate 3</span>
       </div>
 
       <details class="step" open>
@@ -906,7 +905,7 @@
       });
     })();
 
-    // Ativar link do menu e destacar a fase no ribbon conforme scroll
+    // Ativar link do menu e destacar o gate no ribbon conforme scroll
     (function(){
       const navLinks = Array.from(document.querySelectorAll("#topnav a"));
       const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
