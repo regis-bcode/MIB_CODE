@@ -31,6 +31,11 @@
       --shadow2:0 10px 26px rgba(0,0,0,.28);
 
       --max:1200px;
+
+      /* calculado via JS */
+      --gatebarH: 68px;
+      --stickyOffset: 10px;
+      --stickyTop: calc(var(--gatebarH) + var(--stickyOffset) + 8px);
     }
 
     *{box-sizing:border-box}
@@ -64,12 +69,12 @@
     .wrap{max-width:var(--max); margin:0 auto; padding:12px 16px 90px;}
 
     /* =========================================================
-       GATE BAR (sempre visível)
+       TOP NAV (sempre visível)
        ========================================================= */
     .gatebar{
       position: sticky;
       top: 10px;
-      z-index: 100;
+      z-index: 1000;
       margin: 10px auto 14px;
       border:1px solid rgba(248,247,255,.14);
       border-radius: 18px;
@@ -87,7 +92,7 @@
     }
     .brand{
       display:flex; align-items:center; gap:10px;
-      min-width: 230px;
+      min-width: 260px;
       flex: 0 0 auto;
     }
     .logo-wrap{
@@ -124,34 +129,45 @@
 
     .gates{
       display:grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr)); /* + Manifesto */
+      grid-template-columns: repeat(7, minmax(0, 1fr));
       gap:8px;
       width: 100%;
       align-items:center;
     }
+
+    /* Tesla-like: botão “flat”, borda suave, highlight limpo */
     .gbtn{
+      appearance:none;
+      -webkit-appearance:none;
       text-decoration:none;
       color: rgba(248,247,255,.95);
       font-weight:900;
       font-size:10.5px;
       padding: 9px 10px;
       border-radius: 999px;
-      border:1px solid rgba(248,247,255,.14);
-      background: rgba(13,37,63,.22);
+      border:1px solid rgba(248,247,255,.12);
+      background: rgba(13,37,63,.18);
       text-align:center;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      transition: .18s ease;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      cursor:pointer;
     }
-    .gbtn:hover{ transform: translateY(-1px); border-color: rgba(248,247,255,.22); }
+    .gbtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(248,247,255,.22);
+      background: rgba(248,247,255,.06);
+    }
     .gbtn.active{
       border-color: rgba(79,148,255,.60);
       background: rgba(79,148,255,.14);
       box-shadow: 0 0 0 4px rgba(79,148,255,.10);
     }
 
-    /* Hero */
+    /* =========================================================
+       HERO
+       ========================================================= */
     .hero{
       border-radius: var(--radius-xl);
       border:1px solid var(--stroke);
@@ -161,6 +177,7 @@
         linear-gradient(180deg, rgba(13,37,63,.62), rgba(13,37,63,.30));
       box-shadow: var(--shadow);
       overflow:hidden;
+      position:relative;
     }
     .hero-inner{
       padding: 18px 18px 12px;
@@ -174,9 +191,10 @@
 
     .hero-aside{ display:flex; align-items:center; justify-content:center; }
 
+    /* LOGO HERO (reduzido) */
     .hero-logo-card{
       width:100%;
-      max-width: 300px;
+      max-width: 240px;              /* menor (pedido) */
       aspect-ratio: 1 / 1;
       border-radius: 24px;
       border:1px solid rgba(248,247,255,.14);
@@ -185,7 +203,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:18px;
+      padding:14px;
       position:relative;
       overflow:hidden;
     }
@@ -200,11 +218,42 @@
     }
     .hero-logo{
       position:relative;
-      width: 78%;
-      height: 78%;
+      width: 62%;
+      height: 62%;
       object-fit: contain;
       object-position: center;
       filter: drop-shadow(0 14px 18px rgba(0,0,0,.32));
+    }
+
+    /* CTA Manifesto no Hero */
+    .hero-cta{
+      margin-top: 14px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .cta-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(79,148,255,.55);
+      background: rgba(79,148,255,.10);
+      color: rgba(248,247,255,.95);
+      font-weight:900;
+      font-size:12px;
+      cursor:pointer;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      box-shadow: 0 12px 22px rgba(0,0,0,.22);
+    }
+    .cta-btn:hover{ transform: translateY(-1px); border-color: rgba(79,148,255,.75); background: rgba(79,148,255,.14); }
+    .cta-note{
+      font-size:11px;
+      color: var(--muted);
+      line-height:1.5;
     }
 
     /* Ribbon timeline */
@@ -269,10 +318,16 @@
       border:1px solid rgba(248,247,255,.14);
       box-shadow: 0 16px 40px rgba(0,0,0,.32);
       overflow:hidden;
-
-      height: 260px;                 /* cards uniformes */
+      height: 260px;
       display:flex;
       flex-direction:column;
+      transform: translateZ(0);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .rb:hover .rb-flag{
+      border-color: rgba(248,247,255,.22);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 46px rgba(0,0,0,.35);
     }
 
     .rb-flag::after{
@@ -325,14 +380,18 @@
     .c3 .rb-desc{ color: rgba(8,20,34,.85) !important; }
     .c3 .rb-gate{ border-color: rgba(8,20,34,.25) !important; background: rgba(248,247,255,.35) !important; }
 
-    .rb:hover .rb-flag{ border-color: rgba(248,247,255,.22); transform: translateY(-1px); }
     .rb.active .rb-icon{
       border-color: rgba(79,148,255,.65);
       box-shadow: 0 0 0 4px rgba(79,148,255,.12), 0 10px 18px rgba(0,0,0,.25);
     }
     .rb.active .rb-dot{ background: rgba(79,148,255,.95); border-color: rgba(79,148,255,.65); }
 
-    /* Seções */
+    /* =========================================================
+       SECTIONS + STICKY HEADERS (pedido)
+       Quando rolar para qualquer seção, o cabeçalho dela fica visível
+       ========================================================= */
+    section[id]{ scroll-margin-top: calc(var(--stickyTop) + 6px); }
+
     .section{
       margin-top: 18px;
       border-radius: var(--radius-xl);
@@ -340,11 +399,19 @@
       background: linear-gradient(180deg, rgba(13,37,63,.55), rgba(13,37,63,.25));
       box-shadow: var(--shadow2);
       overflow:hidden;
+      position:relative;
     }
+
+    /* cabeçalho sticky dentro de cada seção */
     .section-hd{
-      padding:18px 20px;
+      position: sticky;
+      top: var(--stickyTop);
+      z-index: 50;
+      padding:14px 20px;
       display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
       border-bottom:1px solid rgba(248,247,255,.08);
+      background: rgba(10,26,43,.72);
+      backdrop-filter: blur(10px);
     }
     .section-hd h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
     .section-hd .meta{ margin-top:6px; font-size:12px; color:var(--muted); line-height:1.5; max-width: 92ch; }
@@ -414,9 +481,9 @@
     .gate-box p{ color: rgba(248,247,255,.92); }
     .gate-q{ margin-top:6px; color: var(--muted); }
 
-    /* =========================
-       MANIFESTO (AGF)
-       ========================= */
+    /* =========================================================
+       Manifesto (como seção, com header sticky também)
+       ========================================================= */
     .manifesto{
       margin-top: 18px;
       border-radius: var(--radius-xl);
@@ -428,22 +495,33 @@
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .manifesto-inner{
-      padding: 18px 20px 20px;
+    .manifesto-hd{
+      position: sticky;
+      top: var(--stickyTop);
+      z-index: 50;
+      padding:14px 20px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      border-bottom:1px solid rgba(248,247,255,.10);
+      background: rgba(10,26,43,.72);
+      backdrop-filter: blur(10px);
     }
-    .manifesto h2{
-      margin:0 0 8px;
-      font-size:18px;
+    .manifesto-hd h2{
+      margin:0;
+      font-size:16px;
       font-weight:900;
       letter-spacing:.2px;
     }
-    .manifesto .subtitle{
-      margin:0 0 14px;
-      color: var(--muted);
+    .manifesto-hd .meta{
+      margin-top:6px;
       font-size:12px;
-      line-height:1.6;
-      max-width: 95ch;
+      color:var(--muted);
+      line-height:1.5;
+      max-width: 92ch;
     }
+    .manifesto-inner{ padding: 16px 20px 20px; }
 
     .m-quote{
       border:1px solid rgba(248,247,255,.14);
@@ -455,7 +533,6 @@
       font-size:12px;
       line-height:1.6;
     }
-
     .m-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -467,6 +544,13 @@
       background: rgba(13,37,63,.30);
       border-radius: 16px;
       padding: 14px 14px;
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+      transform: translateZ(0);
+    }
+    .m-card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(248,247,255,.20);
+      box-shadow: 0 16px 44px rgba(0,0,0,.34);
     }
     .m-card h3{
       margin:0 0 8px;
@@ -488,7 +572,6 @@
       font-size:12px;
       line-height:1.7;
     }
-
     .m-footer{
       margin-top: 14px;
       padding-top: 14px;
@@ -505,39 +588,44 @@
       font-size:12px;
       line-height:1.45;
     }
-    .pill-agf{
-      font-size:11px; font-weight:900;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(79,148,255,.55);
-      background: rgba(79,148,255,.12);
-      white-space:nowrap;
-      color: rgba(248,247,255,.92);
+
+    /* =========================================================
+       Smooth “Tesla-like” section entrance (sem copiar nada)
+       ========================================================= */
+    .reveal{
+      opacity:0;
+      transform: translateY(14px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .reveal.inview{
+      opacity:1;
+      transform: translateY(0);
     }
 
     /* Breakpoints */
     @media (max-width:1100px){
       .gbtn{ font-size:10.2px; padding: 9px 8px; }
-      .hero-logo-card{ max-width: 280px; }
+      .hero-logo-card{ max-width: 220px; }
     }
     @media (max-width:980px){
       .hero-inner{ grid-template-columns:1fr; }
       .hero-aside{ justify-content:flex-start; }
-      .hero-logo-card{ max-width: 260px; }
+      .hero-logo-card{ max-width: 220px; }
       .step-content{ grid-template-columns:1fr; }
-      .brand{ min-width: 210px; }
-      .gates{ grid-template-columns: repeat(4, minmax(0, 1fr)); } /* 2 linhas no mobile */
+      .brand{ min-width: 220px; }
+      .gates{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .rb-flag{ height: 250px; }
       .m-grid{ grid-template-columns: 1fr; }
     }
     @media (max-width:640px){
       .wrap{ padding: 10px 10px 75px; }
       .brand-txt .t2{ display:none; }
-      .brand{ min-width: 180px; }
+      .brand{ min-width: 185px; }
       .gates{ gap:6px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .gbtn{ font-size:10px; padding: 8px 7px; }
       .hero h1{ font-size:24px; }
       .rb-flag{ height: 245px; }
+      .cta-btn{ width:100%; }
     }
   </style>
 </head>
@@ -548,7 +636,7 @@
 
   <div class="wrap">
 
-    <!-- GATES SEMPRE VISÍVEL (já aparece ao carregar a página) -->
+    <!-- TOP NAV -->
     <div class="gatebar" id="gatebar">
       <div class="gatebar-inner">
         <div class="brand">
@@ -573,7 +661,8 @@
       </div>
     </div>
 
-    <section class="hero" id="inicio">
+    <!-- HERO -->
+    <section class="hero reveal inview" id="inicio">
       <div class="hero-inner">
         <div>
           <h1>Workflow End-to-End em Gates</h1>
@@ -582,6 +671,11 @@
             <strong>Gates decisórios</strong> — portas de qualificação obrigatória. O projeto só avança quando
             <strong>100% dos pré-requisitos do Gate</strong> estão atendidos, garantindo previsibilidade, proteção de valor e governança objetiva.
           </p>
+
+          <div class="hero-cta">
+            <a class="cta-btn" href="#manifesto">MANIFESTO AGF — ARGUS GATE FRAMEWORK</a>
+            <div class="cta-note">Clique para acessar o manifesto completo (visão, princípios e regra de avanço).</div>
+          </div>
         </div>
 
         <div class="hero-aside">
@@ -683,14 +777,20 @@
       </div>
     </section>
 
-    <!-- MANIFESTO AGF -->
-    <section class="manifesto" id="manifesto">
-      <div class="manifesto-inner">
-        <h2>Manifesto do ARGUS GATE FRAMEWORK (AGF)</h2>
-        <p class="subtitle"><strong>Visão que orienta. Portas que decidem.</strong> O AGF é um método de implantação ágil concebido para ambientes complexos, onde visibilidade total, decisão consciente e execução controlada são essenciais.</p>
+    <!-- MANIFESTO -->
+    <section class="manifesto reveal" id="manifesto">
+      <div class="manifesto-hd">
+        <div>
+          <h2>Manifesto do ARGUS GATE FRAMEWORK (AGF)</h2>
+          <div class="meta">Visão que orienta. Portas que decidem. O AGF existe para visibilidade total, decisão consciente e execução controlada.</div>
+        </div>
+        <span class="pill" style="border-color:rgba(79,148,255,.55);background:rgba(79,148,255,.12)">AGF</span>
+      </div>
 
+      <div class="manifesto-inner">
         <div class="m-quote">
-          Inspirado em <strong>Argus</strong>, o guardião de muitas visões, e no conceito de <strong>Gate</strong> como porta formal de validação entre fases, o método garante que <strong>nenhuma etapa avance sem clareza, estabilidade e valor</strong>.<br><br>
+          Inspirado em <strong>Argus</strong>, o guardião de muitas visões, e no conceito de <strong>Gate</strong> como portas de validação entre fases,
+          o método garante que <strong>nenhuma etapa avance sem clareza, estabilidade e valor</strong>.<br><br>
           Nós não avançamos por pressão de cronograma. Nós avançamos por <strong>consistência</strong>.
         </div>
 
@@ -709,7 +809,7 @@
 
           <div class="m-card">
             <h3>3. Governança não é burocracia</h3>
-            <p>Governança significa <strong>clareza de responsabilidade</strong>, decisão baseada em fatos e previsibilidade. O Gate não trava: ele <strong>protege</strong>.</p>
+            <p>Governança significa clareza de responsabilidade, decisão baseada em fatos e previsibilidade. O Gate não trava: ele <strong>protege</strong>.</p>
           </div>
 
           <div class="m-card">
@@ -732,12 +832,12 @@
 
           <div class="m-card">
             <h3>7. Decidir é tão importante quanto executar</h3>
-            <p>Executar bem é essencial. Decidir bem é estratégico. O Gate existe para garantir as decisões certas no momento certo.</p>
+            <p>Executar bem é essencial. Decidir bem é estratégico. O Gate garante as decisões certas no momento certo.</p>
           </div>
 
           <div class="m-card">
             <h3>Como operamos</h3>
-            <p>Cada Gate avalia, no mínimo: <strong>Visão, Valor, Risco, Qualidade e Controle</strong>. Sem aprovação do Gate, não há avanço.</p>
+            <p>Cada Gate avalia, no mínimo: <strong>Visão, Valor, Risco, Qualidade e Controle</strong>. Sem aprovação do Gate, <strong>não há avanço</strong>.</p>
             <ul class="m-list">
               <li><strong>Visão:</strong> todos entendem para onde estamos indo?</li>
               <li><strong>Valor:</strong> o que foi entregue gera resultado?</li>
@@ -749,16 +849,14 @@
         </div>
 
         <div class="m-footer">
-          <div class="tagline">
-            <em>Argus vê tudo. O Gate decide. A implantação avança com consciência.</em>
-          </div>
-          <div class="pill-agf">Visão contínua • decisão controlada • avanço consciente</div>
+          <div class="tagline"><em>Argus vê tudo. O Gate decide. A implantação avança com consciência.</em></div>
+          <span class="pill" style="border-color:rgba(79,148,255,.55);background:rgba(79,148,255,.12)">Visão contínua • decisão controlada • avanço consciente</span>
         </div>
       </div>
     </section>
 
     <!-- G1 -->
-    <section class="section" id="vendas">
+    <section class="section reveal" id="vendas">
       <div class="section-hd">
         <div>
           <h2>G1) Vendas</h2>
@@ -807,7 +905,7 @@
     </section>
 
     <!-- G2 -->
-    <section class="section" id="arquitetura">
+    <section class="section reveal" id="arquitetura">
       <div class="section-hd">
         <div>
           <h2>G2) Arquitetura</h2>
@@ -855,7 +953,7 @@
     </section>
 
     <!-- G3 -->
-    <section class="section" id="transicao">
+    <section class="section reveal" id="transicao">
       <div class="section-hd">
         <div>
           <h2>G3) Transição Interna</h2>
@@ -904,7 +1002,7 @@
     </section>
 
     <!-- G4 -->
-    <section class="section" id="onboarding">
+    <section class="section reveal" id="onboarding">
       <div class="section-hd">
         <div>
           <h2>G4) Onboarding (Kickoff)</h2>
@@ -954,7 +1052,7 @@
     </section>
 
     <!-- G5 -->
-    <section class="section" id="implantacao">
+    <section class="section reveal" id="implantacao">
       <div class="section-hd">
         <div>
           <h2>G5) Implantação (AGF)</h2>
@@ -1012,7 +1110,7 @@
     </section>
 
     <!-- G6 -->
-    <section class="section" id="suporte">
+    <section class="section reveal" id="suporte">
       <div class="section-hd">
         <div>
           <h2>G6) Suporte</h2>
@@ -1062,27 +1160,29 @@
   </div>
 
   <script>
-    // Destaque ativo (gatebar + ribbon) conforme scroll, incluindo Manifesto
+    // 1) Medir altura real do gatebar e ajustar stickyTop (para headers sempre visíveis)
     (function(){
-      const navBtns = Array.from(document.querySelectorAll(".gbtn"));
-      const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
+      const gatebar = document.getElementById("gatebar");
+      function setVars(){
+        const h = gatebar ? Math.ceil(gatebar.getBoundingClientRect().height) : 68;
+        document.documentElement.style.setProperty("--gatebarH", h + "px");
+      }
+      window.addEventListener("resize", setVars);
+      window.addEventListener("load", setVars);
+      setVars();
+    })();
 
-      const sections = [
-        document.getElementById("manifesto"),
-        document.getElementById("vendas"),
-        document.getElementById("arquitetura"),
-        document.getElementById("transicao"),
-        document.getElementById("onboarding"),
-        document.getElementById("implantacao"),
-        document.getElementById("suporte")
-      ].filter(Boolean);
+    // 2) Ativo no menu conforme scroll
+    (function(){
+      const navBtns = Array.from(document.querySelectorAll(".gbtn[data-target]"));
+      const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
+      const ids = ["manifesto","vendas","arquitetura","transicao","onboarding","implantacao","suporte"];
+      const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
 
       function setActive(){
-        const y = window.scrollY + 200;
+        const y = window.scrollY + 220;
         let current = sections[0]?.id || "";
-        for (const s of sections) {
-          if (s.offsetTop <= y) current = s.id;
-        }
+        for (const s of sections) if (s.offsetTop <= y) current = s.id;
 
         navBtns.forEach(a => a.classList.toggle("active", a.dataset.target === current));
         ribbons.forEach(r => r.classList.toggle("active", r.dataset.target === current));
@@ -1091,6 +1191,24 @@
       window.addEventListener("scroll", setActive, {passive:true});
       window.addEventListener("load", setActive);
       setActive();
+    })();
+
+    // 3) Reveal suave (fluidez)
+    (function(){
+      const els = Array.from(document.querySelectorAll(".reveal"));
+      if (!("IntersectionObserver" in window)) {
+        els.forEach(e => e.classList.add("inview"));
+        return;
+      }
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){
+            en.target.classList.add("inview");
+            io.unobserve(en.target);
+          }
+        });
+      }, {threshold: 0.12});
+      els.forEach(e => io.observe(e));
     })();
   </script>
 </body>
