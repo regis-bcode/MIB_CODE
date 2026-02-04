@@ -24,20 +24,19 @@
 
       --radius-xl:22px;
       --radius-lg:18px;
-      --radius-md:14px;
 
       --shadow:0 18px 50px rgba(0,0,0,.35);
       --shadow2:0 10px 26px rgba(0,0,0,.28);
 
       --max:1220px;
 
-      /* calculado via JS */
+      /* Calculado via JS */
       --gatebarH: 72px;
+      --contextbarH: 56px;
       --stickyOffset: 10px;
-      --stickyTop: calc(var(--gatebarH) + var(--stickyOffset) + 10px);
 
-      /* offset extra para “nada encavalado” ao clicar no menu */
-      --navJumpOffset: calc(var(--gatebarH) + 22px);
+      /* Topo total “ocupado” por barras fixas */
+      --topStack: calc(var(--gatebarH) + var(--contextbarH) + var(--stickyOffset) + 14px);
     }
 
     *{ box-sizing:border-box }
@@ -76,12 +75,12 @@
       position: sticky;
       top: 10px;
       z-index: 1000;
-      margin: 10px auto 14px;
+      margin: 10px auto 10px;
       border:1px solid rgba(248,247,255,.14);
       border-radius: 18px;
-      background: linear-gradient(180deg, rgba(13,37,63,.74), rgba(13,37,63,.40));
+      background: linear-gradient(180deg, rgba(13,37,63,.78), rgba(13,37,63,.46));
       box-shadow: var(--shadow2);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       overflow:hidden;
     }
     .gatebar-inner{
@@ -136,8 +135,6 @@
       align-items:center;
     }
     .gbtn{
-      appearance:none;
-      -webkit-appearance:none;
       text-decoration:none;
       color: rgba(248,247,255,.95);
       font-weight:900;
@@ -162,6 +159,66 @@
       border-color: rgba(79,148,255,.60);
       background: rgba(79,148,255,.14);
       box-shadow: 0 0 0 4px rgba(79,148,255,.10);
+    }
+
+    /* =========================================================
+       CONTEXT BAR (FIX DEFINITIVO: cabeçalho sempre visível SEM encavalar)
+       - Barra fixa abaixo do menu, mostrando “onde estou”
+       - Substitui cabeçalhos sticky dentro das seções
+       ========================================================= */
+    .contextbar{
+      position: sticky;
+      top: calc(10px + var(--gatebarH) + 8px);
+      z-index: 950;
+      border:1px solid rgba(248,247,255,.12);
+      border-radius: 16px;
+      background: rgba(10,26,43,.92);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow2);
+      padding: 10px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin: 0 auto 14px;
+    }
+    .ctx-left{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .ctx-title{
+      margin:0;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.15px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .ctx-sub{
+      margin:0;
+      font-size:11px;
+      color: var(--muted);
+      line-height:1.35;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .ctx-badge{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:11px;
+      font-weight:900;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,122,89,.50);
+      background: rgba(255,122,89,.10);
+      color: rgba(248,247,255,.92);
+      white-space:nowrap;
     }
 
     /* =========================================================
@@ -191,7 +248,7 @@
 
     .hero-logo-card{
       width:100%;
-      max-width: 230px;
+      max-width: 220px;
       aspect-ratio: 1 / 1;
       border-radius: 24px;
       border:1px solid rgba(248,247,255,.14);
@@ -267,7 +324,6 @@
       border-radius:999px;
       background: rgba(248,247,255,.22);
     }
-
     .ribbons{
       display:grid;
       grid-template-columns: repeat(6, minmax(180px, 1fr));
@@ -295,7 +351,6 @@
       border:2px solid rgba(248,247,255,.30);
       background: rgba(248,247,255,.85);
     }
-
     .rb-flag{
       position:relative;
       border-radius: 16px;
@@ -306,7 +361,6 @@
       height: 250px;
       display:flex;
       flex-direction:column;
-      transform: translateZ(0);
       transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
     }
     .rb:hover .rb-flag{
@@ -360,17 +414,89 @@
     .rb.active .rb-dot{ background: rgba(79,148,255,.95); border-color: rgba(79,148,255,.65); }
 
     /* =========================================================
-       REVEAL
+       SECTIONS (SEM sticky header interno => zero encavalamento)
        ========================================================= */
-    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
-    .reveal.inview{ opacity:1; transform: translateY(0); }
+    section[id]{ scroll-margin-top: var(--topStack); }
 
-    /* =========================================================
-       MANIFESTO
-       ========================================================= */
-    #manifesto{ scroll-margin-top: var(--navJumpOffset); }
-    .manifesto{
+    .block{
       margin-top: 18px;
+      border-radius: var(--radius-xl);
+      border:1px solid rgba(248,247,255,.12);
+      background: linear-gradient(180deg, rgba(13,37,63,.55), rgba(13,37,63,.25));
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+
+    .block-hd{
+      padding: 18px 20px 14px;
+      border-bottom:1px solid rgba(248,247,255,.10);
+      background: rgba(10,26,43,.35);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .block-titlewrap{ min-width:0; }
+    .block-title{
+      margin:0;
+      font-size:16px;
+      font-weight:900;
+      line-height:1.2;
+    }
+    .block-sub{
+      margin-top:6px;
+      margin-bottom:0;
+      font-size:12px;
+      color: var(--muted);
+      line-height:1.45;
+    }
+
+    .block-inner{ padding: 16px 20px 18px; }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      align-items:stretch;
+    }
+    .card{
+      border:1px solid rgba(248,247,255,.10);
+      background: rgba(13,37,63,.30);
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+      box-shadow: 0 12px 26px rgba(0,0,0,.22);
+      min-height: 170px;
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.2px;
+      color: rgba(248,247,255,.92);
+    }
+    .card ul{
+      margin:0;
+      padding-left:18px;
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    .decision{
+      margin-top: 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,122,89,.28);
+      background: linear-gradient(90deg, rgba(255,122,89,.12), rgba(79,148,255,.08));
+      padding: 14px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .decision .t{ font-weight:900; font-size:12px; color: rgba(248,247,255,.92); margin:0; }
+    .decision .q{ margin:0; font-size:12px; color: rgba(248,247,255,.78); line-height:1.55; }
+
+    /* Manifesto */
+    .manifesto{
       border-radius: var(--radius-xl);
       border:1px solid rgba(248,247,255,.14);
       background:
@@ -379,24 +505,9 @@
         linear-gradient(180deg, rgba(13,37,63,.62), rgba(13,37,63,.28));
       box-shadow: var(--shadow);
       overflow:hidden;
+      margin-top:18px;
     }
-    .manifesto-hd{
-      position: sticky;
-      top: var(--stickyTop);
-      z-index: 50;
-      padding:14px 20px;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
-      border-bottom:1px solid rgba(248,247,255,.10);
-      background: rgba(10,26,43,.88);
-      backdrop-filter: blur(10px);
-    }
-    .manifesto-hd h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
-    .manifesto-hd .meta{ margin-top:6px; font-size:12px; color:var(--muted); line-height:1.5; max-width: 92ch; }
     .manifesto-inner{ padding: 16px 20px 20px; }
-
     .m-quote{
       border:1px solid rgba(248,247,255,.14);
       background: rgba(248,247,255,.06);
@@ -418,7 +529,6 @@
     .m-card p{ margin:0; font-size:12px; line-height:1.6; color: var(--muted); }
     .m-card p strong{ color: rgba(248,247,255,.92); }
     .m-list{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size:12px; line-height:1.7; }
-
     .m-footer{
       margin-top: 14px;
       padding-top: 14px;
@@ -431,147 +541,15 @@
     }
     .tagline{ font-weight:900; color: rgba(248,247,255,.92); font-size:12px; line-height:1.45; }
 
-    /* =========================================================
-       GATE SECTIONS (FIX definitivo: nada encavalado)
-       ========================================================= */
-    .gate{ margin-top: 18px; border-radius: var(--radius-xl); border:1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(13,37,63,.55), rgba(13,37,63,.25));
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      position:relative;
-    }
-
-    /* IMPORTANTE: offset ao clicar no menu para cada gate */
-    .gate[id]{ scroll-margin-top: var(--navJumpOffset); }
-
-    .gate-hd{
-      position: sticky;
-      top: var(--stickyTop);
-      z-index: 60;
-      padding:14px 20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      border-bottom:1px solid rgba(248,247,255,.10);
-      background: rgba(10,26,43,.90);
-      backdrop-filter: blur(10px);
-      min-height: 78px;
-    }
-
-    .gate-titlewrap{ min-width:0; display:flex; flex-direction:column; gap:4px; }
-    .gate-title{
-      margin:0;
-      font-size:16px;
-      font-weight:900;
-      letter-spacing:.2px;
-      line-height:1.2;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .gate-subtitle{
-      margin:0;
-      font-size:12px;
-      color: var(--muted);
-      line-height:1.4;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 90ch;
-    }
-
-    .gate-badge{
-      flex:0 0 auto;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-size:11px;
-      font-weight:900;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(255,122,89,.50);
-      background: rgba(255,122,89,.10);
-      color: rgba(248,247,255,.92);
-      white-space:nowrap;
-    }
-
-    /* FIX PRINCIPAL:
-       - garante espaço real depois do header
-       - e evita conteúdo “subir” encostando no header ao ancorar
-    */
-    .gate-inner{
-      padding: 18px 20px 18px;
-    }
-
-    .gate-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      align-items:stretch;
-    }
-
-    .card{
-      border:1px solid rgba(248,247,255,.10);
-      background: rgba(13,37,63,.30);
-      border-radius: 16px;
-      padding: 14px 14px 12px;
-      box-shadow: 0 12px 26px rgba(0,0,0,.22);
-      display:flex;
-      flex-direction:column;
-      min-height: 170px; /* FIX: nunca “comer” lista */
-      overflow: visible;
-    }
-    .card h3{
-      margin:0 0 10px;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.2px;
-      color: rgba(248,247,255,.92);
-    }
-    .card ul{
-      margin:0;
-      padding-left:18px;
-      color: var(--muted);
-      font-size:12px;
-      line-height:1.7;
-    }
-
-    .gate-decision{
-      margin-top: 12px;
-      border-radius: 16px;
-      border:1px solid rgba(255,122,89,.28);
-      background: linear-gradient(90deg, rgba(255,122,89,.12), rgba(79,148,255,.08));
-      padding: 14px 14px;
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-    .gate-decision .t{ font-weight:900; font-size:12px; color: rgba(248,247,255,.92); margin:0; }
-    .gate-decision .q{ margin:0; font-size:12px; color: rgba(248,247,255,.78); line-height:1.55; }
-
-    /* =========================================================
-       BREAKPOINTS
-       ========================================================= */
-    @media (max-width:1100px){
-      .gbtn{ font-size:10.1px; padding: 9px 8px; }
-      .hero-logo-card{ max-width: 220px; }
-      .gate-subtitle{ max-width: 70ch; }
-    }
+    /* Responsivo */
     @media (max-width:980px){
       .hero-inner{ grid-template-columns:1fr; }
       .hero-aside{ justify-content:flex-start; }
-      .hero-logo-card{ max-width: 220px; }
-
       .brand{ min-width: 220px; }
       .gates{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
+      .grid2{ grid-template-columns: 1fr; }
       .m-grid{ grid-template-columns: 1fr; }
-      .gate-grid{ grid-template-columns: 1fr; }
-      .gate-hd{ align-items:flex-start; }
-      .gate-title{ white-space:normal; }
-      .gate-subtitle{ white-space:normal; }
-      .card{ min-height: unset; }
+      .ctx-sub{ display:none; }
     }
     @media (max-width:640px){
       .wrap{ padding: 10px 10px 75px; }
@@ -581,8 +559,9 @@
       .gbtn{ font-size:10px; padding: 8px 7px; }
       .hero h1{ font-size:24px; }
       .cta-btn{ width:100%; }
-      .gate-hd{ padding:12px 14px; }
-      .gate-inner{ padding: 14px 14px 16px; }
+      .contextbar{ padding: 9px 10px; }
+      .block-hd{ padding: 16px 14px 12px; }
+      .block-inner{ padding: 14px 14px 16px; }
     }
   </style>
 </head>
@@ -618,8 +597,17 @@
       </div>
     </div>
 
+    <!-- CONTEXT BAR (sempre visível, sem encavalar nada) -->
+    <div class="contextbar" id="contextbar" aria-label="Contexto do Gate atual">
+      <div class="ctx-left">
+        <p class="ctx-title" id="ctxTitle">Início • Visão Geral</p>
+        <p class="ctx-sub" id="ctxSub">Role ou navegue para visualizar o Gate em foco.</p>
+      </div>
+      <span class="ctx-badge" id="ctxBadge">AGF</span>
+    </div>
+
     <!-- HERO -->
-    <section class="hero reveal inview" id="inicio">
+    <section class="hero" id="inicio">
       <div class="hero-inner">
         <div>
           <h1>Workflow End-to-End em Gates</h1>
@@ -650,12 +638,10 @@
 
         <div class="ribbon-track">
           <div class="ribbons" id="ribbons">
-
             <a class="rb" href="#vendas" data-target="vendas">
               <div class="rb-top"><div class="rb-icon">G1</div><div class="rb-dot"></div></div>
               <div class="rb-flag c1">
-                <div class="rb-num">01</div>
-                <div class="rb-name">Vendas</div>
+                <div class="rb-num">01</div><div class="rb-name">Vendas</div>
                 <div class="rb-desc">Proposta → Ciclo de Arquitetura → Validação PMO</div>
                 <div class="rb-gate">Gate 1 • Investimento</div>
               </div>
@@ -664,8 +650,7 @@
             <a class="rb" href="#arquitetura" data-target="arquitetura">
               <div class="rb-top"><div class="rb-icon">G2</div><div class="rb-dot"></div></div>
               <div class="rb-flag c2">
-                <div class="rb-num">02</div>
-                <div class="rb-name">Arquitetura</div>
+                <div class="rb-num">02</div><div class="rb-name">Arquitetura</div>
                 <div class="rb-desc">Validação técnica e operacional. Dependências, integrações e riscos críticos explícitos.</div>
                 <div class="rb-gate">Gate 2 • Viabilidade</div>
               </div>
@@ -674,8 +659,7 @@
             <a class="rb" href="#transicao" data-target="transicao">
               <div class="rb-top"><div class="rb-icon">G3</div><div class="rb-dot"></div></div>
               <div class="rb-flag c3">
-                <div class="rb-num">03</div>
-                <div class="rb-name">Transição Interna</div>
+                <div class="rb-num">03</div><div class="rb-name">Transição Interna</div>
                 <div class="rb-desc">Comercial + Arquitetura apresentam para PMO/GPs. Internalização antes do cliente.</div>
                 <div class="rb-gate">Gate 3 • Internalizado</div>
               </div>
@@ -684,8 +668,7 @@
             <a class="rb" href="#onboarding" data-target="onboarding">
               <div class="rb-top"><div class="rb-icon">G4</div><div class="rb-dot"></div></div>
               <div class="rb-flag c4">
-                <div class="rb-num">04</div>
-                <div class="rb-name">Onboarding</div>
+                <div class="rb-num">04</div><div class="rb-name">Onboarding</div>
                 <div class="rb-desc">Kickoff, governança, papéis, cadência e autorização formal da execução.</div>
                 <div class="rb-gate">Gate 4 • Início</div>
               </div>
@@ -694,8 +677,7 @@
             <a class="rb" href="#implantacao" data-target="implantacao">
               <div class="rb-top"><div class="rb-icon">G5</div><div class="rb-dot"></div></div>
               <div class="rb-flag c5">
-                <div class="rb-num">05</div>
-                <div class="rb-name">Implantação</div>
+                <div class="rb-num">05</div><div class="rb-name">Implantação</div>
                 <div class="rb-desc">Execução controlada com fases PMI: iniciação, planejamento, execução, monitoramento e encerramento.</div>
                 <div class="rb-gate">Gate 5 • Entrega</div>
               </div>
@@ -704,26 +686,24 @@
             <a class="rb" href="#suporte" data-target="suporte">
               <div class="rb-top"><div class="rb-icon">G6</div><div class="rb-dot"></div></div>
               <div class="rb-flag c6">
-                <div class="rb-num">06</div>
-                <div class="rb-name">Suporte</div>
+                <div class="rb-num">06</div><div class="rb-name">Suporte</div>
                 <div class="rb-desc">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite do suporte.</div>
                 <div class="rb-gate">Gate 6 • Sustentação</div>
               </div>
             </a>
-
           </div>
         </div>
       </div>
     </section>
 
     <!-- MANIFESTO -->
-    <section class="manifesto reveal" id="manifesto">
-      <div class="manifesto-hd">
-        <div>
-          <h2>Manifesto do ARGUS GATE FRAMEWORK (AGF)</h2>
-          <p class="meta">Visão que orienta. Portas que decidem. O AGF existe para visibilidade total, decisão consciente e execução controlada.</p>
+    <section class="manifesto" id="manifesto" data-ctx-title="Manifesto • ARGUS GATE FRAMEWORK" data-ctx-sub="Visão que orienta. Portas que decidem." data-ctx-badge="Manifesto">
+      <div class="block-hd">
+        <div class="block-titlewrap">
+          <h2 class="block-title">Manifesto do ARGUS GATE FRAMEWORK (AGF)</h2>
+          <p class="block-sub">Visão que orienta. Portas que decidem. O AGF existe para visibilidade total, decisão consciente e execução controlada.</p>
         </div>
-        <span class="gate-badge" style="border-color:rgba(79,148,255,.55);background:rgba(79,148,255,.12)">AGF</span>
+        <span class="ctx-badge">AGF</span>
       </div>
 
       <div class="manifesto-inner">
@@ -739,72 +719,51 @@
             <p>Nada pode ser bem executado sem ser claramente visto. O AGF mantém visibilidade constante sobre <strong>escopo, riscos, progresso, valor e impactos</strong>.</p>
             <ul class="m-list"><li>O que não é visto, não é governado.</li></ul>
           </div>
-
           <div class="m-card">
             <h3>2. Cada fase é uma porta de decisão</h3>
             <p>O avanço não é automático. Cada etapa possui um <strong>Gate</strong> com critérios objetivos antes da continuidade.</p>
             <ul class="m-list"><li>Avançar é uma escolha consciente, não um impulso.</li></ul>
           </div>
-
           <div class="m-card">
             <h3>3. Governança não é burocracia</h3>
             <p>Governança significa clareza de responsabilidade, decisão baseada em fatos e previsibilidade. O Gate não trava: ele <strong>protege</strong>.</p>
           </div>
-
           <div class="m-card">
             <h3>4. Valor antes de velocidade</h3>
             <p>Ser ágil não é apenas ser rápido. É entregar <strong>valor real</strong>, no momento certo, com o menor risco possível.</p>
             <ul class="m-list"><li>Velocidade sem direção é apenas movimento.</li></ul>
           </div>
-
           <div class="m-card">
             <h3>5. Qualidade é critério de avanço</h3>
             <p>Qualidade não é uma fase final. Ela é avaliada em todos os Gates como condição mínima para seguir adiante.</p>
             <ul class="m-list"><li>O próximo passo só existe se o atual estiver sólido.</li></ul>
           </div>
-
           <div class="m-card">
             <h3>6. Risco visível é risco gerenciável</h3>
             <p>O AGF não elimina riscos. Ele os expõe cedo para que decisões sejam tomadas com consciência.</p>
             <ul class="m-list"><li>Surpresas não são falhas técnicas, são falhas de visão.</li></ul>
           </div>
-
-          <div class="m-card">
-            <h3>7. Decidir é tão importante quanto executar</h3>
-            <p>Executar bem é essencial. Decidir bem é estratégico. O Gate garante as decisões certas no momento certo.</p>
-          </div>
-
-          <div class="m-card">
-            <h3>Como operamos</h3>
-            <p>Cada Gate avalia, no mínimo: <strong>Visão, Valor, Risco, Qualidade e Controle</strong>. Sem aprovação do Gate, <strong>não há avanço</strong>.</p>
-            <ul class="m-list">
-              <li><strong>Visão:</strong> todos entendem para onde estamos indo?</li>
-              <li><strong>Valor:</strong> o que foi entregue gera resultado?</li>
-              <li><strong>Risco:</strong> o próximo passo é seguro?</li>
-              <li><strong>Qualidade:</strong> o nível atual é aceitável?</li>
-              <li><strong>Controle:</strong> há governança e rastreabilidade?</li>
-            </ul>
-          </div>
         </div>
 
         <div class="m-footer">
           <div class="tagline"><em>Argus vê tudo. O Gate decide. A implantação avança com consciência.</em></div>
-          <span class="gate-badge" style="border-color:rgba(79,148,255,.55);background:rgba(79,148,255,.12)">Visão contínua • decisão controlada • avanço consciente</span>
+          <span class="ctx-badge">Visão contínua • decisão controlada • avanço consciente</span>
         </div>
       </div>
     </section>
 
     <!-- G1 -->
-    <section class="gate reveal" id="vendas">
-      <div class="gate-hd">
-        <div class="gate-titlewrap">
-          <h2 class="gate-title">G1) Vendas</h2>
-          <p class="gate-subtitle">Proposta → Ciclo de Arquitetura → Validação PMO</p>
+    <section class="block" id="vendas" data-ctx-title="G1 • Vendas" data-ctx-sub="Proposta → Ciclo de Arquitetura → Validação PMO" data-ctx-badge="Gate 1">
+      <div class="block-hd">
+        <div class="block-titlewrap">
+          <h2 class="block-title">G1) Vendas</h2>
+          <p class="block-sub">Proposta → Ciclo de Arquitetura → Validação PMO</p>
         </div>
-        <span class="gate-badge">Gate 1</span>
+        <span class="ctx-badge">Gate 1</span>
       </div>
-      <div class="gate-inner">
-        <div class="gate-grid">
+
+      <div class="block-inner">
+        <div class="grid2">
           <div class="card">
             <h3>Atividades-chave</h3>
             <ul>
@@ -823,7 +782,8 @@
             </ul>
           </div>
         </div>
-        <div class="gate-decision">
+
+        <div class="decision">
           <p class="t">Gate 1 — Decisão de Investimento</p>
           <p class="q">Pergunta: vale a pena investir e vender esta solução?</p>
         </div>
@@ -831,23 +791,24 @@
     </section>
 
     <!-- G2 -->
-    <section class="gate reveal" id="arquitetura">
-      <div class="gate-hd">
-        <div class="gate-titlewrap">
-          <h2 class="gate-title">G2) Arquitetura</h2>
-          <p class="gate-subtitle">Validação técnica e operacional do que foi vendido. Dependências, integrações e riscos críticos evidenciados.</p>
+    <section class="block" id="arquitetura" data-ctx-title="G2 • Arquitetura" data-ctx-sub="Validação técnica e operacional do que foi vendido" data-ctx-badge="Gate 2">
+      <div class="block-hd">
+        <div class="block-titlewrap">
+          <h2 class="block-title">G2) Arquitetura</h2>
+          <p class="block-sub">Validação técnica e operacional do que foi vendido. Dependências, integrações e riscos críticos evidenciados.</p>
         </div>
-        <span class="gate-badge">Gate 2</span>
+        <span class="ctx-badge">Gate 2</span>
       </div>
-      <div class="gate-inner">
-        <div class="gate-grid">
+
+      <div class="block-inner">
+        <div class="grid2">
           <div class="card">
             <h3>Atividades-chave</h3>
             <ul>
               <li>Desenho da solução e visão de implementação.</li>
               <li>Mapa de integrações e dependências críticas.</li>
-              <li>Identificação de restrições e pontos não negociáveis.</li>
-              <li>Explicitamento de riscos críticos e mitigação inicial.</li>
+              <li>Restrições e pontos não negociáveis.</li>
+              <li>Riscos críticos + mitigação inicial.</li>
             </ul>
           </div>
           <div class="card">
@@ -859,7 +820,8 @@
             </ul>
           </div>
         </div>
-        <div class="gate-decision">
+
+        <div class="decision">
           <p class="t">Gate 2 — Viabilidade da Solução</p>
           <p class="q">Pergunta: a solução vendida é tecnicamente e operacionalmente viável?</p>
         </div>
@@ -867,16 +829,17 @@
     </section>
 
     <!-- G3 -->
-    <section class="gate reveal" id="transicao">
-      <div class="gate-hd">
-        <div class="gate-titlewrap">
-          <h2 class="gate-title">G3) Transição Interna</h2>
-          <p class="gate-subtitle">Comercial + Arquitetura apresentam para PMO/GPs. Internalização completa antes do cliente.</p>
+    <section class="block" id="transicao" data-ctx-title="G3 • Transição Interna" data-ctx-sub="Internalização: Comercial + Arquitetura → PMO/GPs" data-ctx-badge="Gate 3">
+      <div class="block-hd">
+        <div class="block-titlewrap">
+          <h2 class="block-title">G3) Transição Interna</h2>
+          <p class="block-sub">Comercial + Arquitetura apresentam para PMO/GPs. Internalização completa antes do cliente.</p>
         </div>
-        <span class="gate-badge">Gate 3</span>
+        <span class="ctx-badge">Gate 3</span>
       </div>
-      <div class="gate-inner">
-        <div class="gate-grid">
+
+      <div class="block-inner">
+        <div class="grid2">
           <div class="card">
             <h3>Atividades-chave</h3>
             <ul>
@@ -895,7 +858,8 @@
             </ul>
           </div>
         </div>
-        <div class="gate-decision">
+
+        <div class="decision">
           <p class="t">Gate 3 — Projeto Internalizado</p>
           <p class="q">Pergunta: PMO e GPs entendem o projeto o suficiente para assumir a execução?</p>
         </div>
@@ -903,16 +867,17 @@
     </section>
 
     <!-- G4 -->
-    <section class="gate reveal" id="onboarding">
-      <div class="gate-hd">
-        <div class="gate-titlewrap">
-          <h2 class="gate-title">G4) Onboarding (Kickoff)</h2>
-          <p class="gate-subtitle">Kickoff, governança, papéis, cadência e autorização formal para iniciar a execução.</p>
+    <section class="block" id="onboarding" data-ctx-title="G4 • Onboarding (Kickoff)" data-ctx-sub="Governança, papéis, cadência e autorização de execução" data-ctx-badge="Gate 4">
+      <div class="block-hd">
+        <div class="block-titlewrap">
+          <h2 class="block-title">G4) Onboarding (Kickoff)</h2>
+          <p class="block-sub">Kickoff, governança, papéis, cadência e autorização formal para iniciar a execução.</p>
         </div>
-        <span class="gate-badge">Gate 4</span>
+        <span class="ctx-badge">Gate 4</span>
       </div>
-      <div class="gate-inner">
-        <div class="gate-grid">
+
+      <div class="block-inner">
+        <div class="grid2">
           <div class="card">
             <h3>Conteúdos obrigatórios</h3>
             <ul>
@@ -932,7 +897,8 @@
             </ul>
           </div>
         </div>
-        <div class="gate-decision">
+
+        <div class="decision">
           <p class="t">Gate 4 — Autorização de Execução</p>
           <p class="q">Pergunta: o projeto está autorizado a iniciar a execução com governança e alinhamento estabelecidos?</p>
         </div>
@@ -940,16 +906,17 @@
     </section>
 
     <!-- G5 -->
-    <section class="gate reveal" id="implantacao">
-      <div class="gate-hd">
-        <div class="gate-titlewrap">
-          <h2 class="gate-title">G5) Implantação (AGF)</h2>
-          <p class="gate-subtitle">Execução controlada e orientada a valor, com fases PMI e disciplina de decisão contínua.</p>
+    <section class="block" id="implantacao" data-ctx-title="G5 • Implantação (AGF)" data-ctx-sub="Execução controlada com fases PMI e decisão contínua" data-ctx-badge="Gate 5">
+      <div class="block-hd">
+        <div class="block-titlewrap">
+          <h2 class="block-title">G5) Implantação (AGF)</h2>
+          <p class="block-sub">Execução controlada e orientada a valor, com fases PMI e disciplina de decisão contínua.</p>
         </div>
-        <span class="gate-badge">Gate 5</span>
+        <span class="ctx-badge">Gate 5</span>
       </div>
-      <div class="gate-inner">
-        <div class="gate-grid">
+
+      <div class="block-inner">
+        <div class="grid2">
           <div class="card">
             <h3>Fases (PMI) dentro do G5</h3>
             <ul>
@@ -971,7 +938,8 @@
             </ul>
           </div>
         </div>
-        <div class="gate-decision">
+
+        <div class="decision">
           <p class="t">Regra do Gate G5 (oficial)</p>
           <p class="q">Pergunta: <strong>Foi tudo implantado conforme o plano do projeto?</strong></p>
         </div>
@@ -979,16 +947,17 @@
     </section>
 
     <!-- G6 -->
-    <section class="gate reveal" id="suporte">
-      <div class="gate-hd">
-        <div class="gate-titlewrap">
-          <h2 class="gate-title">G6) Suporte</h2>
-          <p class="gate-subtitle">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite final do suporte.</p>
+    <section class="block" id="suporte" data-ctx-title="G6 • Suporte" data-ctx-sub="Passagem de bastão: conhecimento, SLA/canais e aceite" data-ctx-badge="Gate 6">
+      <div class="block-hd">
+        <div class="block-titlewrap">
+          <h2 class="block-title">G6) Suporte</h2>
+          <p class="block-sub">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite final do suporte.</p>
         </div>
-        <span class="gate-badge">Gate 6</span>
+        <span class="ctx-badge">Gate 6</span>
       </div>
-      <div class="gate-inner">
-        <div class="gate-grid">
+
+      <div class="block-inner">
+        <div class="grid2">
           <div class="card">
             <h3>Entregáveis mínimos</h3>
             <ul>
@@ -1006,7 +975,8 @@
             </ul>
           </div>
         </div>
-        <div class="gate-decision">
+
+        <div class="decision">
           <p class="t">Gate 6 — Encerramento</p>
           <p class="q">Pergunta: o suporte consegue sustentar sem dependência do time de projeto?</p>
         </div>
@@ -1016,34 +986,37 @@
   </div>
 
   <script>
-    // 1) Medir altura real do gatebar e atualizar variáveis (sticky + jump offset)
+    // 1) Medir alturas reais (menu + contextbar) e atualizar variáveis
     (function(){
       const gatebar = document.getElementById("gatebar");
+      const contextbar = document.getElementById("contextbar");
       function setVars(){
-        const h = gatebar ? Math.ceil(gatebar.getBoundingClientRect().height) : 72;
-        document.documentElement.style.setProperty("--gatebarH", h + "px");
+        const gb = gatebar ? Math.ceil(gatebar.getBoundingClientRect().height) : 72;
+        const cb = contextbar ? Math.ceil(contextbar.getBoundingClientRect().height) : 56;
+        document.documentElement.style.setProperty("--gatebarH", gb + "px");
+        document.documentElement.style.setProperty("--contextbarH", cb + "px");
       }
       window.addEventListener("resize", setVars);
       window.addEventListener("load", setVars);
       setVars();
     })();
 
-    // 2) Navegação com offset (FIX: ao clicar no menu, nada fica encavalado)
+    // 2) Scroll com offset fixo (stack do topo) — ZERO encavalamento
     (function(){
-      function getOffset(){
+      function getTopStack(){
         const root = getComputedStyle(document.documentElement);
-        const gatebarH = parseFloat(root.getPropertyValue("--gatebarH")) || 72;
-        return gatebarH + 22; // precisa ser maior que a altura da barra + respiro
+        const gb = parseFloat(root.getPropertyValue("--gatebarH")) || 72;
+        const cb = parseFloat(root.getPropertyValue("--contextbarH")) || 56;
+        const off = parseFloat(root.getPropertyValue("--stickyOffset")) || 10;
+        return gb + cb + off + 16; // respiro
       }
-
-      function smoothScrollToId(id){
+      function scrollToId(id){
         const el = document.getElementById(id);
         if(!el) return;
-        const top = el.getBoundingClientRect().top + window.scrollY - getOffset();
+        const top = el.getBoundingClientRect().top + window.scrollY - getTopStack();
         window.scrollTo({ top, behavior: "smooth" });
       }
 
-      // intercepta cliques de anchors internas
       document.querySelectorAll('a[href^="#"]').forEach(a=>{
         a.addEventListener("click", (e)=>{
           const href = a.getAttribute("href");
@@ -1052,53 +1025,52 @@
           if(!id) return;
           e.preventDefault();
           history.replaceState(null, "", href);
-          smoothScrollToId(id);
+          scrollToId(id);
         });
       });
 
-      // se abrir a página já com hash
       window.addEventListener("load", ()=>{
         const hash = (location.hash || "").replace("#","");
-        if(hash) setTimeout(()=>smoothScrollToId(hash), 50);
+        if(hash) setTimeout(()=>scrollToId(hash), 80);
       });
     })();
 
-    // 3) Ativo no menu + ribbon conforme scroll
+    // 3) Ativo no menu + contexto do gate (contextbar) conforme scroll
     (function(){
       const navBtns = Array.from(document.querySelectorAll(".gbtn[data-target]"));
       const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
+      const ctxTitle = document.getElementById("ctxTitle");
+      const ctxSub = document.getElementById("ctxSub");
+      const ctxBadge = document.getElementById("ctxBadge");
+
       const ids = ["manifesto","vendas","arquitetura","transicao","onboarding","implantacao","suporte"];
       const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
 
       function setActive(){
         const y = window.scrollY + 260;
-        let current = sections[0]?.id || "";
-        for (const s of sections) if (s.offsetTop <= y) current = s.id;
+        let current = sections[0]?.id || "inicio";
+
+        for (const s of sections) {
+          if (s.offsetTop <= y) current = s.id;
+        }
 
         navBtns.forEach(a => a.classList.toggle("active", a.dataset.target === current));
         ribbons.forEach(r => r.classList.toggle("active", r.dataset.target === current));
+
+        const sec = document.getElementById(current);
+        if(sec){
+          const t = sec.getAttribute("data-ctx-title") || (current === "manifesto" ? "Manifesto" : current);
+          const sub = sec.getAttribute("data-ctx-sub") || " ";
+          const badge = sec.getAttribute("data-ctx-badge") || "AGF";
+          ctxTitle.textContent = t;
+          ctxSub.textContent = sub;
+          ctxBadge.textContent = badge;
+        }
       }
+
       window.addEventListener("scroll", setActive, {passive:true});
       window.addEventListener("load", setActive);
       setActive();
-    })();
-
-    // 4) Reveal suave
-    (function(){
-      const els = Array.from(document.querySelectorAll(".reveal"));
-      if (!("IntersectionObserver" in window)) {
-        els.forEach(e => e.classList.add("inview"));
-        return;
-      }
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(en=>{
-          if(en.isIntersecting){
-            en.target.classList.add("inview");
-            io.unobserve(en.target);
-          }
-        });
-      }, {threshold: 0.12});
-      els.forEach(e => io.observe(e));
     })();
   </script>
 </body>
