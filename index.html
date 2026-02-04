@@ -15,7 +15,6 @@
       --teal:#32D0C2;
       --lime:#C2F970;
       --orange:#FF7A59;
-      --navy:#0D253F;
       --ice:#F8F7FF;
 
       --text:rgba(248,247,255,.95);
@@ -45,6 +44,7 @@
         radial-gradient(900px 520px at 30% 85%, rgba(50,208,194,.12), transparent 55%),
         linear-gradient(180deg, #06121d 0%, #050f18 100%);
       overflow-x:hidden;
+      scroll-behavior:smooth;
     }
 
     /* ASSETS */
@@ -61,17 +61,17 @@
       mix-blend-mode: screen;
     }
 
-    .wrap{max-width:var(--max); margin:0 auto; padding:14px 16px 80px;}
+    .wrap{max-width:var(--max); margin:0 auto; padding:12px 16px 80px;}
 
     /* =========================================================
-       GATEBAR RESPONSIVA (SEM SCROLL)
-       - Sempre ajusta na tela
-       - Em telas menores: quebra em 2 linhas
+       GATE BAR (sempre visível na carga e no scroll)
+       - Sem barra de rolagem
+       - Ajusta em 2 linhas no mobile
        ========================================================= */
     .gatebar{
       position: sticky;
       top: 10px;
-      z-index: 60;
+      z-index: 100;
       margin: 10px auto 14px;
       border:1px solid rgba(248,247,255,.14);
       border-radius: 18px;
@@ -80,7 +80,6 @@
       backdrop-filter: blur(10px);
       overflow:hidden;
     }
-
     .gatebar-inner{
       display:flex;
       align-items:center;
@@ -88,13 +87,11 @@
       gap:12px;
       padding: 10px 12px;
     }
-
     .brand{
       display:flex; align-items:center; gap:10px;
       min-width: 210px;
       flex: 0 0 auto;
     }
-
     .logo-wrap{
       width:40px; height:40px;
       border-radius: 12px;
@@ -112,7 +109,6 @@
       padding:6px;
       filter: drop-shadow(0 8px 12px rgba(0,0,0,.22));
     }
-
     .brand-txt .t1{
       font-weight:900;
       font-size:13px;
@@ -130,25 +126,24 @@
 
     .gates{
       display:grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr)); /* sempre cabe */
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap:8px;
       width: 100%;
       align-items:center;
     }
-
     .gbtn{
       text-decoration:none;
       color: rgba(248,247,255,.95);
       font-weight:900;
-      font-size:11px;              /* menor */
-      padding: 9px 10px;           /* menor */
+      font-size:11px;
+      padding: 9px 10px;
       border-radius: 999px;
       border:1px solid rgba(248,247,255,.14);
       background: rgba(13,37,63,.22);
       text-align:center;
       white-space:nowrap;
       overflow:hidden;
-      text-overflow:ellipsis;      /* não estoura */
+      text-overflow:ellipsis;
       transition: .18s ease;
     }
     .gbtn:hover{ transform: translateY(-1px); border-color: rgba(248,247,255,.22); }
@@ -180,9 +175,11 @@
     .hero p{ margin:0; color:var(--muted); font-size:13px; line-height:1.65; max-width:84ch; }
 
     .hero-aside{ display:flex; align-items:center; justify-content:center; }
+
+    /* LOGO DO HERO (diminuído) */
     .hero-logo-card{
       width:100%;
-      max-width: 360px;
+      max-width: 300px;               /* ↓ era 360/380 */
       aspect-ratio: 1 / 1;
       border-radius: 24px;
       border:1px solid rgba(248,247,255,.14);
@@ -191,7 +188,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:22px;
+      padding:18px;                   /* ↓ padding para não “estourar” */
       position:relative;
       overflow:hidden;
     }
@@ -206,11 +203,11 @@
     }
     .hero-logo{
       position:relative;
-      width: 84%;
-      height: 84%;
+      width: 78%;                     /* ↓ era 84% */
+      height: 78%;
       object-fit: contain;
       object-position: center;
-      filter: drop-shadow(0 18px 22px rgba(0,0,0,.35));
+      filter: drop-shadow(0 14px 18px rgba(0,0,0,.32));
     }
 
     /* Ribbon timeline */
@@ -275,9 +272,13 @@
       border:1px solid rgba(248,247,255,.14);
       box-shadow: 0 16px 40px rgba(0,0,0,.32);
       overflow:hidden;
-      min-height:128px;
-      transition:.18s ease;
+
+      /* UNIFORMIZAÇÃO */
+      height: 260px;                  /* todos os cards iguais */
+      display:flex;
+      flex-direction:column;
     }
+
     .rb-flag::after{
       content:"";
       position:absolute; left:18px; bottom:-12px;
@@ -290,16 +291,35 @@
 
     .rb-num{ font-weight:900; font-size:18px; margin:0 0 6px; }
     .rb-name{ margin:0 0 8px; font-size:13px; font-weight:900; }
-    .rb-desc{ margin:0; font-size:11px; line-height:1.55; color: rgba(255,255,255,.92); opacity:.95; }
+    .rb-desc{
+      margin:0;
+      font-size:11px;
+      line-height:1.55;
+      color: rgba(255,255,255,.92);
+      opacity:.95;
+
+      /* ocupa o espaço “sobrando” e evita “buracos” */
+      flex: 1 1 auto;
+      display:-webkit-box;
+      -webkit-line-clamp: 5;          /* padroniza texto */
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+    }
+
     .rb-gate{
-      display:inline-block; margin-top:10px;
-      font-size:10px; font-weight:900;
+      display:inline-block;
+      margin-top:12px;
+      font-size:10px;
+      font-weight:900;
       padding:7px 9px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.20);
       background: rgba(13,37,63,.22);
       color: rgba(255,255,255,.92);
       white-space:nowrap;
+
+      /* fica sempre alinhado no rodapé do card */
+      align-self:flex-start;
     }
 
     .c1{ background: linear-gradient(180deg, rgba(79,148,255,.78), rgba(13,37,63,.40)); }
@@ -406,19 +426,19 @@
     .gate-box p{ color: rgba(248,247,255,.92); }
     .gate-q{ margin-top:6px; color: var(--muted); }
 
-    /* =========================
-       BREAKPOINTS: SEM SCROLL, SEM ESTRAGAR
-       ========================= */
+    /* Breakpoints */
     @media (max-width:1100px){
       .gbtn{ font-size:10.5px; padding: 9px 8px; }
+      .hero-logo-card{ max-width: 280px; }
     }
     @media (max-width:980px){
       .hero-inner{ grid-template-columns:1fr; }
       .hero-aside{ justify-content:flex-start; }
-      .hero-logo-card{ max-width: 320px; }
+      .hero-logo-card{ max-width: 260px; }
       .step-content{ grid-template-columns:1fr; }
       .brand{ min-width: 190px; }
-      .gates{ grid-template-columns: repeat(3, minmax(0, 1fr)); } /* quebra para 2 linhas */
+      .gates{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .rb-flag{ height: 250px; }
     }
     @media (max-width:640px){
       .wrap{ padding: 10px 10px 70px; }
@@ -427,6 +447,7 @@
       .gates{ gap:6px; }
       .gbtn{ font-size:10px; padding: 8px 7px; }
       .hero h1{ font-size:24px; }
+      .rb-flag{ height: 245px; }
     }
   </style>
 </head>
@@ -437,7 +458,7 @@
 
   <div class="wrap">
 
-    <!-- GATEBAR (SEM SCROLL) -->
+    <!-- GATES SEMPRE VISÍVEL (já aparece ao carregar a página) -->
     <div class="gatebar" id="gatebar">
       <div class="gatebar-inner">
         <div class="brand">
@@ -578,7 +599,7 @@
           <h2>G1) Vendas</h2>
           <div class="meta">Proposta → Ciclo de Arquitetura → Validação PMO</div>
         </div>
-        <span class="pill orange">Gate 1</span>
+        <span class="pill" style="border-color:rgba(255,122,89,.45);background:rgba(255,122,89,.10)">Gate 1</span>
       </div>
 
       <details class="step" open>
@@ -627,7 +648,7 @@
           <h2>G2) Arquitetura</h2>
           <div class="meta">Validação técnica e operacional do que foi vendido. Integrações, dependências e riscos críticos evidenciados.</div>
         </div>
-        <span class="pill teal">Gate 2</span>
+        <span class="pill" style="border-color:rgba(50,208,194,.45);background:rgba(50,208,194,.10)">Gate 2</span>
       </div>
 
       <details class="step">
@@ -675,7 +696,7 @@
           <h2>G3) Transição Interna</h2>
           <div class="meta">Ciclo obrigatório: projeto internalizado por PMO/GPs antes do onboarding com o cliente.</div>
         </div>
-        <span class="pill blue">Gate 3</span>
+        <span class="pill" style="border-color:rgba(79,148,255,.45);background:rgba(79,148,255,.10)">Gate 3</span>
       </div>
 
       <details class="step" open>
@@ -724,7 +745,7 @@
           <h2>G4) Onboarding</h2>
           <div class="meta">Kickoff e alinhamento com o cliente: governança, papéis, cadência e plano inicial em ondas.</div>
         </div>
-        <span class="pill lime">Gate 4</span>
+        <span class="pill" style="border-color:rgba(194,249,112,.45);background:rgba(194,249,112,.10)">Gate 4</span>
       </div>
 
       <details class="step" open>
@@ -774,7 +795,7 @@
           <h2>G5) Implantação (MIB)</h2>
           <div class="meta">Execução com gates internos por fases (Iniciação → Planejamento → Execução → Monitoramento e Controle → Encerramento).</div>
         </div>
-        <span class="pill blue">Gate 5</span>
+        <span class="pill" style="border-color:rgba(79,148,255,.45);background:rgba(79,148,255,.10)">Gate 5</span>
       </div>
 
       <details class="step" open>
@@ -832,7 +853,7 @@
           <h2>G6) Suporte</h2>
           <div class="meta">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite do suporte.</div>
         </div>
-        <span class="pill orange">Gate 6</span>
+        <span class="pill" style="border-color:rgba(255,122,89,.45);background:rgba(255,122,89,.10)">Gate 6</span>
       </div>
 
       <details class="step">
@@ -876,7 +897,8 @@
   </div>
 
   <script>
-    // Destaque ativo (gatebar + ribbon) conforme scroll
+    // 1) Garantir que o gatebar esteja visível e o foco inicial seja nos Gates
+    //    (sem mudar o scroll do usuário; apenas marca ativo ao carregar)
     (function(){
       const gateBtns = Array.from(document.querySelectorAll(".gbtn"));
       const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
@@ -891,7 +913,7 @@
       ].filter(Boolean);
 
       function setActive(){
-        const y = window.scrollY + 190;
+        const y = window.scrollY + 200;
         let current = sections[0]?.id || "";
         for (const s of sections) {
           if (s.offsetTop <= y) current = s.id;
@@ -901,6 +923,7 @@
       }
 
       window.addEventListener("scroll", setActive, {passive:true});
+      window.addEventListener("load", setActive);
       setActive();
     })();
   </script>
