@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MIB | Workflow End-to-End — Baumgratz Code</title>
+  <title>AGF | ARGUS GATE FRAMEWORK — Workflow End-to-End</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,12 +61,10 @@
       mix-blend-mode: screen;
     }
 
-    .wrap{max-width:var(--max); margin:0 auto; padding:12px 16px 80px;}
+    .wrap{max-width:var(--max); margin:0 auto; padding:12px 16px 90px;}
 
     /* =========================================================
-       GATE BAR (sempre visível na carga e no scroll)
-       - Sem barra de rolagem
-       - Ajusta em 2 linhas no mobile
+       GATE BAR (sempre visível)
        ========================================================= */
     .gatebar{
       position: sticky;
@@ -89,7 +87,7 @@
     }
     .brand{
       display:flex; align-items:center; gap:10px;
-      min-width: 210px;
+      min-width: 230px;
       flex: 0 0 auto;
     }
     .logo-wrap{
@@ -118,7 +116,7 @@
     }
     .brand-txt .t2{
       margin-top:3px;
-      font-weight:600;
+      font-weight:700;
       font-size:10.5px;
       line-height:1.15;
       color:var(--muted);
@@ -126,7 +124,7 @@
 
     .gates{
       display:grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(7, minmax(0, 1fr)); /* + Manifesto */
       gap:8px;
       width: 100%;
       align-items:center;
@@ -135,7 +133,7 @@
       text-decoration:none;
       color: rgba(248,247,255,.95);
       font-weight:900;
-      font-size:11px;
+      font-size:10.5px;
       padding: 9px 10px;
       border-radius: 999px;
       border:1px solid rgba(248,247,255,.14);
@@ -176,10 +174,9 @@
 
     .hero-aside{ display:flex; align-items:center; justify-content:center; }
 
-    /* LOGO DO HERO (diminuído) */
     .hero-logo-card{
       width:100%;
-      max-width: 300px;               /* ↓ era 360/380 */
+      max-width: 300px;
       aspect-ratio: 1 / 1;
       border-radius: 24px;
       border:1px solid rgba(248,247,255,.14);
@@ -188,7 +185,7 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:18px;                   /* ↓ padding para não “estourar” */
+      padding:18px;
       position:relative;
       overflow:hidden;
     }
@@ -203,7 +200,7 @@
     }
     .hero-logo{
       position:relative;
-      width: 78%;                     /* ↓ era 84% */
+      width: 78%;
       height: 78%;
       object-fit: contain;
       object-position: center;
@@ -273,8 +270,7 @@
       box-shadow: 0 16px 40px rgba(0,0,0,.32);
       overflow:hidden;
 
-      /* UNIFORMIZAÇÃO */
-      height: 260px;                  /* todos os cards iguais */
+      height: 260px;                 /* cards uniformes */
       display:flex;
       flex-direction:column;
     }
@@ -297,11 +293,9 @@
       line-height:1.55;
       color: rgba(255,255,255,.92);
       opacity:.95;
-
-      /* ocupa o espaço “sobrando” e evita “buracos” */
       flex: 1 1 auto;
       display:-webkit-box;
-      -webkit-line-clamp: 5;          /* padroniza texto */
+      -webkit-line-clamp: 5;
       -webkit-box-orient: vertical;
       overflow:hidden;
     }
@@ -317,8 +311,6 @@
       background: rgba(13,37,63,.22);
       color: rgba(255,255,255,.92);
       white-space:nowrap;
-
-      /* fica sempre alinhado no rodapé do card */
       align-self:flex-start;
     }
 
@@ -329,7 +321,6 @@
     .c5{ background: linear-gradient(180deg, rgba(79,148,255,.55), rgba(50,208,194,.35)); }
     .c6{ background: linear-gradient(180deg, rgba(248,247,255,.25), rgba(13,37,63,.40)); }
 
-    /* Contraste fase verde */
     .c3, .c3 *{ color: rgba(8,20,34,.92) !important; }
     .c3 .rb-desc{ color: rgba(8,20,34,.85) !important; }
     .c3 .rb-gate{ border-color: rgba(8,20,34,.25) !important; background: rgba(248,247,255,.35) !important; }
@@ -357,6 +348,7 @@
     }
     .section-hd h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
     .section-hd .meta{ margin-top:6px; font-size:12px; color:var(--muted); line-height:1.5; max-width: 92ch; }
+
     .pill{
       font-size:11px; font-weight:900;
       padding:10px 12px;
@@ -365,10 +357,6 @@
       background: rgba(248,247,255,.06);
       white-space:nowrap;
     }
-    .pill.orange{ border-color: rgba(255,122,89,.45); background: rgba(255,122,89,.10); }
-    .pill.teal{ border-color: rgba(50,208,194,.45); background: rgba(50,208,194,.10); }
-    .pill.blue{ border-color: rgba(79,148,255,.45); background: rgba(79,148,255,.10); }
-    .pill.lime{ border-color: rgba(194,249,112,.45); background: rgba(194,249,112,.10); }
 
     details.step{
       border:1px solid var(--stroke);
@@ -426,9 +414,110 @@
     .gate-box p{ color: rgba(248,247,255,.92); }
     .gate-q{ margin-top:6px; color: var(--muted); }
 
+    /* =========================
+       MANIFESTO (AGF)
+       ========================= */
+    .manifesto{
+      margin-top: 18px;
+      border-radius: var(--radius-xl);
+      border:1px solid rgba(248,247,255,.14);
+      background:
+        radial-gradient(900px 520px at 15% 20%, rgba(79,148,255,.18), transparent 60%),
+        radial-gradient(820px 520px at 85% 70%, rgba(50,208,194,.14), transparent 60%),
+        linear-gradient(180deg, rgba(13,37,63,.62), rgba(13,37,63,.28));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .manifesto-inner{
+      padding: 18px 20px 20px;
+    }
+    .manifesto h2{
+      margin:0 0 8px;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .manifesto .subtitle{
+      margin:0 0 14px;
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.6;
+      max-width: 95ch;
+    }
+
+    .m-quote{
+      border:1px solid rgba(248,247,255,.14);
+      background: rgba(248,247,255,.06);
+      border-radius: 16px;
+      padding: 14px 14px;
+      margin: 14px 0;
+      color: rgba(248,247,255,.92);
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .m-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top: 14px;
+    }
+    .m-card{
+      border:1px solid rgba(248,247,255,.12);
+      background: rgba(13,37,63,.30);
+      border-radius: 16px;
+      padding: 14px 14px;
+    }
+    .m-card h3{
+      margin:0 0 8px;
+      font-size:13px;
+      font-weight:900;
+    }
+    .m-card p{
+      margin:0;
+      font-size:12px;
+      line-height:1.6;
+      color: var(--muted);
+    }
+    .m-card p strong{ color: rgba(248,247,255,.92); }
+
+    .m-list{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.7;
+    }
+
+    .m-footer{
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top:1px solid rgba(248,247,255,.10);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .tagline{
+      font-weight:900;
+      color: rgba(248,247,255,.92);
+      font-size:12px;
+      line-height:1.45;
+    }
+    .pill-agf{
+      font-size:11px; font-weight:900;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(79,148,255,.55);
+      background: rgba(79,148,255,.12);
+      white-space:nowrap;
+      color: rgba(248,247,255,.92);
+    }
+
     /* Breakpoints */
     @media (max-width:1100px){
-      .gbtn{ font-size:10.5px; padding: 9px 8px; }
+      .gbtn{ font-size:10.2px; padding: 9px 8px; }
       .hero-logo-card{ max-width: 280px; }
     }
     @media (max-width:980px){
@@ -436,15 +525,16 @@
       .hero-aside{ justify-content:flex-start; }
       .hero-logo-card{ max-width: 260px; }
       .step-content{ grid-template-columns:1fr; }
-      .brand{ min-width: 190px; }
-      .gates{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .brand{ min-width: 210px; }
+      .gates{ grid-template-columns: repeat(4, minmax(0, 1fr)); } /* 2 linhas no mobile */
       .rb-flag{ height: 250px; }
+      .m-grid{ grid-template-columns: 1fr; }
     }
     @media (max-width:640px){
-      .wrap{ padding: 10px 10px 70px; }
+      .wrap{ padding: 10px 10px 75px; }
       .brand-txt .t2{ display:none; }
-      .brand{ min-width: 160px; }
-      .gates{ gap:6px; }
+      .brand{ min-width: 180px; }
+      .gates{ gap:6px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .gbtn{ font-size:10px; padding: 8px 7px; }
       .hero h1{ font-size:24px; }
       .rb-flag{ height: 245px; }
@@ -466,12 +556,13 @@
             <img src="assets/baumgratz_logo_selo.png" alt="Baumgratz Code" />
           </div>
           <div class="brand-txt">
-            <div class="t1">MIB — Workflow</div>
-            <div class="t2">End-to-End • governança por gates</div>
+            <div class="t1">AGF — ARGUS GATE FRAMEWORK</div>
+            <div class="t2">Visão contínua • decisão controlada • avanço consciente</div>
           </div>
         </div>
 
-        <div class="gates" id="gatebarGates" aria-label="Gates">
+        <div class="gates" id="gatebarGates" aria-label="Navegação">
+          <a class="gbtn" href="#manifesto" data-target="manifesto">Manifesto</a>
           <a class="gbtn" href="#vendas" data-target="vendas">G1 • Vendas</a>
           <a class="gbtn" href="#arquitetura" data-target="arquitetura">G2 • Arquitetura</a>
           <a class="gbtn" href="#transicao" data-target="transicao">G3 • Transição</a>
@@ -485,11 +576,11 @@
     <section class="hero" id="inicio">
       <div class="hero-inner">
         <div>
-          <h1>Workflow End-to-End em gates</h1>
+          <h1>Workflow End-to-End em Gates</h1>
           <p>
-            Representação institucional do fluxo completo (do Comercial ao Suporte), com gates, responsabilidades
-            e passagem de bastão controlada. Direcionamento claro para alinhamento de stakeholders e previsibilidade
-            operacional na execução da MIB.
+            O <strong>ARGUS GATE FRAMEWORK (AGF)</strong> organiza a execução do projeto do Comercial ao Suporte por meio de
+            <strong>Gates decisórios</strong> — portas de qualificação obrigatória. O projeto só avança quando
+            <strong>100% dos pré-requisitos do Gate</strong> estão atendidos, garantindo previsibilidade, proteção de valor e governança objetiva.
           </p>
         </div>
 
@@ -556,8 +647,8 @@
               <div class="rb-flag c4">
                 <div class="rb-num">04</div>
                 <div class="rb-name">Onboarding</div>
-                <div class="rb-desc">Kickoff, governança, papéis, cadência e plano inicial em ondas com o cliente.</div>
-                <div class="rb-gate">Gate 4 • Pronto</div>
+                <div class="rb-desc">Kickoff, governança, papéis, cadência e autorização formal da execução.</div>
+                <div class="rb-gate">Gate 4 • Início</div>
               </div>
             </a>
 
@@ -568,9 +659,9 @@
               </div>
               <div class="rb-flag c5">
                 <div class="rb-num">05</div>
-                <div class="rb-name">Implantação (MIB)</div>
-                <div class="rb-desc">Gates internos por fases (Iniciação → Planejamento → Execução → Monitoramento e Controle → Encerramento).</div>
-                <div class="rb-gate">Gate 5 • Execução</div>
+                <div class="rb-name">Implantação</div>
+                <div class="rb-desc">Execução controlada com fases PMI: iniciação, planejamento, execução, monitoramento e encerramento.</div>
+                <div class="rb-gate">Gate 5 • Entrega</div>
               </div>
             </a>
 
@@ -583,11 +674,85 @@
                 <div class="rb-num">06</div>
                 <div class="rb-name">Suporte</div>
                 <div class="rb-desc">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite do suporte.</div>
-                <div class="rb-gate">Gate 6 • Encerramento</div>
+                <div class="rb-gate">Gate 6 • Sustentação</div>
               </div>
             </a>
 
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANIFESTO AGF -->
+    <section class="manifesto" id="manifesto">
+      <div class="manifesto-inner">
+        <h2>Manifesto do ARGUS GATE FRAMEWORK (AGF)</h2>
+        <p class="subtitle"><strong>Visão que orienta. Portas que decidem.</strong> O AGF é um método de implantação ágil concebido para ambientes complexos, onde visibilidade total, decisão consciente e execução controlada são essenciais.</p>
+
+        <div class="m-quote">
+          Inspirado em <strong>Argus</strong>, o guardião de muitas visões, e no conceito de <strong>Gate</strong> como porta formal de validação entre fases, o método garante que <strong>nenhuma etapa avance sem clareza, estabilidade e valor</strong>.<br><br>
+          Nós não avançamos por pressão de cronograma. Nós avançamos por <strong>consistência</strong>.
+        </div>
+
+        <div class="m-grid">
+          <div class="m-card">
+            <h3>1. Visão contínua é inegociável</h3>
+            <p>Nada pode ser bem executado sem ser claramente visto. O AGF mantém visibilidade constante sobre <strong>escopo, riscos, progresso, valor e impactos</strong>.</p>
+            <ul class="m-list"><li>O que não é visto, não é governado.</li></ul>
+          </div>
+
+          <div class="m-card">
+            <h3>2. Cada fase é uma porta de decisão</h3>
+            <p>O avanço não é automático. Cada etapa possui um <strong>Gate</strong> com critérios objetivos antes da continuidade.</p>
+            <ul class="m-list"><li>Avançar é uma escolha consciente, não um impulso.</li></ul>
+          </div>
+
+          <div class="m-card">
+            <h3>3. Governança não é burocracia</h3>
+            <p>Governança significa <strong>clareza de responsabilidade</strong>, decisão baseada em fatos e previsibilidade. O Gate não trava: ele <strong>protege</strong>.</p>
+          </div>
+
+          <div class="m-card">
+            <h3>4. Valor antes de velocidade</h3>
+            <p>Ser ágil não é apenas ser rápido. É entregar <strong>valor real</strong>, no momento certo, com o menor risco possível.</p>
+            <ul class="m-list"><li>Velocidade sem direção é apenas movimento.</li></ul>
+          </div>
+
+          <div class="m-card">
+            <h3>5. Qualidade é critério de avanço</h3>
+            <p>Qualidade não é uma fase final. Ela é avaliada em todos os Gates como condição mínima para seguir adiante.</p>
+            <ul class="m-list"><li>O próximo passo só existe se o atual estiver sólido.</li></ul>
+          </div>
+
+          <div class="m-card">
+            <h3>6. Risco visível é risco gerenciável</h3>
+            <p>O AGF não elimina riscos. Ele os expõe cedo para que decisões sejam tomadas com consciência.</p>
+            <ul class="m-list"><li>Surpresas não são falhas técnicas, são falhas de visão.</li></ul>
+          </div>
+
+          <div class="m-card">
+            <h3>7. Decidir é tão importante quanto executar</h3>
+            <p>Executar bem é essencial. Decidir bem é estratégico. O Gate existe para garantir as decisões certas no momento certo.</p>
+          </div>
+
+          <div class="m-card">
+            <h3>Como operamos</h3>
+            <p>Cada Gate avalia, no mínimo: <strong>Visão, Valor, Risco, Qualidade e Controle</strong>. Sem aprovação do Gate, não há avanço.</p>
+            <ul class="m-list">
+              <li><strong>Visão:</strong> todos entendem para onde estamos indo?</li>
+              <li><strong>Valor:</strong> o que foi entregue gera resultado?</li>
+              <li><strong>Risco:</strong> o próximo passo é seguro?</li>
+              <li><strong>Qualidade:</strong> o nível atual é aceitável?</li>
+              <li><strong>Controle:</strong> há governança e rastreabilidade?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="m-footer">
+          <div class="tagline">
+            <em>Argus vê tudo. O Gate decide. A implantação avança com consciência.</em>
+          </div>
+          <div class="pill-agf">Visão contínua • decisão controlada • avanço consciente</div>
         </div>
       </div>
     </section>
@@ -629,7 +794,7 @@
             <ul>
               <li>Proposta/Contrato com escopo macro claro.</li>
               <li>Premissas/Exclusões formalizadas.</li>
-              <li>Riscos comerciais visíveis e aceitos.</li>
+              <li>Critérios iniciais de sucesso.</li>
             </ul>
           </div>
 
@@ -646,7 +811,7 @@
       <div class="section-hd">
         <div>
           <h2>G2) Arquitetura</h2>
-          <div class="meta">Validação técnica e operacional do que foi vendido. Integrações, dependências e riscos críticos evidenciados.</div>
+          <div class="meta">Validação técnica e operacional do que foi vendido. Dependências, integrações e riscos críticos evidenciados.</div>
         </div>
         <span class="pill" style="border-color:rgba(50,208,194,.45);background:rgba(50,208,194,.10)">Gate 2</span>
       </div>
@@ -694,7 +859,7 @@
       <div class="section-hd">
         <div>
           <h2>G3) Transição Interna</h2>
-          <div class="meta">Ciclo obrigatório: projeto internalizado por PMO/GPs antes do onboarding com o cliente.</div>
+          <div class="meta">Internalização do projeto: Comercial + Arquitetura apresentam para PMO/GPs antes do cliente.</div>
         </div>
         <span class="pill" style="border-color:rgba(79,148,255,.45);background:rgba(79,148,255,.10)">Gate 3</span>
       </div>
@@ -702,8 +867,8 @@
       <details class="step" open>
         <summary>
           <div class="sum-left">
-            <div class="sum-title">Apresentação do Onboarding</div>
-            <div class="sum-desc">Abertura oficial do projeto para alinhamento interno e com o cliente (governança, papéis e cadência)</div>
+            <div class="sum-title">Apresentação interna (PMO / GPs)</div>
+            <div class="sum-desc">Alinhamento interno, premissas, riscos, abordagem e prontidão</div>
           </div>
           <div class="sum-right">
             <span class="chip owner">Owner: PMO</span>
@@ -718,13 +883,13 @@
               <li>Racional da venda + expectativas do cliente.</li>
               <li>Arquitetura proposta e implicações.</li>
               <li>Riscos, restrições e premissas contratuais.</li>
-              <li>Indicação de GP e estratégia de condução.</li>
+              <li>Estratégia de condução e designação de responsáveis.</li>
             </ul>
           </div>
           <div class="box">
             <h4>Entregáveis obrigatórios</h4>
             <ul>
-              <li>Apresentação do Onboarding (material base para kickoff).</li>
+              <li>Pacote de internalização do projeto.</li>
               <li>Escopo macro internalizado.</li>
               <li>Parecer do PMO: apto / apto com ajustes / retornar.</li>
             </ul>
@@ -742,8 +907,8 @@
     <section class="section" id="onboarding">
       <div class="section-hd">
         <div>
-          <h2>G4) Onboarding</h2>
-          <div class="meta">Kickoff e alinhamento com o cliente: governança, papéis, cadência e plano inicial em ondas.</div>
+          <h2>G4) Onboarding (Kickoff)</h2>
+          <div class="meta">Alinhamento, governança, papéis, cadência e autorização formal para iniciar a execução.</div>
         </div>
         <span class="pill" style="border-color:rgba(194,249,112,.45);background:rgba(194,249,112,.10)">Gate 4</span>
       </div>
@@ -751,8 +916,8 @@
       <details class="step" open>
         <summary>
           <div class="sum-left">
-            <div class="sum-title">Onboarding com o Cliente (MIB)</div>
-            <div class="sum-desc">Governança, responsabilidades, cadência e plano inicial em ondas</div>
+            <div class="sum-title">Onboarding com o Cliente (AGF)</div>
+            <div class="sum-desc">Kickoff, governança, responsabilidades e plano inicial em ondas</div>
           </div>
           <div class="sum-right">
             <span class="chip owner">Owner: PMO</span>
@@ -764,7 +929,7 @@
           <div class="box">
             <h4>Conteúdos obrigatórios</h4>
             <ul>
-              <li>Apresentação da MIB e do fluxo de gates.</li>
+              <li>Apresentação do AGF e do fluxo de Gates.</li>
               <li>Papéis e responsabilidades (cliente × Baumgratz Code).</li>
               <li>Modelo de governança e tomada de decisão.</li>
               <li>Plano inicial em ondas + calendário macro.</li>
@@ -781,8 +946,8 @@
           </div>
 
           <div class="box gate-box">
-            <p><strong>Gate 4 — Pronto para Implantar</strong></p>
-            <p class="gate-q">Pergunta: cliente, PMO e time estão alinhados e preparados para iniciar a execução?</p>
+            <p><strong>Gate 4 — Autorização de Execução</strong></p>
+            <p class="gate-q">Pergunta: o projeto está autorizado a iniciar a execução com governança e alinhamento estabelecidos?</p>
           </div>
         </div>
       </details>
@@ -792,8 +957,8 @@
     <section class="section" id="implantacao">
       <div class="section-hd">
         <div>
-          <h2>G5) Implantação (MIB)</h2>
-          <div class="meta">Execução com gates internos por fases (Iniciação → Planejamento → Execução → Monitoramento e Controle → Encerramento).</div>
+          <h2>G5) Implantação (AGF)</h2>
+          <div class="meta">Execução controlada e orientada a valor, com fases PMI e disciplina de decisão contínua.</div>
         </div>
         <span class="pill" style="border-color:rgba(79,148,255,.45);background:rgba(79,148,255,.10)">Gate 5</span>
       </div>
@@ -801,7 +966,7 @@
       <details class="step" open>
         <summary>
           <div class="sum-left">
-            <div class="sum-title">Gates internos da Implantação</div>
+            <div class="sum-title">Fases da Implantação (PMI) dentro do AGF</div>
             <div class="sum-desc">Iniciação → Planejamento → Execução → Monitoramento e Controle → Encerramento</div>
           </div>
           <div class="sum-right">
@@ -813,19 +978,19 @@
         <div class="step-content">
           <div class="box">
             <h4>1. Iniciação (Initiating)</h4>
-            <p>Autorização formal do projeto: alinhamento estratégico, problema/oportunidade, stakeholders e viabilidade preliminar.</p>
+            <p>Autorização formal da implantação: alinhamento estratégico, stakeholders, premissas e viabilidade preliminar.</p>
             <p style="margin-top:8px;color:rgba(248,247,255,.88);font-weight:900;">Output: Project Charter.</p>
           </div>
 
           <div class="box">
             <h4>2. Planejamento (Planning)</h4>
-            <p>Desenho da solução e estratégia: escopo, cronograma, custos, riscos, recursos, comunicações e sucesso.</p>
+            <p>Escopo, cronograma, custos, riscos, recursos, comunicações e critérios de sucesso. Reduz incerteza antes de escalar esforço.</p>
             <p style="margin-top:8px;color:rgba(248,247,255,.88);font-weight:900;">Deliverable: Plano de Gerenciamento (integrado).</p>
           </div>
 
           <div class="box">
             <h4>3. Execução (Executing)</h4>
-            <p>Realização do trabalho planejado: mobilização de times, entregas e engajamento de stakeholders.</p>
+            <p>Mobilização do time, produção de entregas e engajamento contínuo de stakeholders, com validação incremental.</p>
           </div>
 
           <div class="box">
@@ -835,12 +1000,12 @@
 
           <div class="box">
             <h4>5. Encerramento (Closing)</h4>
-            <p>Aceite, lições aprendidas, liberação de recursos e fechamento administrativo/financeiro.</p>
+            <p>Aceite, lições aprendidas, liberação de recursos e fechamento administrativo/financeiro, preparando a transição ao suporte.</p>
           </div>
 
           <div class="box gate-box">
-            <p><strong>Gate de Encerramento da Implantação</strong></p>
-            <p class="gate-q">Regra: Foi tudo implantado conforme plano do projeto?</p>
+            <p><strong>Regra do Gate G5 (oficial)</strong></p>
+            <p class="gate-q">Pergunta: <strong>Foi tudo implantado conforme o plano do projeto?</strong></p>
           </div>
         </div>
       </details>
@@ -851,7 +1016,7 @@
       <div class="section-hd">
         <div>
           <h2>G6) Suporte</h2>
-          <div class="meta">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite do suporte.</div>
+          <div class="meta">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite final.</div>
         </div>
         <span class="pill" style="border-color:rgba(255,122,89,.45);background:rgba(255,122,89,.10)">Gate 6</span>
       </div>
@@ -888,7 +1053,7 @@
 
           <div class="box gate-box">
             <p><strong>Gate 6 — Encerramento</strong></p>
-            <p class="gate-q">Pergunta: o suporte consegue sustentar sem o time de projeto?</p>
+            <p class="gate-q">Pergunta: o suporte consegue sustentar sem dependência do time de projeto?</p>
           </div>
         </div>
       </details>
@@ -897,13 +1062,13 @@
   </div>
 
   <script>
-    // 1) Garantir que o gatebar esteja visível e o foco inicial seja nos Gates
-    //    (sem mudar o scroll do usuário; apenas marca ativo ao carregar)
+    // Destaque ativo (gatebar + ribbon) conforme scroll, incluindo Manifesto
     (function(){
-      const gateBtns = Array.from(document.querySelectorAll(".gbtn"));
+      const navBtns = Array.from(document.querySelectorAll(".gbtn"));
       const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
 
       const sections = [
+        document.getElementById("manifesto"),
         document.getElementById("vendas"),
         document.getElementById("arquitetura"),
         document.getElementById("transicao"),
@@ -918,7 +1083,8 @@
         for (const s of sections) {
           if (s.offsetTop <= y) current = s.id;
         }
-        gateBtns.forEach(a => a.classList.toggle("active", a.dataset.target === current));
+
+        navBtns.forEach(a => a.classList.toggle("active", a.dataset.target === current));
         ribbons.forEach(r => r.classList.toggle("active", r.dataset.target === current));
       }
 
