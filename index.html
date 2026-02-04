@@ -30,16 +30,16 @@
       --shadow:0 18px 50px rgba(0,0,0,.35);
       --shadow2:0 10px 26px rgba(0,0,0,.28);
 
-      --max:1200px;
+      --max:1220px;
 
-      /* calculado via JS */
+      /* calculado via JS (altura real do topo) */
       --gatebarH: 68px;
       --stickyOffset: 10px;
-      --stickyTop: calc(var(--gatebarH) + var(--stickyOffset) + 8px);
+      --stickyTop: calc(var(--gatebarH) + var(--stickyOffset) + 10px);
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
     body{
       margin:0;
       font-family:"Zalando Sans Expanded",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
@@ -66,7 +66,7 @@
       mix-blend-mode: screen;
     }
 
-    .wrap{max-width:var(--max); margin:0 auto; padding:12px 16px 90px;}
+    .wrap{ max-width:var(--max); margin:0 auto; padding:12px 16px 90px; }
 
     /* =========================================================
        TOP NAV (sempre visível)
@@ -92,7 +92,7 @@
     }
     .brand{
       display:flex; align-items:center; gap:10px;
-      min-width: 260px;
+      min-width: 270px;
       flex: 0 0 auto;
     }
     .logo-wrap{
@@ -134,15 +134,13 @@
       width: 100%;
       align-items:center;
     }
-
-    /* Tesla-like: botão “flat”, borda suave, highlight limpo */
     .gbtn{
       appearance:none;
       -webkit-appearance:none;
       text-decoration:none;
       color: rgba(248,247,255,.95);
       font-weight:900;
-      font-size:10.5px;
+      font-size:10.3px;
       padding: 9px 10px;
       border-radius: 999px;
       border:1px solid rgba(248,247,255,.12);
@@ -187,14 +185,12 @@
       align-items:center;
     }
     .hero h1{ margin:0 0 10px; font-size:28px; font-weight:900; line-height:1.12; }
-    .hero p{ margin:0; color:var(--muted); font-size:13px; line-height:1.65; max-width:84ch; }
-
+    .hero p{ margin:0; color:var(--muted); font-size:13px; line-height:1.65; max-width:86ch; }
     .hero-aside{ display:flex; align-items:center; justify-content:center; }
 
-    /* LOGO HERO (reduzido) */
     .hero-logo-card{
       width:100%;
-      max-width: 240px;              /* menor (pedido) */
+      max-width: 230px;
       aspect-ratio: 1 / 1;
       border-radius: 24px;
       border:1px solid rgba(248,247,255,.14);
@@ -225,7 +221,6 @@
       filter: drop-shadow(0 14px 18px rgba(0,0,0,.32));
     }
 
-    /* CTA Manifesto no Hero */
     .hero-cta{
       margin-top: 14px;
       display:flex;
@@ -237,7 +232,6 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
       padding: 12px 14px;
       border-radius: 14px;
       border:1px solid rgba(79,148,255,.55);
@@ -248,6 +242,8 @@
       cursor:pointer;
       transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
       box-shadow: 0 12px 22px rgba(0,0,0,.22);
+      text-decoration:none;
+      white-space:nowrap;
     }
     .cta-btn:hover{ transform: translateY(-1px); border-color: rgba(79,148,255,.75); background: rgba(79,148,255,.14); }
     .cta-note{
@@ -256,7 +252,9 @@
       line-height:1.5;
     }
 
-    /* Ribbon timeline */
+    /* =========================================================
+       TIMELINE (ribbons)
+       ========================================================= */
     .ribbon-area{
       padding: 12px 18px 18px;
       border-top:1px solid rgba(248,247,255,.08);
@@ -285,7 +283,7 @@
 
     .ribbons{
       display:grid;
-      grid-template-columns: repeat(6, minmax(170px, 1fr));
+      grid-template-columns: repeat(6, minmax(180px, 1fr));
       gap:14px;
       align-items:start;
       overflow-x:auto;
@@ -294,7 +292,7 @@
     .ribbons::-webkit-scrollbar{ height:8px; }
     .ribbons::-webkit-scrollbar-thumb{ background: rgba(248,247,255,.12); border-radius:999px; }
 
-    .rb{ text-decoration:none; color:var(--text); min-width:170px; }
+    .rb{ text-decoration:none; color:var(--text); min-width:180px; }
     .rb-top{ display:flex; align-items:center; justify-content:center; position:relative; margin-bottom:12px; height:48px; }
     .rb-icon{
       width:42px; height:42px; border-radius:999px;
@@ -318,7 +316,7 @@
       border:1px solid rgba(248,247,255,.14);
       box-shadow: 0 16px 40px rgba(0,0,0,.32);
       overflow:hidden;
-      height: 260px;
+      height: 250px;
       display:flex;
       flex-direction:column;
       transform: translateZ(0);
@@ -329,7 +327,6 @@
       transform: translateY(-2px);
       box-shadow: 0 18px 46px rgba(0,0,0,.35);
     }
-
     .rb-flag::after{
       content:"";
       position:absolute; left:18px; bottom:-12px;
@@ -354,7 +351,6 @@
       -webkit-box-orient: vertical;
       overflow:hidden;
     }
-
     .rb-gate{
       display:inline-block;
       margin-top:12px;
@@ -387,102 +383,22 @@
     .rb.active .rb-dot{ background: rgba(79,148,255,.95); border-color: rgba(79,148,255,.65); }
 
     /* =========================================================
-       SECTIONS + STICKY HEADERS (pedido)
-       Quando rolar para qualquer seção, o cabeçalho dela fica visível
+       SECTION SCROLL OFFSET + REVEAL
        ========================================================= */
-    section[id]{ scroll-margin-top: calc(var(--stickyTop) + 6px); }
+    section[id]{ scroll-margin-top: calc(var(--stickyTop) + 10px); }
 
-    .section{
-      margin-top: 18px;
-      border-radius: var(--radius-xl);
-      border:1px solid var(--stroke);
-      background: linear-gradient(180deg, rgba(13,37,63,.55), rgba(13,37,63,.25));
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      position:relative;
+    .reveal{
+      opacity:0;
+      transform: translateY(14px);
+      transition: opacity .55s ease, transform .55s ease;
     }
-
-    /* cabeçalho sticky dentro de cada seção */
-    .section-hd{
-      position: sticky;
-      top: var(--stickyTop);
-      z-index: 50;
-      padding:14px 20px;
-      display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
-      border-bottom:1px solid rgba(248,247,255,.08);
-      background: rgba(10,26,43,.72);
-      backdrop-filter: blur(10px);
+    .reveal.inview{
+      opacity:1;
+      transform: translateY(0);
     }
-    .section-hd h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
-    .section-hd .meta{ margin-top:6px; font-size:12px; color:var(--muted); line-height:1.5; max-width: 92ch; }
-
-    .pill{
-      font-size:11px; font-weight:900;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(248,247,255,.06);
-      white-space:nowrap;
-    }
-
-    details.step{
-      border:1px solid var(--stroke);
-      border-radius: var(--radius-lg);
-      background: rgba(13,37,63,.34);
-      margin: 14px 20px 18px;
-      overflow:hidden;
-    }
-    details.step summary{
-      list-style:none;
-      cursor:pointer;
-      padding: 16px 16px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    details.step summary::-webkit-details-marker{ display:none; }
-
-    .sum-left{ min-width: 0; }
-    .sum-title{ font-weight:900; font-size:14px; }
-    .sum-desc{
-      margin-top:4px; color: var(--muted); font-size:12px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .sum-right{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
-    .chip{
-      font-size:11px; font-weight:900;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(248,247,255,.06);
-    }
-    .chip.owner{ border-color: rgba(50,208,194,.45); background: rgba(50,208,194,.10); }
-    .chip.gate{ border-color: rgba(255,122,89,.55); background: rgba(255,122,89,.12); }
-
-    .step-content{
-      padding: 0 16px 16px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    .box{
-      border:1px solid rgba(248,247,255,.10);
-      background: rgba(13,37,63,.28);
-      border-radius: var(--radius-md);
-      padding: 12px 12px 10px;
-    }
-    .box h4{ margin:0 0 8px; font-size:12px; font-weight:900; letter-spacing:.2px; }
-    .box p, .box ul{ margin:0; color: var(--muted); font-size:12px; line-height:1.6; }
-    .box ul{ padding-left:18px; }
-
-    .gate-box{
-      grid-column: 1 / -1;
-      border-color: rgba(255,122,89,.28);
-      background: linear-gradient(90deg, rgba(255,122,89,.12), rgba(79,148,255,.08));
-    }
-    .gate-box p{ color: rgba(248,247,255,.92); }
-    .gate-q{ margin-top:6px; color: var(--muted); }
 
     /* =========================================================
-       Manifesto (como seção, com header sticky também)
+       MANIFESTO (seção)
        ========================================================= */
     .manifesto{
       margin-top: 18px;
@@ -508,19 +424,8 @@
       background: rgba(10,26,43,.72);
       backdrop-filter: blur(10px);
     }
-    .manifesto-hd h2{
-      margin:0;
-      font-size:16px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-    .manifesto-hd .meta{
-      margin-top:6px;
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.5;
-      max-width: 92ch;
-    }
+    .manifesto-hd h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
+    .manifesto-hd .meta{ margin-top:6px; font-size:12px; color:var(--muted); line-height:1.5; max-width: 92ch; }
     .manifesto-inner{ padding: 16px 20px 20px; }
 
     .m-quote{
@@ -552,19 +457,9 @@
       border-color: rgba(248,247,255,.20);
       box-shadow: 0 16px 44px rgba(0,0,0,.34);
     }
-    .m-card h3{
-      margin:0 0 8px;
-      font-size:13px;
-      font-weight:900;
-    }
-    .m-card p{
-      margin:0;
-      font-size:12px;
-      line-height:1.6;
-      color: var(--muted);
-    }
+    .m-card h3{ margin:0 0 8px; font-size:13px; font-weight:900; }
+    .m-card p{ margin:0; font-size:12px; line-height:1.6; color: var(--muted); }
     .m-card p strong{ color: rgba(248,247,255,.92); }
-
     .m-list{
       margin: 10px 0 0;
       padding-left: 18px;
@@ -590,42 +485,175 @@
     }
 
     /* =========================================================
-       Smooth “Tesla-like” section entrance (sem copiar nada)
+       GATE SECTIONS (CORREÇÃO: header/body/footer fechados)
        ========================================================= */
-    .reveal{
-      opacity:0;
-      transform: translateY(14px);
-      transition: opacity .55s ease, transform .55s ease;
-    }
-    .reveal.inview{
-      opacity:1;
-      transform: translateY(0);
+    .gate{
+      margin-top: 18px;
+      border-radius: var(--radius-xl);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(13,37,63,.55), rgba(13,37,63,.25));
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      position:relative;
     }
 
-    /* Breakpoints */
-    @media (max-width:1100px){
-      .gbtn{ font-size:10.2px; padding: 9px 8px; }
-      .hero-logo-card{ max-width: 220px; }
+    .gate-hd{
+      position: sticky;
+      top: var(--stickyTop);
+      z-index: 60;
+      padding:14px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      border-bottom:1px solid rgba(248,247,255,.08);
+      background: rgba(10,26,43,.72);
+      backdrop-filter: blur(10px);
+      min-height: 74px;
     }
+
+    .gate-titlewrap{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .gate-title{
+      margin:0;
+      font-size:16px;
+      font-weight:900;
+      letter-spacing:.2px;
+      line-height:1.2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .gate-subtitle{
+      margin:0;
+      font-size:12px;
+      color: var(--muted);
+      line-height:1.4;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 86ch;
+    }
+
+    .gate-badge{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:11px;
+      font-weight:900;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,122,89,.50);
+      background: rgba(255,122,89,.10);
+      color: rgba(248,247,255,.92);
+      white-space:nowrap;
+    }
+
+    .gate-inner{
+      padding: 16px 20px 18px;
+    }
+
+    .gate-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr; /* CORREÇÃO: duas colunas reais */
+      gap:12px;
+      align-items:stretch; /* CORREÇÃO: alturas alinhadas */
+    }
+
+    .card{
+      border:1px solid rgba(248,247,255,.10);
+      background: rgba(13,37,63,.28);
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+      box-shadow: 0 12px 26px rgba(0,0,0,.22);
+      display:flex;
+      flex-direction:column;
+      min-height: 150px; /* CORREÇÃO: uniformiza visual */
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.2px;
+      color: rgba(248,247,255,.92);
+    }
+    .card ul{
+      margin:0;
+      padding-left:18px;
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.7;
+    }
+    .card p{
+      margin:0;
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.65;
+    }
+
+    .gate-decision{
+      margin-top: 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,122,89,.28);
+      background: linear-gradient(90deg, rgba(255,122,89,.12), rgba(79,148,255,.08));
+      padding: 14px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .gate-decision .t{
+      font-weight:900;
+      font-size:12px;
+      color: rgba(248,247,255,.92);
+      margin:0;
+    }
+    .gate-decision .q{
+      margin:0;
+      font-size:12px;
+      color: rgba(248,247,255,.78);
+      line-height:1.55;
+    }
+
+    /* =========================================================
+       BREAKPOINTS
+       ========================================================= */
+    @media (max-width:1100px){
+      .gbtn{ font-size:10.1px; padding: 9px 8px; }
+      .hero-logo-card{ max-width: 220px; }
+      .gate-subtitle{ max-width: 70ch; }
+    }
+
     @media (max-width:980px){
       .hero-inner{ grid-template-columns:1fr; }
       .hero-aside{ justify-content:flex-start; }
       .hero-logo-card{ max-width: 220px; }
-      .step-content{ grid-template-columns:1fr; }
+
       .brand{ min-width: 220px; }
       .gates{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
-      .rb-flag{ height: 250px; }
+
       .m-grid{ grid-template-columns: 1fr; }
+      .gate-grid{ grid-template-columns: 1fr; } /* mobile: empilha */
+      .gate-hd{ align-items:flex-start; }
+      .gate-title{ white-space:normal; }
+      .gate-subtitle{ white-space:normal; }
     }
+
     @media (max-width:640px){
       .wrap{ padding: 10px 10px 75px; }
       .brand-txt .t2{ display:none; }
       .brand{ min-width: 185px; }
       .gates{ gap:6px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .gbtn{ font-size:10px; padding: 8px 7px; }
+
       .hero h1{ font-size:24px; }
-      .rb-flag{ height: 245px; }
       .cta-btn{ width:100%; }
+      .gate-hd{ padding:12px 14px; }
+      .gate-inner{ padding: 14px 14px 16px; }
     }
   </style>
 </head>
@@ -649,7 +677,7 @@
           </div>
         </div>
 
-        <div class="gates" id="gatebarGates" aria-label="Navegação">
+        <div class="gates" aria-label="Navegação">
           <a class="gbtn" href="#manifesto" data-target="manifesto">Manifesto</a>
           <a class="gbtn" href="#vendas" data-target="vendas">G1 • Vendas</a>
           <a class="gbtn" href="#arquitetura" data-target="arquitetura">G2 • Arquitetura</a>
@@ -695,10 +723,7 @@
           <div class="ribbons" id="ribbons">
 
             <a class="rb" href="#vendas" data-target="vendas">
-              <div class="rb-top">
-                <div class="rb-icon">G1</div>
-                <div class="rb-dot"></div>
-              </div>
+              <div class="rb-top"><div class="rb-icon">G1</div><div class="rb-dot"></div></div>
               <div class="rb-flag c1">
                 <div class="rb-num">01</div>
                 <div class="rb-name">Vendas</div>
@@ -708,10 +733,7 @@
             </a>
 
             <a class="rb" href="#arquitetura" data-target="arquitetura">
-              <div class="rb-top">
-                <div class="rb-icon">G2</div>
-                <div class="rb-dot"></div>
-              </div>
+              <div class="rb-top"><div class="rb-icon">G2</div><div class="rb-dot"></div></div>
               <div class="rb-flag c2">
                 <div class="rb-num">02</div>
                 <div class="rb-name">Arquitetura</div>
@@ -721,10 +743,7 @@
             </a>
 
             <a class="rb" href="#transicao" data-target="transicao">
-              <div class="rb-top">
-                <div class="rb-icon">G3</div>
-                <div class="rb-dot"></div>
-              </div>
+              <div class="rb-top"><div class="rb-icon">G3</div><div class="rb-dot"></div></div>
               <div class="rb-flag c3">
                 <div class="rb-num">03</div>
                 <div class="rb-name">Transição Interna</div>
@@ -734,10 +753,7 @@
             </a>
 
             <a class="rb" href="#onboarding" data-target="onboarding">
-              <div class="rb-top">
-                <div class="rb-icon">G4</div>
-                <div class="rb-dot"></div>
-              </div>
+              <div class="rb-top"><div class="rb-icon">G4</div><div class="rb-dot"></div></div>
               <div class="rb-flag c4">
                 <div class="rb-num">04</div>
                 <div class="rb-name">Onboarding</div>
@@ -747,10 +763,7 @@
             </a>
 
             <a class="rb" href="#implantacao" data-target="implantacao">
-              <div class="rb-top">
-                <div class="rb-icon">G5</div>
-                <div class="rb-dot"></div>
-              </div>
+              <div class="rb-top"><div class="rb-icon">G5</div><div class="rb-dot"></div></div>
               <div class="rb-flag c5">
                 <div class="rb-num">05</div>
                 <div class="rb-name">Implantação</div>
@@ -760,10 +773,7 @@
             </a>
 
             <a class="rb" href="#suporte" data-target="suporte">
-              <div class="rb-top">
-                <div class="rb-icon">G6</div>
-                <div class="rb-dot"></div>
-              </div>
+              <div class="rb-top"><div class="rb-icon">G6</div><div class="rb-dot"></div></div>
               <div class="rb-flag c6">
                 <div class="rb-num">06</div>
                 <div class="rb-name">Suporte</div>
@@ -782,9 +792,9 @@
       <div class="manifesto-hd">
         <div>
           <h2>Manifesto do ARGUS GATE FRAMEWORK (AGF)</h2>
-          <div class="meta">Visão que orienta. Portas que decidem. O AGF existe para visibilidade total, decisão consciente e execução controlada.</div>
+          <p class="meta">Visão que orienta. Portas que decidem. O AGF existe para visibilidade total, decisão consciente e execução controlada.</p>
         </div>
-        <span class="pill" style="border-color:rgba(79,148,255,.55);background:rgba(79,148,255,.12)">AGF</span>
+        <span class="gate-badge" style="border-color:rgba(79,148,255,.55);background:rgba(79,148,255,.12)">AGF</span>
       </div>
 
       <div class="manifesto-inner">
@@ -850,36 +860,25 @@
 
         <div class="m-footer">
           <div class="tagline"><em>Argus vê tudo. O Gate decide. A implantação avança com consciência.</em></div>
-          <span class="pill" style="border-color:rgba(79,148,255,.55);background:rgba(79,148,255,.12)">Visão contínua • decisão controlada • avanço consciente</span>
+          <span class="gate-badge" style="border-color:rgba(79,148,255,.55);background:rgba(79,148,255,.12)">Visão contínua • decisão controlada • avanço consciente</span>
         </div>
       </div>
     </section>
 
     <!-- G1 -->
-    <section class="section reveal" id="vendas">
-      <div class="section-hd">
-        <div>
-          <h2>G1) Vendas</h2>
-          <div class="meta">Proposta → Ciclo de Arquitetura → Validação PMO</div>
+    <section class="gate reveal" id="vendas">
+      <div class="gate-hd">
+        <div class="gate-titlewrap">
+          <h2 class="gate-title">G1) Vendas</h2>
+          <p class="gate-subtitle">Proposta → Ciclo de Arquitetura → Validação PMO</p>
         </div>
-        <span class="pill" style="border-color:rgba(255,122,89,.45);background:rgba(255,122,89,.10)">Gate 1</span>
+        <span class="gate-badge">Gate 1</span>
       </div>
 
-      <details class="step" open>
-        <summary>
-          <div class="sum-left">
-            <div class="sum-title">Playbook + Pipeline Comercial</div>
-            <div class="sum-desc">Prospecção → Qualificação → Diagnóstico → Proposta → Ciclo de Arquitetura → Validação PMO</div>
-          </div>
-          <div class="sum-right">
-            <span class="chip owner">Owner: Comercial</span>
-            <span class="chip gate">Gate 1</span>
-          </div>
-        </summary>
-
-        <div class="step-content">
-          <div class="box">
-            <h4>Atividades-chave</h4>
+      <div class="gate-inner">
+        <div class="gate-grid">
+          <div class="card">
+            <h3>Atividades-chave</h3>
             <ul>
               <li>Qualificação e entendimento do problema do cliente.</li>
               <li>Macroescopo, premissas, exclusões e dependências explícitas.</li>
@@ -887,280 +886,226 @@
               <li>Validação final com PMO antes de seguir para execução.</li>
             </ul>
           </div>
-          <div class="box">
-            <h4>Entregáveis mínimos</h4>
+
+          <div class="card">
+            <h3>Entregáveis mínimos</h3>
             <ul>
               <li>Proposta/Contrato com escopo macro claro.</li>
               <li>Premissas/Exclusões formalizadas.</li>
               <li>Critérios iniciais de sucesso.</li>
             </ul>
           </div>
-
-          <div class="box gate-box">
-            <p><strong>Gate 1 — Decisão de Investimento</strong></p>
-            <p class="gate-q">Pergunta: vale a pena investir e vender esta solução?</p>
-          </div>
         </div>
-      </details>
+
+        <div class="gate-decision">
+          <p class="t">Gate 1 — Decisão de Investimento</p>
+          <p class="q">Pergunta: vale a pena investir e vender esta solução?</p>
+        </div>
+      </div>
     </section>
 
     <!-- G2 -->
-    <section class="section reveal" id="arquitetura">
-      <div class="section-hd">
-        <div>
-          <h2>G2) Arquitetura</h2>
-          <div class="meta">Validação técnica e operacional do que foi vendido. Dependências, integrações e riscos críticos evidenciados.</div>
+    <section class="gate reveal" id="arquitetura">
+      <div class="gate-hd">
+        <div class="gate-titlewrap">
+          <h2 class="gate-title">G2) Arquitetura</h2>
+          <p class="gate-subtitle">Validação técnica e operacional do que foi vendido. Dependências, integrações e riscos críticos evidenciados.</p>
         </div>
-        <span class="pill" style="border-color:rgba(50,208,194,.45);background:rgba(50,208,194,.10)">Gate 2</span>
+        <span class="gate-badge">Gate 2</span>
       </div>
 
-      <details class="step">
-        <summary>
-          <div class="sum-left">
-            <div class="sum-title">Validação técnica e operacional</div>
-            <div class="sum-desc">Arquitetura, integrações, dependências críticas e riscos</div>
-          </div>
-          <div class="sum-right">
-            <span class="chip owner">Owner: Arquitetura</span>
-            <span class="chip gate">Gate 2</span>
-          </div>
-        </summary>
-
-        <div class="step-content">
-          <div class="box">
-            <h4>Atividades-chave</h4>
+      <div class="gate-inner">
+        <div class="gate-grid">
+          <div class="card">
+            <h3>Atividades-chave</h3>
             <ul>
               <li>Desenho da solução e visão de implementação.</li>
-              <li>Mapa de integrações/dependências críticas.</li>
+              <li>Mapa de integrações e dependências críticas.</li>
               <li>Identificação de restrições e pontos não negociáveis.</li>
+              <li>Explicitamento de riscos críticos e mitigação inicial.</li>
             </ul>
           </div>
-          <div class="box">
-            <h4>Entregáveis obrigatórios</h4>
+
+          <div class="card">
+            <h3>Entregáveis mínimos</h3>
             <ul>
               <li>Documento de arquitetura (visão executável).</li>
               <li>Riscos técnicos/operacionais + mitigação inicial.</li>
-              <li>Ajustes formais de escopo quando aplicável.</li>
+              <li>Dependências e restrições formalizadas.</li>
             </ul>
           </div>
-
-          <div class="box gate-box">
-            <p><strong>Gate 2 — Viabilidade da Solução</strong></p>
-            <p class="gate-q">Pergunta: a solução vendida é tecnicamente e operacionalmente viável?</p>
-          </div>
         </div>
-      </details>
+
+        <div class="gate-decision">
+          <p class="t">Gate 2 — Viabilidade da Solução</p>
+          <p class="q">Pergunta: a solução vendida é tecnicamente e operacionalmente viável?</p>
+        </div>
+      </div>
     </section>
 
     <!-- G3 -->
-    <section class="section reveal" id="transicao">
-      <div class="section-hd">
-        <div>
-          <h2>G3) Transição Interna</h2>
-          <div class="meta">Internalização do projeto: Comercial + Arquitetura apresentam para PMO/GPs antes do cliente.</div>
+    <section class="gate reveal" id="transicao">
+      <div class="gate-hd">
+        <div class="gate-titlewrap">
+          <h2 class="gate-title">G3) Transição Interna</h2>
+          <p class="gate-subtitle">Comercial + Arquitetura apresentam para PMO/GPs. Internalização completa antes do cliente.</p>
         </div>
-        <span class="pill" style="border-color:rgba(79,148,255,.45);background:rgba(79,148,255,.10)">Gate 3</span>
+        <span class="gate-badge">Gate 3</span>
       </div>
 
-      <details class="step" open>
-        <summary>
-          <div class="sum-left">
-            <div class="sum-title">Apresentação interna (PMO / GPs)</div>
-            <div class="sum-desc">Alinhamento interno, premissas, riscos, abordagem e prontidão</div>
-          </div>
-          <div class="sum-right">
-            <span class="chip owner">Owner: PMO</span>
-            <span class="chip gate">Gate 3</span>
-          </div>
-        </summary>
-
-        <div class="step-content">
-          <div class="box">
-            <h4>Atividades-chave</h4>
+      <div class="gate-inner">
+        <div class="gate-grid">
+          <div class="card">
+            <h3>Atividades-chave</h3>
             <ul>
-              <li>Racional da venda + expectativas do cliente.</li>
-              <li>Arquitetura proposta e implicações.</li>
+              <li>Racional da venda e expectativas do cliente.</li>
+              <li>Arquitetura proposta e implicações práticas.</li>
               <li>Riscos, restrições e premissas contratuais.</li>
-              <li>Estratégia de condução e designação de responsáveis.</li>
+              <li>Designação de responsáveis e abordagem de condução.</li>
             </ul>
           </div>
-          <div class="box">
-            <h4>Entregáveis obrigatórios</h4>
+
+          <div class="card">
+            <h3>Entregáveis mínimos</h3>
             <ul>
-              <li>Pacote de internalização do projeto.</li>
-              <li>Escopo macro internalizado.</li>
+              <li>Pacote de internalização (comercial + arquitetura + riscos).</li>
+              <li>Escopo macro internalizado (in/out).</li>
               <li>Parecer do PMO: apto / apto com ajustes / retornar.</li>
             </ul>
           </div>
-
-          <div class="box gate-box">
-            <p><strong>Gate 3 — Projeto Internalizado</strong></p>
-            <p class="gate-q">Pergunta: PMO e GPs entendem o projeto o suficiente para assumir a execução?</p>
-          </div>
         </div>
-      </details>
+
+        <div class="gate-decision">
+          <p class="t">Gate 3 — Projeto Internalizado</p>
+          <p class="q">Pergunta: PMO e GPs entendem o projeto o suficiente para assumir a execução?</p>
+        </div>
+      </div>
     </section>
 
     <!-- G4 -->
-    <section class="section reveal" id="onboarding">
-      <div class="section-hd">
-        <div>
-          <h2>G4) Onboarding (Kickoff)</h2>
-          <div class="meta">Alinhamento, governança, papéis, cadência e autorização formal para iniciar a execução.</div>
+    <section class="gate reveal" id="onboarding">
+      <div class="gate-hd">
+        <div class="gate-titlewrap">
+          <h2 class="gate-title">G4) Onboarding (Kickoff)</h2>
+          <p class="gate-subtitle">Kickoff, governança, papéis, cadência e autorização formal para iniciar a execução.</p>
         </div>
-        <span class="pill" style="border-color:rgba(194,249,112,.45);background:rgba(194,249,112,.10)">Gate 4</span>
+        <span class="gate-badge">Gate 4</span>
       </div>
 
-      <details class="step" open>
-        <summary>
-          <div class="sum-left">
-            <div class="sum-title">Onboarding com o Cliente (AGF)</div>
-            <div class="sum-desc">Kickoff, governança, responsabilidades e plano inicial em ondas</div>
-          </div>
-          <div class="sum-right">
-            <span class="chip owner">Owner: PMO</span>
-            <span class="chip gate">Gate 4</span>
-          </div>
-        </summary>
-
-        <div class="step-content">
-          <div class="box">
-            <h4>Conteúdos obrigatórios</h4>
+      <div class="gate-inner">
+        <div class="gate-grid">
+          <div class="card">
+            <h3>Conteúdos obrigatórios</h3>
             <ul>
               <li>Apresentação do AGF e do fluxo de Gates.</li>
               <li>Papéis e responsabilidades (cliente × Baumgratz Code).</li>
-              <li>Modelo de governança e tomada de decisão.</li>
-              <li>Plano inicial em ondas + calendário macro.</li>
-            </ul>
-          </div>
-          <div class="box">
-            <h4>Entregáveis</h4>
-            <ul>
-              <li>Ata de Kickoff + decisões registradas.</li>
-              <li>Mapa de stakeholders validado.</li>
-              <li>Governança aprovada.</li>
-              <li>Plano inicial e calendário macro validados.</li>
+              <li>Governança e cadência (rituais, canais, SLA de resposta).</li>
+              <li>Plano inicial em ondas (30–45 dias) e dependências do cliente.</li>
             </ul>
           </div>
 
-          <div class="box gate-box">
-            <p><strong>Gate 4 — Autorização de Execução</strong></p>
-            <p class="gate-q">Pergunta: o projeto está autorizado a iniciar a execução com governança e alinhamento estabelecidos?</p>
+          <div class="card">
+            <h3>Entregáveis mínimos</h3>
+            <ul>
+              <li>Ata de Kickoff + decisões registradas.</li>
+              <li>RACI validado e stakeholders confirmados.</li>
+              <li>Plano inicial e calendário macro aprovados.</li>
+              <li>Riscos iniciais registrados (Risk Log v1).</li>
+            </ul>
           </div>
         </div>
-      </details>
+
+        <div class="gate-decision">
+          <p class="t">Gate 4 — Autorização de Execução</p>
+          <p class="q">Pergunta: o projeto está autorizado a iniciar a execução com governança e alinhamento estabelecidos?</p>
+        </div>
+      </div>
     </section>
 
     <!-- G5 -->
-    <section class="section reveal" id="implantacao">
-      <div class="section-hd">
-        <div>
-          <h2>G5) Implantação (AGF)</h2>
-          <div class="meta">Execução controlada e orientada a valor, com fases PMI e disciplina de decisão contínua.</div>
+    <section class="gate reveal" id="implantacao">
+      <div class="gate-hd">
+        <div class="gate-titlewrap">
+          <h2 class="gate-title">G5) Implantação (AGF)</h2>
+          <p class="gate-subtitle">Execução controlada e orientada a valor, com fases PMI e disciplina de decisão contínua.</p>
         </div>
-        <span class="pill" style="border-color:rgba(79,148,255,.45);background:rgba(79,148,255,.10)">Gate 5</span>
+        <span class="gate-badge">Gate 5</span>
       </div>
 
-      <details class="step" open>
-        <summary>
-          <div class="sum-left">
-            <div class="sum-title">Fases da Implantação (PMI) dentro do AGF</div>
-            <div class="sum-desc">Iniciação → Planejamento → Execução → Monitoramento e Controle → Encerramento</div>
-          </div>
-          <div class="sum-right">
-            <span class="chip owner">Owner: GP</span>
-            <span class="chip gate">Gate 5</span>
-          </div>
-        </summary>
-
-        <div class="step-content">
-          <div class="box">
-            <h4>1. Iniciação (Initiating)</h4>
-            <p>Autorização formal da implantação: alinhamento estratégico, stakeholders, premissas e viabilidade preliminar.</p>
-            <p style="margin-top:8px;color:rgba(248,247,255,.88);font-weight:900;">Output: Project Charter.</p>
+      <div class="gate-inner">
+        <div class="gate-grid">
+          <div class="card">
+            <h3>Fases (PMI) dentro do G5</h3>
+            <ul>
+              <li><strong>Iniciação:</strong> autorização formal, papéis e riscos iniciais.</li>
+              <li><strong>Planejamento:</strong> plano integrado, cronograma base, critérios de aceite.</li>
+              <li><strong>Execução:</strong> entregas em ondas/sprints, evidências e validação incremental.</li>
+              <li><strong>Monitoramento e Controle:</strong> status, riscos/issues, mudanças e correção de rota.</li>
+              <li><strong>Encerramento:</strong> aceite formal, lições aprendidas e dossiê final.</li>
+            </ul>
           </div>
 
-          <div class="box">
-            <h4>2. Planejamento (Planning)</h4>
-            <p>Escopo, cronograma, custos, riscos, recursos, comunicações e critérios de sucesso. Reduz incerteza antes de escalar esforço.</p>
-            <p style="margin-top:8px;color:rgba(248,247,255,.88);font-weight:900;">Deliverable: Plano de Gerenciamento (integrado).</p>
-          </div>
-
-          <div class="box">
-            <h4>3. Execução (Executing)</h4>
-            <p>Mobilização do time, produção de entregas e engajamento contínuo de stakeholders, com validação incremental.</p>
-          </div>
-
-          <div class="box">
-            <h4>4. Monitoramento e Controle</h4>
-            <p>Transversal: mede performance, controla desvios, gerencia riscos e suporta correção de rota para proteger valor.</p>
-          </div>
-
-          <div class="box">
-            <h4>5. Encerramento (Closing)</h4>
-            <p>Aceite, lições aprendidas, liberação de recursos e fechamento administrativo/financeiro, preparando a transição ao suporte.</p>
-          </div>
-
-          <div class="box gate-box">
-            <p><strong>Regra do Gate G5 (oficial)</strong></p>
-            <p class="gate-q">Pergunta: <strong>Foi tudo implantado conforme o plano do projeto?</strong></p>
+          <div class="card">
+            <h3>Artefatos mínimos do G5</h3>
+            <ul>
+              <li>Plano integrado + cronograma base.</li>
+              <li>Backlog/entregas priorizadas + matriz de dependências.</li>
+              <li>Risk & Issue Log + registro de decisões.</li>
+              <li>Critérios de aceite + evidências mínimas por entrega.</li>
+              <li>Dossiê do projeto + lições aprendidas.</li>
+            </ul>
           </div>
         </div>
-      </details>
+
+        <div class="gate-decision">
+          <p class="t">Regra do Gate G5 (oficial)</p>
+          <p class="q">Pergunta: <strong>Foi tudo implantado conforme o plano do projeto?</strong></p>
+        </div>
+      </div>
     </section>
 
     <!-- G6 -->
-    <section class="section reveal" id="suporte">
-      <div class="section-hd">
-        <div>
-          <h2>G6) Suporte</h2>
-          <div class="meta">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite final.</div>
+    <section class="gate reveal" id="suporte">
+      <div class="gate-hd">
+        <div class="gate-titlewrap">
+          <h2 class="gate-title">G6) Suporte</h2>
+          <p class="gate-subtitle">Passagem de bastão formal: base de conhecimento, SLA/canais e aceite final do suporte.</p>
         </div>
-        <span class="pill" style="border-color:rgba(255,122,89,.45);background:rgba(255,122,89,.10)">Gate 6</span>
+        <span class="gate-badge">Gate 6</span>
       </div>
 
-      <details class="step">
-        <summary>
-          <div class="sum-left">
-            <div class="sum-title">Passagem de bastão formal</div>
-            <div class="sum-desc">Transferência de conhecimento, SLA/canais e aceite do suporte</div>
-          </div>
-          <div class="sum-right">
-            <span class="chip owner">Owner: Suporte</span>
-            <span class="chip gate">Gate 6</span>
-          </div>
-        </summary>
-
-        <div class="step-content">
-          <div class="box">
-            <h4>Entregáveis</h4>
+      <div class="gate-inner">
+        <div class="gate-grid">
+          <div class="card">
+            <h3>Entregáveis mínimos</h3>
             <ul>
               <li>Documento de transição e orientações operacionais.</li>
               <li>Base de conhecimento mínima e rastreável.</li>
               <li>SLA/canais e critérios de acionamento.</li>
             </ul>
           </div>
-          <div class="box">
-            <h4>Critérios de prontidão</h4>
+
+          <div class="card">
+            <h3>Critérios de prontidão</h3>
             <ul>
               <li>Suporte apto a sustentar sem dependência do time de projeto.</li>
               <li>Cliente sabe acionar e expectativas calibradas.</li>
               <li>Riscos residuais conhecidos e aceitos.</li>
             </ul>
           </div>
-
-          <div class="box gate-box">
-            <p><strong>Gate 6 — Encerramento</strong></p>
-            <p class="gate-q">Pergunta: o suporte consegue sustentar sem dependência do time de projeto?</p>
-          </div>
         </div>
-      </details>
+
+        <div class="gate-decision">
+          <p class="t">Gate 6 — Encerramento</p>
+          <p class="q">Pergunta: o suporte consegue sustentar sem dependência do time de projeto?</p>
+        </div>
+      </div>
     </section>
 
   </div>
 
   <script>
-    // 1) Medir altura real do gatebar e ajustar stickyTop (para headers sempre visíveis)
+    // 1) Medir altura real do gatebar e ajustar stickyTop (headers sempre visíveis)
     (function(){
       const gatebar = document.getElementById("gatebar");
       function setVars(){
@@ -1172,7 +1117,7 @@
       setVars();
     })();
 
-    // 2) Ativo no menu conforme scroll
+    // 2) Ativo no menu + ribbon conforme scroll
     (function(){
       const navBtns = Array.from(document.querySelectorAll(".gbtn[data-target]"));
       const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
@@ -1180,14 +1125,13 @@
       const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
 
       function setActive(){
-        const y = window.scrollY + 220;
+        const y = window.scrollY + 240;
         let current = sections[0]?.id || "";
         for (const s of sections) if (s.offsetTop <= y) current = s.id;
 
         navBtns.forEach(a => a.classList.toggle("active", a.dataset.target === current));
         ribbons.forEach(r => r.classList.toggle("active", r.dataset.target === current));
       }
-
       window.addEventListener("scroll", setActive, {passive:true});
       window.addEventListener("load", setActive);
       setActive();
