@@ -21,7 +21,6 @@
       --muted:rgba(248,247,255,.72);
 
       --stroke:rgba(248,247,255,.12);
-      --stroke2:rgba(248,247,255,.20);
 
       --radius-xl:22px;
       --radius-lg:18px;
@@ -32,10 +31,13 @@
 
       --max:1220px;
 
-      /* calculado via JS (altura real do topo) */
-      --gatebarH: 68px;
+      /* calculado via JS */
+      --gatebarH: 72px;
       --stickyOffset: 10px;
       --stickyTop: calc(var(--gatebarH) + var(--stickyOffset) + 10px);
+
+      /* offset extra para “nada encavalado” ao clicar no menu */
+      --navJumpOffset: calc(var(--gatebarH) + 22px);
     }
 
     *{ box-sizing:border-box }
@@ -49,7 +51,6 @@
         radial-gradient(900px 520px at 30% 85%, rgba(50,208,194,.12), transparent 55%),
         linear-gradient(180deg, #06121d 0%, #050f18 100%);
       overflow-x:hidden;
-      scroll-behavior:smooth;
     }
 
     /* ASSETS */
@@ -246,31 +247,17 @@
       white-space:nowrap;
     }
     .cta-btn:hover{ transform: translateY(-1px); border-color: rgba(79,148,255,.75); background: rgba(79,148,255,.14); }
-    .cta-note{
-      font-size:11px;
-      color: var(--muted);
-      line-height:1.5;
-    }
+    .cta-note{ font-size:11px; color: var(--muted); line-height:1.5; }
 
     /* =========================================================
-       TIMELINE (ribbons)
+       TIMELINE
        ========================================================= */
-    .ribbon-area{
-      padding: 12px 18px 18px;
-      border-top:1px solid rgba(248,247,255,.08);
-    }
-    .ribbon-title{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin-bottom:12px;
-    }
+    .ribbon-area{ padding: 12px 18px 18px; border-top:1px solid rgba(248,247,255,.08); }
+    .ribbon-title{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
     .ribbon-title .l{ font-weight:900; font-size:12px; color: rgba(248,247,255,.90); }
     .ribbon-title .r{ font-size:11px; color:var(--muted); }
 
-    .ribbon-track{
-      position:relative;
-      margin-top:6px;
-      padding: 16px 0 4px;
-    }
+    .ribbon-track{ position:relative; margin-top:6px; padding: 16px 0 4px; }
     .ribbon-track::before{
       content:"";
       position:absolute;
@@ -327,16 +314,6 @@
       transform: translateY(-2px);
       box-shadow: 0 18px 46px rgba(0,0,0,.35);
     }
-    .rb-flag::after{
-      content:"";
-      position:absolute; left:18px; bottom:-12px;
-      width:0; height:0;
-      border-left:12px solid transparent;
-      border-right:12px solid transparent;
-      border-top:12px solid rgba(255,255,255,.20);
-      opacity:.65;
-    }
-
     .rb-num{ font-weight:900; font-size:18px; margin:0 0 6px; }
     .rb-name{ margin:0 0 8px; font-size:13px; font-weight:900; }
     .rb-desc{
@@ -383,23 +360,15 @@
     .rb.active .rb-dot{ background: rgba(79,148,255,.95); border-color: rgba(79,148,255,.65); }
 
     /* =========================================================
-       SECTION SCROLL OFFSET + REVEAL
+       REVEAL
        ========================================================= */
-    section[id]{ scroll-margin-top: calc(var(--stickyTop) + 10px); }
-
-    .reveal{
-      opacity:0;
-      transform: translateY(14px);
-      transition: opacity .55s ease, transform .55s ease;
-    }
-    .reveal.inview{
-      opacity:1;
-      transform: translateY(0);
-    }
+    .reveal{ opacity:0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.inview{ opacity:1; transform: translateY(0); }
 
     /* =========================================================
-       MANIFESTO (seção)
+       MANIFESTO
        ========================================================= */
+    #manifesto{ scroll-margin-top: var(--navJumpOffset); }
     .manifesto{
       margin-top: 18px;
       border-radius: var(--radius-xl);
@@ -421,7 +390,7 @@
       justify-content:space-between;
       gap:14px;
       border-bottom:1px solid rgba(248,247,255,.10);
-      background: rgba(10,26,43,.72);
+      background: rgba(10,26,43,.88);
       backdrop-filter: blur(10px);
     }
     .manifesto-hd h2{ margin:0; font-size:16px; font-weight:900; letter-spacing:.2px; }
@@ -438,35 +407,18 @@
       font-size:12px;
       line-height:1.6;
     }
-    .m-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top: 14px;
-    }
+    .m-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top: 14px; }
     .m-card{
       border:1px solid rgba(248,247,255,.12);
       background: rgba(13,37,63,.30);
       border-radius: 16px;
       padding: 14px 14px;
-      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
-      transform: translateZ(0);
-    }
-    .m-card:hover{
-      transform: translateY(-2px);
-      border-color: rgba(248,247,255,.20);
-      box-shadow: 0 16px 44px rgba(0,0,0,.34);
     }
     .m-card h3{ margin:0 0 8px; font-size:13px; font-weight:900; }
     .m-card p{ margin:0; font-size:12px; line-height:1.6; color: var(--muted); }
     .m-card p strong{ color: rgba(248,247,255,.92); }
-    .m-list{
-      margin: 10px 0 0;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size:12px;
-      line-height:1.7;
-    }
+    .m-list{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size:12px; line-height:1.7; }
+
     .m-footer{
       margin-top: 14px;
       padding-top: 14px;
@@ -477,25 +429,20 @@
       gap:12px;
       flex-wrap:wrap;
     }
-    .tagline{
-      font-weight:900;
-      color: rgba(248,247,255,.92);
-      font-size:12px;
-      line-height:1.45;
-    }
+    .tagline{ font-weight:900; color: rgba(248,247,255,.92); font-size:12px; line-height:1.45; }
 
     /* =========================================================
-       GATE SECTIONS (CORREÇÃO: header/body/footer fechados)
+       GATE SECTIONS (FIX definitivo: nada encavalado)
        ========================================================= */
-    .gate{
-      margin-top: 18px;
-      border-radius: var(--radius-xl);
-      border:1px solid var(--stroke);
+    .gate{ margin-top: 18px; border-radius: var(--radius-xl); border:1px solid var(--stroke);
       background: linear-gradient(180deg, rgba(13,37,63,.55), rgba(13,37,63,.25));
       box-shadow: var(--shadow2);
       overflow:hidden;
       position:relative;
     }
+
+    /* IMPORTANTE: offset ao clicar no menu para cada gate */
+    .gate[id]{ scroll-margin-top: var(--navJumpOffset); }
 
     .gate-hd{
       position: sticky;
@@ -506,18 +453,13 @@
       align-items:center;
       justify-content:space-between;
       gap:14px;
-      border-bottom:1px solid rgba(248,247,255,.08);
-      background: rgba(10,26,43,.72);
+      border-bottom:1px solid rgba(248,247,255,.10);
+      background: rgba(10,26,43,.90);
       backdrop-filter: blur(10px);
-      min-height: 74px;
+      min-height: 78px;
     }
 
-    .gate-titlewrap{
-      min-width:0;
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
+    .gate-titlewrap{ min-width:0; display:flex; flex-direction:column; gap:4px; }
     .gate-title{
       margin:0;
       font-size:16px;
@@ -536,7 +478,7 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width: 86ch;
+      max-width: 90ch;
     }
 
     .gate-badge{
@@ -554,26 +496,31 @@
       white-space:nowrap;
     }
 
+    /* FIX PRINCIPAL:
+       - garante espaço real depois do header
+       - e evita conteúdo “subir” encostando no header ao ancorar
+    */
     .gate-inner{
-      padding: 16px 20px 18px;
+      padding: 18px 20px 18px;
     }
 
     .gate-grid{
       display:grid;
-      grid-template-columns: 1fr 1fr; /* CORREÇÃO: duas colunas reais */
+      grid-template-columns: 1fr 1fr;
       gap:12px;
-      align-items:stretch; /* CORREÇÃO: alturas alinhadas */
+      align-items:stretch;
     }
 
     .card{
       border:1px solid rgba(248,247,255,.10);
-      background: rgba(13,37,63,.28);
+      background: rgba(13,37,63,.30);
       border-radius: 16px;
       padding: 14px 14px 12px;
       box-shadow: 0 12px 26px rgba(0,0,0,.22);
       display:flex;
       flex-direction:column;
-      min-height: 150px; /* CORREÇÃO: uniformiza visual */
+      min-height: 170px; /* FIX: nunca “comer” lista */
+      overflow: visible;
     }
     .card h3{
       margin:0 0 10px;
@@ -589,12 +536,6 @@
       font-size:12px;
       line-height:1.7;
     }
-    .card p{
-      margin:0;
-      color: var(--muted);
-      font-size:12px;
-      line-height:1.65;
-    }
 
     .gate-decision{
       margin-top: 12px;
@@ -606,18 +547,8 @@
       flex-direction:column;
       gap:6px;
     }
-    .gate-decision .t{
-      font-weight:900;
-      font-size:12px;
-      color: rgba(248,247,255,.92);
-      margin:0;
-    }
-    .gate-decision .q{
-      margin:0;
-      font-size:12px;
-      color: rgba(248,247,255,.78);
-      line-height:1.55;
-    }
+    .gate-decision .t{ font-weight:900; font-size:12px; color: rgba(248,247,255,.92); margin:0; }
+    .gate-decision .q{ margin:0; font-size:12px; color: rgba(248,247,255,.78); line-height:1.55; }
 
     /* =========================================================
        BREAKPOINTS
@@ -627,7 +558,6 @@
       .hero-logo-card{ max-width: 220px; }
       .gate-subtitle{ max-width: 70ch; }
     }
-
     @media (max-width:980px){
       .hero-inner{ grid-template-columns:1fr; }
       .hero-aside{ justify-content:flex-start; }
@@ -637,19 +567,18 @@
       .gates{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
       .m-grid{ grid-template-columns: 1fr; }
-      .gate-grid{ grid-template-columns: 1fr; } /* mobile: empilha */
+      .gate-grid{ grid-template-columns: 1fr; }
       .gate-hd{ align-items:flex-start; }
       .gate-title{ white-space:normal; }
       .gate-subtitle{ white-space:normal; }
+      .card{ min-height: unset; }
     }
-
     @media (max-width:640px){
       .wrap{ padding: 10px 10px 75px; }
       .brand-txt .t2{ display:none; }
       .brand{ min-width: 185px; }
       .gates{ gap:6px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .gbtn{ font-size:10px; padding: 8px 7px; }
-
       .hero h1{ font-size:24px; }
       .cta-btn{ width:100%; }
       .gate-hd{ padding:12px 14px; }
@@ -874,7 +803,6 @@
         </div>
         <span class="gate-badge">Gate 1</span>
       </div>
-
       <div class="gate-inner">
         <div class="gate-grid">
           <div class="card">
@@ -886,7 +814,6 @@
               <li>Validação final com PMO antes de seguir para execução.</li>
             </ul>
           </div>
-
           <div class="card">
             <h3>Entregáveis mínimos</h3>
             <ul>
@@ -896,7 +823,6 @@
             </ul>
           </div>
         </div>
-
         <div class="gate-decision">
           <p class="t">Gate 1 — Decisão de Investimento</p>
           <p class="q">Pergunta: vale a pena investir e vender esta solução?</p>
@@ -913,7 +839,6 @@
         </div>
         <span class="gate-badge">Gate 2</span>
       </div>
-
       <div class="gate-inner">
         <div class="gate-grid">
           <div class="card">
@@ -925,7 +850,6 @@
               <li>Explicitamento de riscos críticos e mitigação inicial.</li>
             </ul>
           </div>
-
           <div class="card">
             <h3>Entregáveis mínimos</h3>
             <ul>
@@ -935,7 +859,6 @@
             </ul>
           </div>
         </div>
-
         <div class="gate-decision">
           <p class="t">Gate 2 — Viabilidade da Solução</p>
           <p class="q">Pergunta: a solução vendida é tecnicamente e operacionalmente viável?</p>
@@ -952,7 +875,6 @@
         </div>
         <span class="gate-badge">Gate 3</span>
       </div>
-
       <div class="gate-inner">
         <div class="gate-grid">
           <div class="card">
@@ -964,7 +886,6 @@
               <li>Designação de responsáveis e abordagem de condução.</li>
             </ul>
           </div>
-
           <div class="card">
             <h3>Entregáveis mínimos</h3>
             <ul>
@@ -974,7 +895,6 @@
             </ul>
           </div>
         </div>
-
         <div class="gate-decision">
           <p class="t">Gate 3 — Projeto Internalizado</p>
           <p class="q">Pergunta: PMO e GPs entendem o projeto o suficiente para assumir a execução?</p>
@@ -991,7 +911,6 @@
         </div>
         <span class="gate-badge">Gate 4</span>
       </div>
-
       <div class="gate-inner">
         <div class="gate-grid">
           <div class="card">
@@ -1003,7 +922,6 @@
               <li>Plano inicial em ondas (30–45 dias) e dependências do cliente.</li>
             </ul>
           </div>
-
           <div class="card">
             <h3>Entregáveis mínimos</h3>
             <ul>
@@ -1014,7 +932,6 @@
             </ul>
           </div>
         </div>
-
         <div class="gate-decision">
           <p class="t">Gate 4 — Autorização de Execução</p>
           <p class="q">Pergunta: o projeto está autorizado a iniciar a execução com governança e alinhamento estabelecidos?</p>
@@ -1031,7 +948,6 @@
         </div>
         <span class="gate-badge">Gate 5</span>
       </div>
-
       <div class="gate-inner">
         <div class="gate-grid">
           <div class="card">
@@ -1044,7 +960,6 @@
               <li><strong>Encerramento:</strong> aceite formal, lições aprendidas e dossiê final.</li>
             </ul>
           </div>
-
           <div class="card">
             <h3>Artefatos mínimos do G5</h3>
             <ul>
@@ -1056,7 +971,6 @@
             </ul>
           </div>
         </div>
-
         <div class="gate-decision">
           <p class="t">Regra do Gate G5 (oficial)</p>
           <p class="q">Pergunta: <strong>Foi tudo implantado conforme o plano do projeto?</strong></p>
@@ -1073,7 +987,6 @@
         </div>
         <span class="gate-badge">Gate 6</span>
       </div>
-
       <div class="gate-inner">
         <div class="gate-grid">
           <div class="card">
@@ -1084,7 +997,6 @@
               <li>SLA/canais e critérios de acionamento.</li>
             </ul>
           </div>
-
           <div class="card">
             <h3>Critérios de prontidão</h3>
             <ul>
@@ -1094,7 +1006,6 @@
             </ul>
           </div>
         </div>
-
         <div class="gate-decision">
           <p class="t">Gate 6 — Encerramento</p>
           <p class="q">Pergunta: o suporte consegue sustentar sem dependência do time de projeto?</p>
@@ -1105,11 +1016,11 @@
   </div>
 
   <script>
-    // 1) Medir altura real do gatebar e ajustar stickyTop (headers sempre visíveis)
+    // 1) Medir altura real do gatebar e atualizar variáveis (sticky + jump offset)
     (function(){
       const gatebar = document.getElementById("gatebar");
       function setVars(){
-        const h = gatebar ? Math.ceil(gatebar.getBoundingClientRect().height) : 68;
+        const h = gatebar ? Math.ceil(gatebar.getBoundingClientRect().height) : 72;
         document.documentElement.style.setProperty("--gatebarH", h + "px");
       }
       window.addEventListener("resize", setVars);
@@ -1117,7 +1028,42 @@
       setVars();
     })();
 
-    // 2) Ativo no menu + ribbon conforme scroll
+    // 2) Navegação com offset (FIX: ao clicar no menu, nada fica encavalado)
+    (function(){
+      function getOffset(){
+        const root = getComputedStyle(document.documentElement);
+        const gatebarH = parseFloat(root.getPropertyValue("--gatebarH")) || 72;
+        return gatebarH + 22; // precisa ser maior que a altura da barra + respiro
+      }
+
+      function smoothScrollToId(id){
+        const el = document.getElementById(id);
+        if(!el) return;
+        const top = el.getBoundingClientRect().top + window.scrollY - getOffset();
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+
+      // intercepta cliques de anchors internas
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener("click", (e)=>{
+          const href = a.getAttribute("href");
+          if(!href || href === "#") return;
+          const id = href.slice(1);
+          if(!id) return;
+          e.preventDefault();
+          history.replaceState(null, "", href);
+          smoothScrollToId(id);
+        });
+      });
+
+      // se abrir a página já com hash
+      window.addEventListener("load", ()=>{
+        const hash = (location.hash || "").replace("#","");
+        if(hash) setTimeout(()=>smoothScrollToId(hash), 50);
+      });
+    })();
+
+    // 3) Ativo no menu + ribbon conforme scroll
     (function(){
       const navBtns = Array.from(document.querySelectorAll(".gbtn[data-target]"));
       const ribbons = Array.from(document.querySelectorAll("#ribbons .rb"));
@@ -1125,7 +1071,7 @@
       const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
 
       function setActive(){
-        const y = window.scrollY + 240;
+        const y = window.scrollY + 260;
         let current = sections[0]?.id || "";
         for (const s of sections) if (s.offsetTop <= y) current = s.id;
 
@@ -1137,7 +1083,7 @@
       setActive();
     })();
 
-    // 3) Reveal suave (fluidez)
+    // 4) Reveal suave
     (function(){
       const els = Array.from(document.querySelectorAll(".reveal"));
       if (!("IntersectionObserver" in window)) {
